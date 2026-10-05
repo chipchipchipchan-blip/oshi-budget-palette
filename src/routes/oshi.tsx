@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Camera, Plus, Trash2 } from "lucide-react";
 import { AppShell, OshiAvatar } from "@/components/AppShell";
-import { useStore, actions, OSHI_COLORS, type Oshi } from "@/lib/store";
+import { useStore, actions, OSHI_COLORS, isWhitish, type Oshi } from "@/lib/store";
 
 export const Route = createFileRoute("/oshi")({
   head: () => ({
