@@ -1,12 +1,13 @@
 import { useSyncExternalStore } from "react";
+import { Gift, Ticket, TrainFront, Mail, Sparkles, type LucideIcon } from "lucide-react";
 
 export type Category = "goods" | "ticket" | "travel" | "fc" | "other";
-export const CATEGORIES: { id: Category; label: string; emoji: string; color: string }[] = [
-  { id: "goods", label: "グッズ", emoji: "🧸", color: "var(--pink)" },
-  { id: "ticket", label: "チケット", emoji: "🎫", color: "var(--lilac)" },
-  { id: "travel", label: "遠征費", emoji: "🚄", color: "var(--mint)" },
-  { id: "fc", label: "FC・月額", emoji: "💌", color: "var(--peach)" },
-  { id: "other", label: "その他", emoji: "✨", color: "var(--sky)" },
+export const CATEGORIES: { id: Category; label: string; icon: LucideIcon; color: string }[] = [
+  { id: "goods", label: "グッズ", icon: Gift, color: "var(--pink)" },
+  { id: "ticket", label: "チケット", icon: Ticket, color: "var(--lilac)" },
+  { id: "travel", label: "遠征費", icon: TrainFront, color: "var(--mint)" },
+  { id: "fc", label: "FC・月額", icon: Mail, color: "var(--peach)" },
+  { id: "other", label: "その他", icon: Sparkles, color: "var(--sky)" },
 ];
 
 export const OSHI_COLORS = ["#F2B8C6", "#C9B6E4", "#A8DCCB", "#F6CBA5", "#AFCBEA", "#F3E1A0"];
