@@ -12,11 +12,20 @@ export const CATEGORIES: { id: Category; label: string; icon: LucideIcon; color:
 
 export const OSHI_COLORS = ["#FFFFFF", "#E8E6E3", "#F2B8C6", "#C9B6E4", "#A8DCCB", "#F6CBA5", "#AFCBEA", "#F3E1A0"];
 
+export const BG_PRESETS: { label: string; color: string | null }[] = [
+  { label: "デフォルト", color: null },
+  { label: "ミント", color: "#E7F5EF" },
+  { label: "ラベンダー", color: "#F1ECFA" },
+  { label: "ピーチ", color: "#FBEFE4" },
+  { label: "スカイ", color: "#E8F1FA" },
+  { label: "クリーム", color: "#FAF6EA" },
+];
+
 export type Oshi = { id: string; name: string; color: string; photo?: string };
 export type Expense = {
   id: string; amount: number; date: string; memo: string; oshiId: string; category: Category;
 };
-type State = { oshis: Oshi[]; expenses: Expense[] };
+type State = { oshis: Oshi[]; expenses: Expense[]; bgColor?: string };
 
 const KEY = "oshikatsu-wallet-v1";
 const initial: State = {
@@ -62,6 +71,7 @@ export const actions = {
   updateOshi: (id: string, o: Partial<Oshi>) =>
     set({ ...state, oshis: state.oshis.map((x) => (x.id === id ? { ...x, ...o } : x)) }),
   deleteOshi: (id: string) => set({ ...state, oshis: state.oshis.filter((x) => x.id !== id) }),
+  setBgColor: (c: string | null) => set({ ...state, bgColor: c ?? undefined }),
 };
 
 export const yen = (n: number) => "¥" + n.toLocaleString("ja-JP");
@@ -73,3 +83,28 @@ export const isWhitish = (color: string) => {
   const rgb = [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16));
   return Math.min(...rgb) > 224;
 };
+
+/** 選んだ背景色をアプリ全体に反映。濃い色は自動で白に混ぜて淡く補正する */
+export function applyBackground(color?: string) {
+  if (typeof document === "undefined") return;
+  const root = document.documentElement;
+  if (!color) {
+    root.style.removeProperty("--background");
+    root.style.removeProperty("--bg-tint-a");
+    root.style.removeProperty("--bg-tint-b");
+    return;
+  }
+  const hex = color.replace("#", "");
+  let [r, g, b] = /^[0-9a-fA-F]{6}$/.test(hex)
+    ? [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16))
+    : [253, 243, 247];
+  const lum = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+  if (lum < 0.78) {
+    r = Math.round(r + (255 - r) * 0.75);
+    g = Math.round(g + (255 - g) * 0.75);
+    b = Math.round(b + (255 - b) * 0.75);
+  }
+  root.style.setProperty("--background", `rgb(${r} ${g} ${b})`);
+  root.style.setProperty("--bg-tint-a", `rgb(${r} ${g} ${b} / 0.55)`);
+  root.style.setProperty("--bg-tint-b", `rgb(${r} ${g} ${b} / 0.45)`);
+}

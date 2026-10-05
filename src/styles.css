@@ -77,8 +77,8 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    background-image: radial-gradient(circle at 10% 0%, oklch(0.93 0.04 355 / 0.7), transparent 40%),
-      radial-gradient(circle at 100% 30%, oklch(0.93 0.04 175 / 0.6), transparent 40%);
+    background-image: radial-gradient(circle at 10% 0%, var(--bg-tint-a, oklch(0.93 0.04 355 / 0.7)), transparent 40%),
+      radial-gradient(circle at 100% 30%, var(--bg-tint-b, oklch(0.93 0.04 175 / 0.6)), transparent 40%);
     background-attachment: fixed;
   }
 }

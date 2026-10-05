@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Camera, Plus, Trash2 } from "lucide-react";
+import { Camera, Check, Palette, Plus, Trash2 } from "lucide-react";
 import { AppShell, OshiAvatar } from "@/components/AppShell";
-import { useStore, actions, OSHI_COLORS, isWhitish, type Oshi } from "@/lib/store";
+import { useStore, actions, OSHI_COLORS, BG_PRESETS, isWhitish, type Oshi } from "@/lib/store";
 
 export const Route = createFileRoute("/oshi")({
   head: () => ({
@@ -49,7 +49,44 @@ function OshiPage() {
         <input value={name} onChange={(e) => setName(e.target.value)} placeholder="新しい推しの名前" className="flex-1 rounded-full bg-muted px-4 outline-none" />
         <button className="press grid h-11 w-11 place-items-center rounded-full bg-primary text-primary-foreground"><Plus /></button>
       </form>
+      <BackgroundPicker />
     </AppShell>
+  );
+}
+
+function BackgroundPicker() {
+  const { bgColor } = useStore();
+  return (
+    <div className="card-soft mt-5 p-5">
+      <div className="mb-3 flex items-center gap-2">
+        <Palette className="h-4 w-4 text-primary" />
+        <span className="text-sm font-bold">アプリの背景色</span>
+      </div>
+      <div className="flex items-center gap-2">
+        {BG_PRESETS.map((p) => {
+          const active = bgColor === p.color;
+          return (
+            <button
+              key={p.label}
+              onClick={() => actions.setBgColor(p.color)}
+              aria-label={`背景を${p.label}にする`}
+              className={`press grid h-9 w-9 place-items-center rounded-full border-2 ${active ? "border-foreground" : "border-border"}`}
+              style={p.color ? { background: p.color } : { background: "linear-gradient(135deg, #FDF3F7, #EEF7F2)" }}
+            >
+              {active && <Check className="h-4 w-4 text-foreground" />}
+            </button>
+          );
+        })}
+        <input
+          type="color"
+          value={bgColor ?? "#FDF3F7"}
+          onChange={(e) => actions.setBgColor(e.target.value)}
+          className="h-9 w-9 cursor-pointer rounded-full bg-transparent"
+          aria-label="背景を好きな色にする"
+        />
+      </div>
+      <p className="mt-2 text-xs text-muted-foreground">好きな色も選べます。濃い色は自動で淡く調整されます。</p>
+    </div>
   );
 }
 
