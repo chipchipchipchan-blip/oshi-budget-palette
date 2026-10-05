@@ -20,8 +20,8 @@ type State = { oshis: Oshi[]; expenses: Expense[] };
 const KEY = "oshikatsu-wallet-v1";
 const initial: State = {
   oshis: [
-    { id: "a", name: "推しA", color: OSHI_COLORS[0] },
-    { id: "b", name: "推しB", color: OSHI_COLORS[1] },
+    { id: "a", name: "推しA", color: "#F2B8C6" },
+    { id: "b", name: "推しB", color: "#C9B6E4" },
   ],
   expenses: [],
 };

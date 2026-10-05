@@ -76,7 +76,7 @@ function Dashboard() {
           <ResponsiveContainer>
             <BarChart data={byCat}>
               <XAxis dataKey="emoji" axisLine={false} tickLine={false} tick={{ fontSize: 20 }} />
-              <Tooltip formatter={(v: number) => yen(v)} labelFormatter={() => ""} cursor={{ fill: "transparent" }} />
+              <Tooltip formatter={(v) => yen(Number(v))} labelFormatter={() => ""} cursor={{ fill: "transparent" }} />
               <Bar dataKey="value" radius={[12, 12, 12, 12]}>
                 {byCat.map((c) => <Cell key={c.id} fill={c.color} />)}
               </Bar>

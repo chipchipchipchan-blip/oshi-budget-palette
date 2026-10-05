@@ -41,7 +41,7 @@ function OshiPage() {
         onSubmit={(e) => {
           e.preventDefault();
           if (!name.trim()) return;
-          actions.addOshi({ name: name.trim(), color: OSHI_COLORS[oshis.length % OSHI_COLORS.length] });
+          actions.addOshi({ name: name.trim(), color: OSHI_COLORS[oshis.length % OSHI_COLORS.length] ?? "#F2B8C6" });
           setName("");
         }}
         className="card-soft mt-5 flex gap-2 p-3"
