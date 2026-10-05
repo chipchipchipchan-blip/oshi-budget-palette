@@ -51,7 +51,7 @@ function Dashboard() {
             <div className="h-40 w-40 shrink-0">
               <ResponsiveContainer>
                 <PieChart>
-                  <Pie data={byOshi} dataKey="value" innerRadius={42} outerRadius={70} paddingAngle={byOshi.length > 1 ? 4 : 0} cornerRadius={8} stroke="none">
+                  <Pie data={byOshi} dataKey="value" innerRadius={42} outerRadius={70} paddingAngle={byOshi.length > 1 ? 4 : 0} cornerRadius={8} stroke="var(--border)" strokeWidth={1}>
                     {byOshi.map((o) => <Cell key={o.id} fill={o.color} />)}
                   </Pie>
                 </PieChart>
