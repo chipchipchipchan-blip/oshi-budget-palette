@@ -64,4 +64,4 @@ export const actions = {
 };
 
 export const yen = (n: number) => "¥" + n.toLocaleString("ja-JP");
-export const catOf = (id: Category) => CATEGORIES.find((c) => c.id === id) ?? CATEGORIES[4];
+export const catOf = (id: Category) => CATEGORIES.find((c) => c.id === id) ?? CATEGORIES[4]!;
