@@ -12,11 +12,20 @@ export const CATEGORIES: { id: Category; label: string; icon: LucideIcon; color:
 
 export const OSHI_COLORS = ["#FFFFFF", "#E8E6E3", "#F2B8C6", "#C9B6E4", "#A8DCCB", "#F6CBA5", "#AFCBEA", "#F3E1A0"];
 
+export const BG_PRESETS: { label: string; color: string | null }[] = [
+  { label: "デフォルト", color: null },
+  { label: "ミント", color: "#E7F5EF" },
+  { label: "ラベンダー", color: "#F1ECFA" },
+  { label: "ピーチ", color: "#FBEFE4" },
+  { label: "スカイ", color: "#E8F1FA" },
+  { label: "クリーム", color: "#FAF6EA" },
+];
+
 export type Oshi = { id: string; name: string; color: string; photo?: string };
 export type Expense = {
   id: string; amount: number; date: string; memo: string; oshiId: string; category: Category;
 };
-type State = { oshis: Oshi[]; expenses: Expense[] };
+type State = { oshis: Oshi[]; expenses: Expense[]; bgColor?: string };
 
 const KEY = "oshikatsu-wallet-v1";
 const initial: State = {
@@ -62,6 +71,7 @@ export const actions = {
   updateOshi: (id: string, o: Partial<Oshi>) =>
     set({ ...state, oshis: state.oshis.map((x) => (x.id === id ? { ...x, ...o } : x)) }),
   deleteOshi: (id: string) => set({ ...state, oshis: state.oshis.filter((x) => x.id !== id) }),
+  setBgColor: (c: string | null) => set({ ...state, bgColor: c ?? undefined }),
 };
 
 export const yen = (n: number) => "¥" + n.toLocaleString("ja-JP");
