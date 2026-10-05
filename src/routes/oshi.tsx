@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Camera, Plus, Trash2 } from "lucide-react";
 import { AppShell, OshiAvatar } from "@/components/AppShell";
-import { useStore, actions, OSHI_COLORS, type Oshi } from "@/lib/store";
+import { useStore, actions, OSHI_COLORS, isWhitish, type Oshi } from "@/lib/store";
 
 export const Route = createFileRoute("/oshi")({
   head: () => ({
@@ -54,8 +54,9 @@ function OshiPage() {
 }
 
 function OshiCard({ o }: { o: Oshi }) {
+  const light = isWhitish(o.color);
   return (
-    <div className="card-soft overflow-hidden">
+    <div className="card-soft overflow-hidden" style={light ? { background: "var(--secondary)" } : undefined}>
       <div className="h-14" style={{ background: o.color }} />
       <div className="-mt-9 flex items-end gap-3 px-5">
         <label className="press relative cursor-pointer">

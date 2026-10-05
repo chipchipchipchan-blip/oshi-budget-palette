@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Home, PlusCircle, Clock, Heart, Wallet } from "lucide-react";
 import type { ReactNode } from "react";
+import { isWhitish } from "@/lib/store";
 
 const tabs = [
   { to: "/", label: "ホーム", icon: Home },
@@ -42,7 +43,13 @@ export function OshiAvatar({ name, color, photo, size = 40 }: { name: string; co
   return (
     <div
       className="grid shrink-0 place-items-center overflow-hidden rounded-full border-2 border-card font-bold text-ink"
-      style={{ width: size, height: size, background: color, fontSize: size * 0.4 }}
+      style={{
+        width: size,
+        height: size,
+        background: color,
+        fontSize: size * 0.4,
+        borderColor: isWhitish(color) ? "var(--border)" : undefined,
+      }}
     >
       {photo ? <img src={photo} alt={name} className="h-full w-full object-cover" /> : name.slice(0, 1)}
     </div>

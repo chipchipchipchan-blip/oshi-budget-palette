@@ -66,3 +66,10 @@ export const actions = {
 
 export const yen = (n: number) => "¥" + n.toLocaleString("ja-JP");
 export const catOf = (id: Category) => CATEGORIES.find((c) => c.id === id) ?? CATEGORIES[4]!;
+/** 白・オフホワイトなど、カード背景に溶ける色かどうか（カラーピッカーの手入力にも対応） */
+export const isWhitish = (color: string) => {
+  const hex = color.replace("#", "");
+  if (!/^[0-9a-fA-F]{6}$/.test(hex)) return false;
+  const rgb = [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16));
+  return Math.min(...rgb) > 224;
+};
