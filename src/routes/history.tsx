@@ -25,7 +25,7 @@ function HistoryPage() {
 
   return (
     <AppShell title="履歴">
-      {sorted.length === 0 && <p className="card-soft p-8 text-center text-sm text-muted-foreground">まだ記録がありません 🌷</p>}
+      {sorted.length === 0 && <p className="card-soft p-8 text-center text-sm text-muted-foreground">まだ記録がありません</p>}
       <div className="space-y-6">
         {Object.entries(groups).map(([date, list]) => (
           <div key={date}>
@@ -39,7 +39,7 @@ function HistoryPage() {
                 return (
                   <li key={e.id} className="card-soft relative flex items-center gap-3 p-4">
                     <span className="absolute -left-[1.85rem] top-1/2 h-3 w-3 -translate-y-1/2 rounded-full border-2 border-card" style={{ background: o?.color ?? "var(--muted)" }} />
-                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl text-xl" style={{ background: c.color }}>{c.emoji}</span>
+                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl text-ink" style={{ background: c.color }}><c.icon className="h-5 w-5" /></span>
                     <div className="min-w-0 flex-1">
                       <p className="truncate font-bold">{e.memo || c.label}</p>
                       <span className="mt-1 inline-block rounded-full px-2 py-0.5 text-[11px] font-bold text-ink" style={{ background: o?.color ?? "var(--muted)" }}>

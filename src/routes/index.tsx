@@ -38,12 +38,12 @@ function Dashboard() {
         <p className="text-sm font-bold text-ink/70">{now.getMonth() + 1}月の推し活合計</p>
         <p className="mt-2 font-display text-5xl font-bold tracking-tight text-ink">{yen(total)}</p>
         <p className="mt-3 inline-flex rounded-full bg-card/60 px-3 py-1 text-xs font-bold text-ink">
-          🎀 {month.length}件の愛を記録中
+          {month.length}件の愛を記録中
         </p>
       </section>
 
       <section className="card-soft mt-5 p-5">
-        <h2 className="mb-2 font-bold">💞 推し別の割合</h2>
+        <h2 className="mb-2 font-bold">推し別の割合</h2>
         {byOshi.length === 0 ? (
           <Empty />
         ) : (
@@ -71,11 +71,11 @@ function Dashboard() {
       </section>
 
       <section className="card-soft mt-5 p-5">
-        <h2 className="mb-3 font-bold">🗂️ カテゴリ別</h2>
+        <h2 className="mb-3 font-bold">カテゴリ別</h2>
         <div className="h-40">
           <ResponsiveContainer>
             <BarChart data={byCat}>
-              <XAxis dataKey="emoji" axisLine={false} tickLine={false} tick={{ fontSize: 20 }} />
+              <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fontSize: 11 }} interval={0} />
               <Tooltip formatter={(v) => yen(Number(v))} labelFormatter={() => ""} cursor={{ fill: "transparent" }} />
               <Bar dataKey="value" radius={[12, 12, 12, 12]}>
                 {byCat.map((c) => <Cell key={c.id} fill={c.color} />)}
@@ -86,7 +86,7 @@ function Dashboard() {
         <div className="mt-3 grid grid-cols-2 gap-2">
           {byCat.map((c) => (
             <div key={c.id} className="flex items-center gap-2 rounded-2xl bg-muted px-3 py-2 text-sm">
-              <span className="grid h-8 w-8 place-items-center rounded-xl" style={{ background: c.color }}>{c.emoji}</span>
+              <span className="grid h-8 w-8 place-items-center rounded-xl text-ink" style={{ background: c.color }}><c.icon className="h-4 w-4" /></span>
               <div className="leading-tight">
                 <p className="text-[11px] text-muted-foreground">{c.label}</p>
                 <p className="font-bold">{yen(c.value)}</p>
@@ -104,5 +104,5 @@ function Dashboard() {
 }
 
 function Empty() {
-  return <p className="py-6 text-center text-sm text-muted-foreground">まだ今月の記録がありません 🌱<br />右下の＋から登録してね</p>;
+  return <p className="py-6 text-center text-sm text-muted-foreground">まだ今月の記録がありません<br />右下の＋から登録してね</p>;
 }

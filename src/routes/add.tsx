@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Check } from "lucide-react";
+import { Check, Heart, LayoutGrid, CalendarDays, PenLine } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { useStore, actions, CATEGORIES, type Category } from "@/lib/store";
 
@@ -52,14 +52,14 @@ function AddPage() {
         </div>
 
         <label className="block">
-          <span className="mb-1 block text-sm font-bold">💖 誰のための支出？</span>
+          <span className="mb-1 flex items-center gap-1.5 text-sm font-bold"><Heart className="h-4 w-4 text-primary" /> 誰のための支出？</span>
           <select value={selected} onChange={(e) => setOshiId(e.target.value)} className={field}>
             {oshis.map((o) => <option key={o.id} value={o.id}>{o.name}</option>)}
           </select>
         </label>
 
         <div>
-          <span className="mb-2 block text-sm font-bold">🗂️ カテゴリ</span>
+          <span className="mb-2 flex items-center gap-1.5 text-sm font-bold"><LayoutGrid className="h-4 w-4 text-primary" /> カテゴリ</span>
           <div className="grid grid-cols-3 gap-2">
             {CATEGORIES.map((c) => (
               <button
@@ -67,19 +67,19 @@ function AddPage() {
                 className={`press flex flex-col items-center gap-1 rounded-2xl border-2 py-3 text-xs font-bold ${category === c.id ? "border-primary" : "border-transparent"}`}
                 style={{ background: c.color }}
               >
-                <span className="text-2xl">{c.emoji}</span>{c.label}
+                <c.icon className="h-6 w-6 text-ink" />{c.label}
               </button>
             ))}
           </div>
         </div>
 
         <label className="block">
-          <span className="mb-1 block text-sm font-bold">📅 日付</span>
+          <span className="mb-1 flex items-center gap-1.5 text-sm font-bold"><CalendarDays className="h-4 w-4 text-primary" /> 日付</span>
           <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className={field} />
         </label>
 
         <label className="block">
-          <span className="mb-1 block text-sm font-bold">📝 メモ</span>
+          <span className="mb-1 flex items-center gap-1.5 text-sm font-bold"><PenLine className="h-4 w-4 text-primary" /> メモ</span>
           <input value={memo} onChange={(e) => setMemo(e.target.value)} placeholder="アクスタ購入、ライブ当選…" className={field} />
         </label>
 
