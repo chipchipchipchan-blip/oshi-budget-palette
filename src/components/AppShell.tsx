@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Home, PlusCircle, Clock, Heart, Wallet } from "lucide-react";
-import type { ReactNode } from "react";
-import { isWhitish } from "@/lib/store";
+import { useEffect, type ReactNode } from "react";
+import { applyBackground, isWhitish, useStore } from "@/lib/store";
 
 const tabs = [
   { to: "/", label: "ホーム", icon: Home },
@@ -11,6 +11,8 @@ const tabs = [
 ] as const;
 
 export function AppShell({ title, children }: { title: string; children: ReactNode }) {
+  const { bgColor } = useStore();
+  useEffect(() => { applyBackground(bgColor); }, [bgColor]);
   return (
     <div className="mx-auto min-h-screen max-w-md px-5 pb-32 pt-8">
       <header className="mb-6 flex items-center justify-between">

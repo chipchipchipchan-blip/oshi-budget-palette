@@ -83,3 +83,28 @@ export const isWhitish = (color: string) => {
   const rgb = [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16));
   return Math.min(...rgb) > 224;
 };
+
+/** 選んだ背景色をアプリ全体に反映。濃い色は自動で白に混ぜて淡く補正する */
+export function applyBackground(color?: string) {
+  if (typeof document === "undefined") return;
+  const root = document.documentElement;
+  if (!color) {
+    root.style.removeProperty("--background");
+    root.style.removeProperty("--bg-tint-a");
+    root.style.removeProperty("--bg-tint-b");
+    return;
+  }
+  const hex = color.replace("#", "");
+  let [r, g, b] = /^[0-9a-fA-F]{6}$/.test(hex)
+    ? [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16))
+    : [253, 243, 247];
+  const lum = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+  if (lum < 0.78) {
+    r = Math.round(r + (255 - r) * 0.75);
+    g = Math.round(g + (255 - g) * 0.75);
+    b = Math.round(b + (255 - b) * 0.75);
+  }
+  root.style.setProperty("--background", `rgb(${r} ${g} ${b})`);
+  root.style.setProperty("--bg-tint-a", `rgb(${r} ${g} ${b} / 0.55)`);
+  root.style.setProperty("--bg-tint-b", `rgb(${r} ${g} ${b} / 0.45)`);
+}
