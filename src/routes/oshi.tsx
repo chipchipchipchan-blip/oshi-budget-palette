@@ -79,7 +79,7 @@ function OshiCard({ o }: { o: Oshi }) {
         <span className="text-xs font-bold text-muted-foreground">イメージカラー</span>
         {OSHI_COLORS.map((c) => (
           <button key={c} onClick={() => actions.updateOshi(o.id, { color: c })}
-            className={`press h-7 w-7 rounded-full border-2 ${o.color === c ? "border-foreground" : "border-card"}`}
+            className={`press h-7 w-7 rounded-full border-2 ${o.color === c ? "border-foreground" : "border-border"}`}
             style={{ background: c }} aria-label={c} />
         ))}
         <input type="color" value={o.color} onChange={(e) => actions.updateOshi(o.id, { color: e.target.value })} className="h-7 w-7 cursor-pointer rounded-full bg-transparent" />

@@ -10,7 +10,7 @@ export const CATEGORIES: { id: Category; label: string; icon: LucideIcon; color:
   { id: "other", label: "その他", icon: Sparkles, color: "var(--sky)" },
 ];
 
-export const OSHI_COLORS = ["#F2B8C6", "#C9B6E4", "#A8DCCB", "#F6CBA5", "#AFCBEA", "#F3E1A0"];
+export const OSHI_COLORS = ["#FFFFFF", "#E8E6E3", "#F2B8C6", "#C9B6E4", "#A8DCCB", "#F6CBA5", "#AFCBEA", "#F3E1A0"];
 
 export type Oshi = { id: string; name: string; color: string; photo?: string };
 export type Expense = {
