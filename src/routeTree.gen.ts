@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AddRouteImport } from './routes/add'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as OshiRouteImport } from './routes/oshi'
+import { Route as SavingsRouteImport } from './routes/savings'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +35,25 @@ const OshiRoute = OshiRouteImport.update({
   path: '/oshi',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SavingsRoute = SavingsRouteImport.update({
+  id: '/savings',
+  path: '/savings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/add': typeof AddRoute
   '/history': typeof HistoryRoute
   '/oshi': typeof OshiRoute
+  '/savings': typeof SavingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/add': typeof AddRoute
   '/history': typeof HistoryRoute
   '/oshi': typeof OshiRoute
+  '/savings': typeof SavingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,14 @@ export interface FileRoutesById {
   '/add': typeof AddRoute
   '/history': typeof HistoryRoute
   '/oshi': typeof OshiRoute
+  '/savings': typeof SavingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/add' | '/history' | '/oshi'
+  fullPaths: '/' | '/add' | '/history' | '/oshi' | '/savings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/add' | '/history' | '/oshi'
-  id: '__root__' | '/' | '/add' | '/history' | '/oshi'
+  to: '/' | '/add' | '/history' | '/oshi' | '/savings'
+  id: '__root__' | '/' | '/add' | '/history' | '/oshi' | '/savings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +76,7 @@ export interface RootRouteChildren {
   AddRoute: typeof AddRoute
   HistoryRoute: typeof HistoryRoute
   OshiRoute: typeof OshiRoute
+  SavingsRoute: typeof SavingsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OshiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/savings': {
+      id: '/savings'
+      path: '/savings'
+      fullPath: '/savings'
+      preLoaderRoute: typeof SavingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +124,7 @@ const rootRouteChildren: RootRouteChildren = {
   AddRoute: AddRoute,
   HistoryRoute: HistoryRoute,
   OshiRoute: OshiRoute,
+  SavingsRoute: SavingsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

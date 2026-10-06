@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Home, PlusCircle, Clock, Heart, Wallet } from "lucide-react";
+import { Home, PlusCircle, Clock, Heart, Wallet, PiggyBank } from "lucide-react";
 import { useEffect, type ReactNode } from "react";
 import { applyBackground, isWhitish, useStore } from "@/lib/store";
 
@@ -7,6 +7,7 @@ const tabs = [
   { to: "/", label: "ホーム", icon: Home },
   { to: "/add", label: "記録", icon: PlusCircle },
   { to: "/history", label: "履歴", icon: Clock },
+  { to: "/savings", label: "貯金", icon: PiggyBank },
   { to: "/oshi", label: "推し", icon: Heart },
 ] as const;
 
