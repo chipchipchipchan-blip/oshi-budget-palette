@@ -20,7 +20,7 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
           <p className="font-display text-xs font-bold tracking-[0.25em] text-primary">OSHI WALLET</p>
           <h1 className="text-2xl font-bold">{title}</h1>
         </div>
-        <div className="grid h-11 w-11 place-items-center rounded-full bg-hero text-ink shadow-soft"><Wallet className="h-5 w-5" /></div>
+        <div className="grid h-11 w-11 place-items-center rounded-full bg-hero text-hero-foreground shadow-soft"><Wallet className="h-5 w-5" /></div>
       </header>
       {children}
       <nav className="fixed inset-x-0 bottom-4 z-20 mx-auto flex max-w-sm justify-around rounded-full border bg-card/90 p-2 shadow-soft backdrop-blur">
