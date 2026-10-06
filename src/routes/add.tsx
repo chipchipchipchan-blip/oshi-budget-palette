@@ -45,7 +45,7 @@ function AddPage() {
         <div className="satin-dark rounded-3xl p-7 text-center text-hero-foreground">
           <p className="text-xs font-bold text-hero-foreground/60 tracking-[0.3em]">金額</p>
           <div className="mt-3 flex items-center justify-center font-display text-5xl font-light">
-            ¥
+            <span className="silver-ink">¥</span>
             <input
               aria-label="金額" inputMode="numeric" value={amount} placeholder="0"
               onChange={(e) => setAmount(e.target.value.replace(/\D/g, ""))}
