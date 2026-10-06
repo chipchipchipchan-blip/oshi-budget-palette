@@ -22,7 +22,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Dashboard() {
-  const { oshis, expenses, budget, goal } = useStore();
+  const { oshis, expenses, budget, goals } = useStore();
   const now = new Date();
   const ym = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
   const month = expenses.filter((e) => e.date.startsWith(ym));
@@ -48,7 +48,7 @@ function Dashboard() {
       </section>
 
       <BudgetCard total={total} budget={budget} />
-      <GoalCard goal={goal} />
+      <GoalCard goals={goals ?? []} />
 
       <section className="mt-8">
         <h2 className="mb-4 px-1 text-xs font-normal text-muted-foreground">推し別の割合</h2>

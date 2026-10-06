@@ -44,8 +44,9 @@ export type Oshi = { id: string; name: string; color: string; photo?: string };
 export type Expense = {
   id: string; amount: number; date: string; memo: string; oshiId: string; category: Category; payment?: PaymentMethod;
 };
-export type SavingsGoal = { title: string; target: number; saved: number };
-type State = { oshis: Oshi[]; expenses: Expense[]; bgColor?: string; mono?: boolean; budget?: number; goal?: SavingsGoal };
+export type SavingsGoal = { id: string; title: string; target: number; saved: number };
+export const MAX_SAVINGS_GOALS = 3;
+type State = { oshis: Oshi[]; expenses: Expense[]; bgColor?: string; mono?: boolean; budget?: number; goals?: SavingsGoal[]; goal?: Omit<SavingsGoal, "id"> };
 
 const KEY = "oshikatsu-wallet-v1";
 const initial: State = {
@@ -68,6 +69,11 @@ function load() {
   try {
     const raw = localStorage.getItem(KEY);
     if (raw) state = JSON.parse(raw);
+    if (state.goal) {
+      const { goal, ...rest } = state;
+      state = { ...rest, goals: state.goals ?? [{ ...goal, id: "legacy-savings-goal" }] };
+      localStorage.setItem(KEY, JSON.stringify(state));
+    }
     if (!state.mono) {
       // モノトーン版へ移行：3人の白の推しを登録し、未使用の初期サンプル推しを外す
       const used = new Set(state.expenses.map((e) => e.oshiId));
@@ -102,13 +108,19 @@ export const actions = {
   updateOshi: (id: string, o: Partial<Oshi>) =>
     set({ ...state, oshis: state.oshis.map((x) => (x.id === id ? { ...x, ...o } : x)) }),
   deleteOshi: (id: string) => set({ ...state, oshis: state.oshis.filter((x) => x.id !== id) }),
-  setGoal: (g: SavingsGoal | null) => {
-    const { goal: _g, ...rest } = state;
-    set(g ? { ...rest, goal: g } : rest);
+  addGoal: (g: Omit<SavingsGoal, "id">) => {
+    const goals = state.goals ?? [];
+    if (goals.length >= MAX_SAVINGS_GOALS || !Number.isSafeInteger(g.target) || g.target <= 0 || !Number.isSafeInteger(g.saved) || g.saved < 0) return;
+    set({ ...state, goals: [...goals, { ...g, id: uid() }] });
   },
-  addSaving: (n: number) => {
-    if (!state.goal || !(n > 0)) return;
-    set({ ...state, goal: { ...state.goal, saved: state.goal.saved + Math.round(n) } });
+  updateGoal: (id: string, g: Omit<SavingsGoal, "id">) => {
+    if (!Number.isSafeInteger(g.target) || g.target <= 0 || !Number.isSafeInteger(g.saved) || g.saved < 0) return;
+    set({ ...state, goals: (state.goals ?? []).map((goal) => goal.id === id ? { ...g, id } : goal) });
+  },
+  deleteGoal: (id: string) => set({ ...state, goals: (state.goals ?? []).filter((g) => g.id !== id) }),
+  addSaving: (id: string, n: number) => {
+    if (!Number.isSafeInteger(n) || n <= 0) return;
+    set({ ...state, goals: (state.goals ?? []).map((g) => g.id === id && Number.isSafeInteger(g.saved + n) ? { ...g, saved: g.saved + n } : g) });
   },
   setBudget: (n: number | null) => {
     const { budget: _b, ...rest } = state;
