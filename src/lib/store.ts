@@ -64,12 +64,33 @@ let state: State = initial;
 let loaded = false;
 const listeners = new Set<() => void>();
 
+const BACKUP_KEY = KEY + "-backup";
+
 function load() {
   if (loaded || typeof window === "undefined") return;
   loaded = true;
   try {
     const raw = localStorage.getItem(KEY);
-    if (raw) state = JSON.parse(raw);
+    if (raw) {
+      try {
+        state = JSON.parse(raw);
+      } catch {
+        // データが壊れている：初期データで上書きせず、壊れたデータをバックアップキーに退避して
+        // 本体はそのまま残す（次回以降も復旧の可能性を残す）。復旧用に最大2世代保持。
+        try {
+          const prev = localStorage.getItem(BACKUP_KEY);
+          if (prev) localStorage.setItem(BACKUP_KEY + "-prev", prev);
+          localStorage.setItem(BACKUP_KEY, raw);
+        } catch {}
+        if (typeof window !== "undefined") {
+          toast.error("保存データの読み込みに失敗しました", {
+            description: "データは消去せずバックアップとして残しています。心当たりのある操作の前の状態に戻したい場合はご連絡ください。",
+            duration: 8000,
+          });
+        }
+        return;
+      }
+    }
     if (state.goal) {
       const { goal, ...rest } = state;
       state = { ...rest, goals: state.goals ?? [{ ...goal, id: "legacy-savings-goal" }] };
