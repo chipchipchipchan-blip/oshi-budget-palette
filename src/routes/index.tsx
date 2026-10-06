@@ -4,7 +4,7 @@ import { Sparkles, Plus, PencilLine, Check, X } from "lucide-react";
 import { useState } from "react";
 import { AppShell, OshiAvatar } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
-import { GoalCard } from "@/components/GoalCard";
+import { SavingsSummary } from "@/components/SavingsSummary";
 import { useStore, CATEGORIES, PIE_COLORS, yen, actions } from "@/lib/store";
 
 export const Route = createFileRoute("/")({
@@ -48,7 +48,7 @@ function Dashboard() {
       </section>
 
       <BudgetCard total={total} budget={budget} />
-      <GoalCard goals={goals ?? []} />
+      <SavingsSummary goals={goals ?? []} />
 
       <section className="mt-8">
         <h2 className="mb-4 px-1 text-xs font-normal text-muted-foreground">推し別の割合</h2>

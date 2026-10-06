@@ -11,3 +11,8 @@
 - [x] Preserve the existing savings goal and support up to three independent goals.
 - [x] Add compact stacked goals with individual saving, editing, and deletion controls.
 - [x] Verify migration, management, and persistence in the browser.
+
+# Dedicated savings page
+- [ ] Replace home goal details with a linked aggregate summary.
+- [ ] Add /savings with existing goal management and bottom navigation access.
+- [ ] Verify navigation, totals, updates, and direct page refresh.
