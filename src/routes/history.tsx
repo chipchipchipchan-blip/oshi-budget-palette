@@ -88,6 +88,24 @@ function HistoryPage() {
           </div>
         ))}
       </div>
+      <AlertDialog open={pendingDelete !== null} onOpenChange={(open) => { if (!open) setPendingDelete(null); }}>
+        <AlertDialogContent className="max-w-xs rounded-3xl border-border/60 bg-card/95 p-6 backdrop-blur-xl">
+          <AlertDialogHeader className="space-y-2 text-left">
+            <AlertDialogTitle className="font-light text-foreground/90">記録を削除しますか？</AlertDialogTitle>
+            <AlertDialogDescription className="text-xs font-light leading-relaxed text-muted-foreground">
+              {pendingDelete && `「${pendingDelete.label}」の記録を削除してもよろしいですか？削除した記録は元に戻せません。`}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="flex-row gap-2">
+            <AlertDialogCancel asChild>
+              <Button variant="satin" size="sm" className="flex-1 rounded-full font-light">やめる</Button>
+            </AlertDialogCancel>
+            <AlertDialogAction asChild>
+              <Button size="sm" className="flex-1 rounded-full font-light" onClick={() => { if (pendingDelete) actions.deleteExpense(pendingDelete.id); setPendingDelete(null); }}>削除する</Button>
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </AppShell>
   );
 }
