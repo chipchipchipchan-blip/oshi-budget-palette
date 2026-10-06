@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, Tooltip } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { Sparkles, Plus, Heart } from "lucide-react";
 import { AppShell, OshiAvatar } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
@@ -76,31 +76,24 @@ function Dashboard() {
 
       <section className="mt-8">
         <h2 className="mb-4 px-1 text-xs font-normal text-muted-foreground">カテゴリ別</h2>
-        <div className="card-soft p-5">
-        <div className="h-40">
-          <ResponsiveContainer>
-            <BarChart data={byCat}>
-              <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fontSize: 11 }} interval={0} />
-              <Tooltip formatter={(v) => yen(Number(v))} labelFormatter={() => ""} cursor={{ fill: "transparent" }} />
-              <Bar dataKey="value" radius={[2, 2, 0, 0]}>
-                {byCat.map((c) => <Cell key={c.id} fill={c.color} />)}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-        <div className="mt-4 grid grid-cols-1 gap-1">
-          {byCat.map((c) => (
-            <div key={c.id} className="flex min-w-0 items-center gap-4 border-b border-border/40 py-3.5 text-sm last:border-b-0">
-              <span className="blue-glass press grid h-12 w-12 shrink-0 place-items-center rounded-full">
-                <c.icon className="h-5 w-5 text-hero-foreground" style={{ filter: "drop-shadow(0 1px 2px oklch(0.45 0.06 20 / 0.4))" }} />
-              </span>
-              <div className="flex-1 leading-tight">
-                <p className="text-[11px] text-muted-foreground">{c.label}</p>
-                <p className="mt-1 break-all font-display text-base font-normal">{yen(c.value)}</p>
+        <div className="grid grid-cols-2 gap-3">
+          {byCat.map((c, i) => {
+            const share = total > 0 ? c.value / total : 0;
+            return (
+              <div key={c.id} className={`card-soft press p-4 ${i === byCat.length - 1 ? "col-span-2" : ""}`}>
+                <div className="flex items-center gap-3">
+                  <span className="blue-glass grid h-10 w-10 shrink-0 place-items-center rounded-full">
+                    <c.icon className="h-[18px] w-[18px] text-hero-foreground" style={{ filter: "drop-shadow(0 1px 2px oklch(0.45 0.06 20 / 0.4))" }} />
+                  </span>
+                  <p className="text-[11px] font-light text-muted-foreground">{c.label}</p>
+                </div>
+                <p className="mt-3 break-all font-display text-xl font-light leading-none">{yen(c.value)}</p>
+                <div className="mt-3 h-[3px] overflow-hidden rounded-full bg-border/60">
+                  <div className="h-full rounded-full blue-glass" style={{ width: `${Math.max(share * 100, share > 0 ? 8 : 0)}%` }} />
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            );
+          })}
         </div>
       </section>
 
