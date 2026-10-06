@@ -51,11 +51,7 @@ type State = { oshis: Oshi[]; expenses: Expense[]; bgColor?: string; mono?: bool
 
 const KEY = "oshikatsu-wallet-v1";
 const initial: State = {
-  oshis: [
-    { id: "idol", name: "アイドル", color: "#FFFFFF" },
-    { id: "anime", name: "アニメ", color: "#FFFFFF" },
-    { id: "seiyu", name: "声優", color: "#FFFFFF" },
-  ],
+  oshis: [],
   expenses: [],
   mono: true,
 };
@@ -97,12 +93,12 @@ function load() {
       localStorage.setItem(KEY, JSON.stringify(state));
     }
     if (!state.mono) {
-      // モノトーン版へ移行：3人の白の推しを登録し、未使用の初期サンプル推しを外す
+      // 旧バージョンからの人：使っていない旧サンプル推しが残っていれば外すだけで、
+      // 新しいサンプル推しは登録しない（初期状態は推しゼロで始まる）
       const used = new Set(state.expenses.map((e) => e.oshiId));
       const kept = state.oshis.filter((o) => !(["a", "b"].includes(o.id) && !used.has(o.id)));
-      const add = initial.oshis.filter((o) => !kept.some((k) => k.name === o.name));
       const { bgColor: _b, ...rest } = state;
-      state = { ...rest, oshis: [...add, ...kept], mono: true };
+      state = { ...rest, oshis: kept, mono: true };
       localStorage.setItem(KEY, JSON.stringify(state));
     }
   } catch {}
