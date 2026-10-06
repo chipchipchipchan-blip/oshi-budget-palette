@@ -49,7 +49,10 @@ function HistoryPage() {
                       <c.icon className="h-4 w-4 text-hero-foreground" style={{ filter: "drop-shadow(0 1px 2px oklch(0.45 0.06 20 / 0.4))" }} />
                     </span>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-medium">{e.memo || c.label}</p>
+                      <p className="truncate text-sm font-medium">{c.label}</p>
+                      {e.memo && (
+                        <p className="mt-0.5 truncate text-[11px] font-light tracking-wide text-muted-foreground/80">{e.memo}</p>
+                      )}
                       <span className="mt-1.5 inline-flex items-center">
                         <span className="inline-flex max-w-full items-center rounded-full bg-foreground px-2.5 py-0.5 text-[10px] font-medium tracking-wide text-background">
                           <span className="truncate">{o?.name ?? "削除された推し"}</span>
