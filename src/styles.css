@@ -111,18 +111,20 @@
   }
   input, select, button { font: inherit; }
   .font-bold, .font-semibold { font-weight: 500; }
-  /* ブラウザのオートコンプリート（自動入力）でも水色にならず、アプリの淡いグレーに馴染ませる */
+  /* ブラウザのオートコンプリート（自動入力）でも水色にならず、視認できる淡いグレーに馴染ませる */
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
   input:autofill,
   input:autofill:hover,
   input:autofill:focus {
-    -webkit-box-shadow: 0 0 0px 1000px oklch(0.975 0.002 247) inset !important;
-    box-shadow: 0 0 0px 1000px oklch(0.975 0.002 247) inset !important;
+    -webkit-box-shadow: 0 0 0px 1000px #e5e7eb inset !important;
+    box-shadow: 0 0 0px 1000px #e5e7eb inset !important;
     -webkit-text-fill-color: var(--color-foreground) !important;
     caret-color: var(--color-foreground);
     border-radius: inherit;
+    border: 1px solid var(--color-border) !important;
+    outline: none !important;
     transition: background-color 999999s ease-out 999999s;
   }
   .tracking-tight, .tracking-tighter, .tracking-widest { letter-spacing: 0; }
