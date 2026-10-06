@@ -41,6 +41,7 @@ function HistoryPage() {
               {list.map((e) => {
                 const o = oshis.find((x) => x.id === e.oshiId);
                 const c = catOf(e.category);
+                const p = payOf(e.payment);
                 return (
                   <li key={e.id} className="card-soft relative flex items-center gap-3.5 rounded-2xl p-4">
                     <span className="blue-glass absolute -left-[1.44rem] top-1/2 h-2.5 w-2.5 -translate-y-1/2 rounded-full" />
@@ -49,8 +50,15 @@ function HistoryPage() {
                     </span>
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium">{e.memo || c.label}</p>
-                      <span className="mt-1.5 inline-flex items-center rounded-full bg-foreground px-2.5 py-0.5 text-[10px] font-medium tracking-wide text-background">
-                        {o?.name ?? "削除された推し"}
+                      <span className="mt-1.5 inline-flex items-center gap-1.5">
+                        <span className="inline-flex items-center rounded-full bg-foreground px-2.5 py-0.5 text-[10px] font-medium tracking-wide text-background">
+                          {o?.name ?? "削除された推し"}
+                        </span>
+                        {p && (
+                          <span className="inline-flex items-center gap-1 rounded-full border border-border px-2 py-0.5 text-[10px] font-light tracking-wide text-muted-foreground">
+                            <p.icon className="h-3 w-3" />{p.label}
+                          </span>
+                        )}
                       </span>
                     </div>
                     <p className="shrink-0 break-all text-right font-display text-xl font-extralight leading-none tracking-tight">{yen(e.amount)}</p>
