@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,7 @@ function AuthPage() {
   const [mode, setMode] = useState<"in" | "up" | "reset">("in");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
 
@@ -112,7 +114,12 @@ function AuthPage() {
           <p className="text-center text-[11px] font-light text-muted-foreground">または</p>
           <form onSubmit={submit} className="space-y-3">
             <input type="email" required placeholder="メールアドレス" value={email} onChange={(e) => setEmail(e.target.value)} className={field} />
-            <input type="password" required minLength={6} placeholder="パスワード（6文字以上）" value={password} onChange={(e) => setPassword(e.target.value)} className={field} />
+            <div className="relative">
+              <input type={showPassword ? "text" : "password"} required minLength={6} placeholder="パスワード（6文字以上）" value={password} onChange={(e) => setPassword(e.target.value)} className={field + " pr-12"} />
+              <button type="button" aria-label={showPassword ? "パスワードを隠す" : "パスワードを表示"} onClick={() => setShowPassword((v) => !v)} className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-clear-blue">
+                {showPassword ? <EyeOff className="h-4 w-4" strokeWidth={1.5} /> : <Eye className="h-4 w-4" strokeWidth={1.5} />}
+              </button>
+            </div>
             <Button type="submit" variant="blueGlass" disabled={busy} className="w-full font-light">
               {mode === "in" ? "ログイン" : "登録する"}
             </Button>
