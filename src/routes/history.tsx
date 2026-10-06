@@ -55,7 +55,7 @@ function HistoryPage() {
                           {o?.name ?? "削除された推し"}
                         </span>
                         {p && (
-                          <span className="inline-flex items-center gap-1 rounded-full border border-border px-2 py-0.5 text-[10px] font-light tracking-wide text-muted-foreground">
+                          <span className="inline-flex items-center gap-1 whitespace-nowrap rounded-full border border-border px-2 py-0.5 text-[10px] font-light tracking-wide text-muted-foreground">
                             <p.icon className="h-3 w-3" />{p.label}
                           </span>
                         )}
