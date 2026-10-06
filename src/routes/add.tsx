@@ -117,7 +117,7 @@ function AddPage() {
           <input value={memo} onChange={(e) => setMemo(e.target.value)} placeholder="アクスタ購入、ライブ当選…" className={field} />
         </label>
 
-        <Button variant="unstyled" size="auto" disabled={!Number(amount)} className="satin-dark press flex w-full items-center justify-center gap-2 rounded-2xl py-4 font-light tracking-wide text-hero-foreground">
+        <Button variant="unstyled" size="auto" disabled={!Number(amount)} className="luxe-satin press flex w-full items-center justify-center gap-2 rounded-2xl py-4 font-light tracking-widest text-hero-foreground transition-all duration-300 active:scale-[0.98]">
           <Check className="h-5 w-5 silver-ink" /> <span className="silver-ink">{editing ? "保存する" : "記録する"}</span>
         </Button>
       </form>
