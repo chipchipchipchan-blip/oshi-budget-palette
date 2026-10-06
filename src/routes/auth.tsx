@@ -34,12 +34,12 @@ function AuthPage() {
     if (mode === "up") {
       const { error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: window.location.origin } });
       setBusy(false);
-      if (error) return toast.error("登録できませんでした", { description: error.message });
+      if (error) { toast.error("登録できませんでした", { description: error.message }); return; }
       setSent(true);
     } else {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       setBusy(false);
-      if (error) return toast.error("ログインできませんでした", { description: "メールアドレスかパスワードが違います" });
+      if (error) { toast.error("ログインできませんでした", { description: "メールアドレスかパスワードが違います" }); return; }
       toast.success("ログインしました");
       navigate({ to: "/" });
     }
@@ -47,7 +47,7 @@ function AuthPage() {
 
   const google = async () => {
     const r = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
-    if (r.error) return toast.error("Googleでログインできませんでした");
+    if (r.error) { toast.error("Googleでログインできませんでした"); return; }
     if (r.redirected) return;
     toast.success("ログインしました");
     navigate({ to: "/" });
