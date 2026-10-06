@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Home, PlusCircle, Clock, Heart, Wallet, PiggyBank } from "lucide-react";
+import { Home, PlusCircle, Clock, Heart, Settings, PiggyBank } from "lucide-react";
 import { useEffect, type ReactNode } from "react";
 import { useAccount } from "@/hooks/use-account";
 import { applyBackground, isWhitish, useStore } from "@/lib/store";
@@ -23,7 +23,7 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
           <p className="mb-1 font-display text-[11px] font-light text-muted-foreground">OSHI WALLET{account?.nickname ? <span className="ml-2 font-sans">・{account.nickname}さん</span> : null}</p>
           <h1 className="text-2xl font-light">{title}</h1>
         </div>
-        <div className="silver-surface grid h-12 w-12 shrink-0 place-items-center rounded-2xl text-muted-foreground"><Wallet className="h-5 w-5" /></div>
+        <Link to="/settings" aria-label="設定" title="設定" className="press silver-surface grid h-12 w-12 shrink-0 place-items-center rounded-2xl text-muted-foreground" activeProps={{ className: "!text-clear-blue" }}><Settings className="h-5 w-5" /></Link>
       </header>
       {children}
       <nav aria-label="メインメニュー" className="glass-nav fixed inset-x-6 bottom-6 z-20 mx-auto flex max-w-sm justify-around rounded-3xl p-2">
