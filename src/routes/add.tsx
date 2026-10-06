@@ -45,12 +45,12 @@ function AddPage() {
       <form onSubmit={submit} className="space-y-6">
         <div className="satin-dark relative overflow-hidden rounded-3xl p-7 text-center text-hero-foreground">
           <p className="text-xs font-light text-hero-foreground/70">金額</p>
-          <div className="mt-6 flex items-center justify-center font-display text-6xl font-extralight leading-none">
-            <span className="silver-ink">¥</span>
+          <div className="mt-6 flex items-center justify-center leading-none">
+            <span className="silver-ink font-display text-6xl font-extralight">¥</span>
             <input
               aria-label="金額" inputMode="numeric" value={amount} placeholder="0"
               onChange={(e) => setAmount(e.target.value.replace(/\D/g, ""))}
-              className="silver-ink w-48 bg-transparent text-center outline-none"
+              className="silver-ink w-48 bg-transparent text-center font-display text-6xl font-extralight tracking-tight outline-none placeholder:text-hero-foreground/40"
             />
           </div>
         </div>
@@ -68,7 +68,7 @@ function AddPage() {
             {CATEGORIES.map((c) => (
               <Button variant="unstyled" size="auto"
                 type="button" key={c.id} onClick={() => setCategory(c.id)}
-                className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-bold ${category === c.id ? "blue-glass blue-ring text-white" : "border-border bg-card"}`}
+                className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-bold transition-colors ${category === c.id ? "blue-glass blue-ring text-white" : "border-border bg-card text-muted-foreground"}`}
               >
                 <c.icon className="h-6 w-6" />{c.label}
               </Button>
@@ -82,7 +82,7 @@ function AddPage() {
             {PAYMENTS.map((p) => (
               <Button variant="unstyled" size="auto"
                 type="button" key={p.id} onClick={() => setPayment(p.id)}
-                className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-bold ${payment === p.id ? "blue-glass blue-ring text-white" : "border-border bg-card"}`}
+                className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-bold transition-colors ${payment === p.id ? "blue-glass blue-ring text-white" : "border-border bg-card text-muted-foreground"}`}
               >
                 <p.icon className="h-6 w-6" />{p.label}
               </Button>
