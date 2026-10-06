@@ -84,15 +84,15 @@
   --gradient-sheen: linear-gradient(120deg, transparent 20%, oklch(1 0 0 / 0.07) 50%, transparent 80%);
   --shadow-soft: 0 10px 35px -12px oklch(0.3 0.005 247 / 0.1), 0 2px 8px oklch(0.3 0.005 247 / 0.025);
   --shadow-glass: inset 0 1px 0 oklch(1 0 0 / 0.95), 0 14px 40px -14px oklch(0.25 0.005 247 / 0.16);
-  --shadow-hero: inset 0 1px 0 oklch(1 0 0 / 0.22), 0 18px 42px -16px oklch(0.08 0 0 / 0.38), 0 0 0 1px oklch(0.82 0.05 355 / 0.14);
-  --clear-blue: #b76e79;
+  --shadow-hero: inset 0 1px 0 oklch(1 0 0 / 0.22), 0 18px 42px -16px oklch(0.08 0 0 / 0.38), 0 0 0 1px oklch(0.82 0.03 30 / 0.14);
+  --clear-blue: #c8a29a;
   --clear-blue-foreground: #ffffff;
   --blue-glass-border: oklch(1 0 0 / 0.65);
-  --gradient-blue-glass: linear-gradient(145deg, #f8dfe4 0%, #ecb6c0 36%, #d4919e 72%, #b76e79 100%);
-  --gradient-silver-ink: linear-gradient(110deg, #ffffff 0%, #f7e7ea 40%, #efcdd4 68%, #fbf3f5 100%);
-  --silver-glow: #f5dee2;
-  --shadow-blue-glass: inset 0 1px 2px oklch(1 0 0 / 0.85), inset 0 -2px 4px oklch(0.55 0.07 355 / 0.16), 0 8px 22px -6px oklch(0.68 0.08 355 / 0.4);
-  --shadow-silver-glow: 0 0 12px oklch(0.88 0.045 355 / 0.3);
+  --gradient-blue-glass: linear-gradient(145deg, #f4e6e2 0%, #e2c6bf 36%, #d4b2ab 64%, #b8918a 100%);
+  --gradient-silver-ink: linear-gradient(110deg, #ffffff 0%, #f3e7e3 40%, #e2c8c1 68%, #faf4f2 100%);
+  --silver-glow: #eedcd7;
+  --shadow-blue-glass: inset 0 1px 2px oklch(1 0 0 / 0.85), inset 0 -2px 4px oklch(0.55 0.035 30 / 0.16), 0 8px 22px -6px oklch(0.68 0.04 30 / 0.4);
+  --shadow-silver-glow: 0 0 12px oklch(0.88 0.03 30 / 0.3);
 }
 
 @layer base {
@@ -136,13 +136,13 @@
   position: relative;
   background-image: var(--gradient-sheen), var(--gradient-hero);
   box-shadow: var(--shadow-hero);
-  border: 1px solid color-mix(in oklab, #eccdd5 30%, transparent);
+  border: 1px solid color-mix(in oklab, #dfc3bc 30%, transparent);
   &::before {
     content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: linear-gradient(160deg, oklch(1 0 0 / 0.07), transparent 32%, transparent 68%, oklch(0.95 0.02 355 / 0.05));
+    background: linear-gradient(160deg, oklch(1 0 0 / 0.07), transparent 32%, transparent 68%, oklch(0.95 0.015 30 / 0.05));
     pointer-events: none;
   }
   & > * { position: relative; }
@@ -167,7 +167,7 @@
   filter: drop-shadow(var(--shadow-silver-glow));
 }
 @utility blue-ring {
-  box-shadow: 0 0 0 1.5px color-mix(in oklab, var(--clear-blue) 32%, transparent), 0 4px 18px -6px oklch(0.75 0.07 355 / 0.38);
+  box-shadow: 0 0 0 1.5px color-mix(in oklab, var(--clear-blue) 32%, transparent), 0 4px 18px -6px oklch(0.75 0.035 30 / 0.38);
 }
 @utility press {
   transition: transform .18s ease, box-shadow .2s ease, background-color .2s ease;
