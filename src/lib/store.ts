@@ -2,12 +2,12 @@ import { useSyncExternalStore } from "react";
 import { Gift, Ticket, TrainFront, Mail, Sparkles, type LucideIcon } from "lucide-react";
 
 export type Category = "goods" | "ticket" | "travel" | "fc" | "other";
-export const CATEGORIES: { id: Category; label: string; icon: LucideIcon; color: string }[] = [
-  { id: "goods", label: "グッズ", icon: Gift, color: "var(--pink)" },
-  { id: "ticket", label: "チケット", icon: Ticket, color: "var(--lilac)" },
-  { id: "travel", label: "遠征費", icon: TrainFront, color: "var(--mint)" },
-  { id: "fc", label: "FC・月額", icon: Mail, color: "var(--peach)" },
-  { id: "other", label: "その他", icon: Sparkles, color: "var(--sky)" },
+export const CATEGORIES: { id: Category; label: string; icon: LucideIcon; color: string; fg: string }[] = [
+  { id: "goods", label: "グッズ", icon: Gift, color: "var(--pink)", fg: "#fff" },
+  { id: "ticket", label: "チケット", icon: Ticket, color: "var(--lilac)", fg: "#fff" },
+  { id: "travel", label: "遠征費", icon: TrainFront, color: "var(--mint)", fg: "#fff" },
+  { id: "fc", label: "FC・月額", icon: Mail, color: "var(--peach)", fg: "var(--ink)" },
+  { id: "other", label: "その他", icon: Sparkles, color: "var(--sky)", fg: "var(--ink)" },
 ];
 
 /** グラフ用モノトーン（推しが全員白でも区別できるよう濃淡で塗り分け） */

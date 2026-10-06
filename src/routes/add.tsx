@@ -34,12 +34,12 @@ function AddPage() {
     nav({ to: "/history" });
   };
 
-  const field = "w-full rounded-2xl border bg-card px-4 py-3 outline-none focus:ring-2 focus:ring-ring";
+  const field = "w-full rounded-lg border bg-card px-4 py-3 outline-none focus:ring-2 focus:ring-ring";
 
   return (
     <AppShell title="支出を記録">
       <form onSubmit={submit} className="card-soft space-y-5 p-5">
-        <div className="rounded-3xl bg-hero p-5 text-center">
+        <div className="rounded-lg bg-hero p-5 text-center">
           <p className="text-xs font-bold text-ink/70">金額</p>
           <div className="flex items-center justify-center font-display text-4xl font-bold text-ink">
             ¥
@@ -64,7 +64,7 @@ function AddPage() {
             {CATEGORIES.map((c) => (
               <button
                 type="button" key={c.id} onClick={() => setCategory(c.id)}
-                className={`press flex flex-col items-center gap-1 rounded-2xl border-2 py-3 text-xs font-bold ${category === c.id ? "border-primary" : "border-transparent"}`}
+                className={`press flex flex-col items-center gap-1 rounded-lg border-2 py-3 text-xs font-bold ${category === c.id ? "border-primary" : "border-transparent"}`}
                 style={{ background: c.color }}
               >
                 <c.icon className="h-6 w-6 text-ink" />{c.label}

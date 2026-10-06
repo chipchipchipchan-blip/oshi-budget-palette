@@ -87,7 +87,7 @@ function Dashboard() {
         <div className="mt-3 grid grid-cols-2 gap-2">
           {byCat.map((c) => (
             <div key={c.id} className="flex items-center gap-2 rounded-md bg-muted px-3 py-2 text-sm">
-              <span className="grid h-8 w-8 place-items-center rounded-md text-hero-foreground" style={{ background: c.color }}><c.icon className="h-4 w-4" /></span>
+              <span className="grid h-8 w-8 place-items-center rounded-md " style={{ background: c.color, color: c.fg }}><c.icon className="h-4 w-4" /></span>
               <div className="leading-tight">
                 <p className="text-[11px] text-muted-foreground">{c.label}</p>
                 <p className="font-bold">{yen(c.value)}</p>
