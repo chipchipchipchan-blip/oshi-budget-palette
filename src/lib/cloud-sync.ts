@@ -1,7 +1,7 @@
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
-import { getStateSnapshot, replaceFromCloud, setSyncHandler } from "@/lib/store";
+import { getStateSnapshot, replaceFromCloud, resetLocal, setSyncHandler } from "@/lib/store";
 
 let currentUser: string | null = null;
 let timer: ReturnType<typeof setTimeout> | undefined;
@@ -36,6 +36,18 @@ function stop() {
   currentUser = null;
   clearTimeout(timer);
   setSyncHandler(null);
+}
+
+/** すべてのデータを初期化。ログイン中ならクラウドの行も削除する。失敗時はエラーメッセージ */
+export async function resetAllData(): Promise<string | null> {
+  clearTimeout(timer);
+  const { data } = await supabase.auth.getUser();
+  if (data.user) {
+    const { error } = await supabase.from("wallet_data").delete().eq("user_id", data.user.id);
+    if (error) return "クラウドのデータを削除できませんでした。通信状況を確認してください。";
+  }
+  resetLocal();
+  return null;
 }
 
 /** アプリ起動時に一度だけ呼ぶ。ログイン状態に合わせて同期を開始・停止する */
