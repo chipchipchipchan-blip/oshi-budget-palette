@@ -77,8 +77,18 @@ function ResetPage() {
         <div className="card-soft rounded-3xl p-6">
           <p className="mb-4 text-sm font-light text-muted-foreground">新しいパスワードを入力してください。</p>
           <form onSubmit={submit} className="space-y-3">
-            <input type="password" required minLength={6} placeholder="新しいパスワード（6文字以上）" value={password} onChange={(e) => setPassword(e.target.value)} className={field} />
-            <input type="password" required minLength={6} placeholder="新しいパスワード（確認）" value={confirm} onChange={(e) => setConfirm(e.target.value)} className={field} />
+            <div className="relative">
+              <input type={showPassword ? "text" : "password"} required minLength={6} placeholder="新しいパスワード（6文字以上）" value={password} onChange={(e) => setPassword(e.target.value)} className={field + " pr-12"} />
+              <button type="button" aria-label={showPassword ? "パスワードを隠す" : "パスワードを表示"} onClick={() => setShowPassword((v) => !v)} className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-clear-blue">
+                {showPassword ? <EyeOff className="h-4 w-4" strokeWidth={1.5} /> : <Eye className="h-4 w-4" strokeWidth={1.5} />}
+              </button>
+            </div>
+            <div className="relative">
+              <input type={showConfirm ? "text" : "password"} required minLength={6} placeholder="新しいパスワード（確認）" value={confirm} onChange={(e) => setConfirm(e.target.value)} className={field + " pr-12"} />
+              <button type="button" aria-label={showConfirm ? "パスワードを隠す" : "パスワードを表示"} onClick={() => setShowConfirm((v) => !v)} className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-clear-blue">
+                {showConfirm ? <EyeOff className="h-4 w-4" strokeWidth={1.5} /> : <Eye className="h-4 w-4" strokeWidth={1.5} />}
+              </button>
+            </div>
             <Button type="submit" variant="blueGlass" disabled={busy} className="w-full font-light">
               パスワードを変更する
             </Button>
