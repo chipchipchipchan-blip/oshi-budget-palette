@@ -1,9 +1,9 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Check, Heart, LayoutGrid, CalendarDays, PenLine } from "lucide-react";
+import { Check, Heart, LayoutGrid, CalendarDays, PenLine, Wallet } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
-import { useStore, actions, CATEGORIES, type Category } from "@/lib/store";
+import { useStore, actions, CATEGORIES, PAYMENTS, type Category, type PaymentMethod } from "@/lib/store";
 
 export const Route = createFileRoute("/add")({
   head: () => ({
@@ -27,13 +27,14 @@ function AddPage() {
   const [memo, setMemo] = useState("");
   const [oshiId, setOshiId] = useState("");
   const [category, setCategory] = useState<Category>("goods");
+  const [payment, setPayment] = useState<PaymentMethod>("cash");
   const selected = oshiId || oshis[0]?.id || "";
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     const n = Number(amount);
     if (!n || !selected) return;
-    actions.addExpense({ amount: n, date, memo, oshiId: selected, category });
+    actions.addExpense({ amount: n, date, memo, oshiId: selected, category, payment });
     nav({ to: "/history" });
   };
 
@@ -70,6 +71,20 @@ function AddPage() {
                 className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-bold ${category === c.id ? "blue-glass blue-ring text-white" : "border-border bg-card"}`}
               >
                 <c.icon className="h-6 w-6" />{c.label}
+              </Button>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <span className="mb-2 flex items-center gap-1.5 text-sm font-bold"><Wallet className="h-4 w-4 text-primary" /> 支払い方法</span>
+          <div className="grid grid-cols-3 gap-2">
+            {PAYMENTS.map((p) => (
+              <Button variant="unstyled" size="auto"
+                type="button" key={p.id} onClick={() => setPayment(p.id)}
+                className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-bold ${payment === p.id ? "blue-glass blue-ring text-white" : "border-border bg-card"}`}
+              >
+                <p.icon className="h-6 w-6" />{p.label}
               </Button>
             ))}
           </div>
