@@ -1,7 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Pencil, Trash2 } from "lucide-react";
+import { useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { useStore, actions, catOf, payOf, yen } from "@/lib/store";
 
 export const Route = createFileRoute("/history")({
@@ -20,6 +25,7 @@ export const Route = createFileRoute("/history")({
 
 function HistoryPage() {
   const { expenses, oshis } = useStore();
+  const [pendingDelete, setPendingDelete] = useState<{ id: string; label: string } | null>(null);
   const sorted = [...expenses].sort((a, b) => b.date.localeCompare(a.date));
   const groups = sorted.reduce<Record<string, typeof sorted>>((acc, e) => {
     (acc[e.date] ??= []).push(e);
@@ -71,7 +77,7 @@ function HistoryPage() {
                     <Button asChild variant="unstyled" size="auto" className="grid h-8 w-8 place-items-center rounded-full text-muted-foreground/70 transition-colors hover:text-clear-blue">
                       <Link to="/add" search={{ edit: e.id }} aria-label="編集" title="編集"><Pencil className="h-3.5 w-3.5" strokeWidth={1.5} /></Link>
                     </Button>
-                    <Button variant="unstyled" size="auto" onClick={() => actions.deleteExpense(e.id)} aria-label="削除" title="削除" className="grid h-8 w-8 place-items-center rounded-full text-muted-foreground/70 transition-colors hover:text-clear-blue">
+                    <Button variant="unstyled" size="auto" onClick={() => setPendingDelete({ id: e.id, label: c.label })} aria-label="削除" title="削除" className="grid h-8 w-8 place-items-center rounded-full text-muted-foreground/70 transition-colors hover:text-clear-blue">
                       <Trash2 className="h-3.5 w-3.5" strokeWidth={1.5} />
                     </Button>
                     </div>
@@ -82,6 +88,24 @@ function HistoryPage() {
           </div>
         ))}
       </div>
+      <AlertDialog open={pendingDelete !== null} onOpenChange={(open) => { if (!open) setPendingDelete(null); }}>
+        <AlertDialogContent className="max-w-xs rounded-3xl border-border/60 bg-card/95 p-6 backdrop-blur-xl">
+          <AlertDialogHeader className="space-y-2 text-left">
+            <AlertDialogTitle className="font-light text-foreground/90">記録を削除しますか？</AlertDialogTitle>
+            <AlertDialogDescription className="text-xs font-light leading-relaxed text-muted-foreground">
+              {pendingDelete && `「${pendingDelete.label}」の記録を削除してもよろしいですか？削除した記録は元に戻せません。`}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="flex-row gap-2">
+            <AlertDialogCancel asChild>
+              <Button variant="silver" size="sm" className="flex-1 rounded-full font-light">やめる</Button>
+            </AlertDialogCancel>
+            <AlertDialogAction asChild>
+              <Button size="sm" className="flex-1 rounded-full font-light" onClick={() => { if (pendingDelete) actions.deleteExpense(pendingDelete.id); setPendingDelete(null); }}>削除する</Button>
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </AppShell>
   );
 }
