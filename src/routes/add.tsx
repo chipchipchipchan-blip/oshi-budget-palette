@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Check, Heart, LayoutGrid, CalendarDays, PenLine, Wallet } from "lucide-react";
+import { Check, LayoutGrid, CalendarDays, PenLine, Wallet } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
 import { useStore, actions, CATEGORIES, PAYMENTS, type Category, type PaymentMethod } from "@/lib/store";
@@ -67,7 +67,7 @@ function AddPage() {
         </div>
 
         <label className="block">
-          <span className="mb-1 flex items-center gap-1.5 text-sm font-light text-foreground/80"><Heart className="h-3.5 w-3.5 text-primary" /> 推し</span>
+          <span className="mb-1 block text-sm font-light text-foreground/80">推し</span>
           <select value={selected} onChange={(e) => setOshiId(e.target.value)} className={field}>
             {oshis.map((o) => <option key={o.id} value={o.id}>{o.name}</option>)}
           </select>
@@ -79,7 +79,7 @@ function AddPage() {
             {CATEGORIES.map((c) => (
               <Button variant="unstyled" size="auto"
                 type="button" key={c.id} onClick={() => setCategory(c.id)}
-                className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-normal transition-colors ${category === c.id ? "blue-glass blue-ring text-white" : "border-border bg-card text-muted-foreground"}`}
+                className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-light transition-colors ${category === c.id ? "blue-glass blue-ring text-white" : "border-border bg-card text-muted-foreground"}`}
               >
                 <c.icon className="h-6 w-6" />{c.label}
               </Button>
@@ -93,7 +93,7 @@ function AddPage() {
             {PAYMENTS.map((p) => (
               <Button variant="unstyled" size="auto"
                 type="button" key={p.id} onClick={() => setPayment(p.id)}
-                className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-normal transition-colors ${payment === p.id ? "blue-glass blue-ring text-white" : "border-border bg-card text-muted-foreground"}`}
+                className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-light transition-colors ${payment === p.id ? "blue-glass blue-ring text-white" : "border-border bg-card text-muted-foreground"}`}
               >
                 <p.icon className="h-6 w-6" />{p.label}
               </Button>

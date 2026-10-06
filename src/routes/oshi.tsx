@@ -124,7 +124,7 @@ function OshiCard({ o }: { o: Oshi }) {
         </Button>
       </div>
       <div className="flex flex-wrap items-center gap-2 px-5 py-4">
-        <span className="text-xs font-light tracking-wide text-foreground/70">イメージカラー</span>
+        <span className="text-xs font-light text-foreground/80">イメージカラー</span>
         {OSHI_COLORS.map((c) => (
           <Button variant="unstyled" size="auto" key={c} onClick={() => actions.updateOshi(o.id, { color: c })}
             className={`press h-7 w-7 rounded-full border-2 ${o.color === c ? "blue-ring border-transparent" : "border-border"}`}
