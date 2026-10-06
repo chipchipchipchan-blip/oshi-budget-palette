@@ -26,7 +26,7 @@ function AddPage() {
   const { edit } = Route.useSearch();
   const editing = edit ? expenses.find((x) => x.id === edit) : undefined;
   const [amount, setAmount] = useState("");
-  const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10));
+  const [date, setDate] = useState(() => todayLocal());
   const [memo, setMemo] = useState("");
   const [oshiId, setOshiId] = useState("");
   const [category, setCategory] = useState<Category>("goods");
