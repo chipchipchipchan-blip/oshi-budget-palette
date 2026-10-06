@@ -75,7 +75,7 @@ function BackgroundPicker() {
               key={p.label}
               onClick={() => actions.setBgColor(p.color)}
               aria-label={`背景を${p.label}にする`}
-              className={`press grid h-9 w-9 place-items-center rounded-full border-2 ${active ? "border-foreground" : "border-border"}`}
+              className={`press grid h-9 w-9 place-items-center rounded-full border-2 ${active ? "blue-ring border-transparent" : "border-border"}`}
               style={{ background: p.color ?? "var(--gradient-silver)" }}
             >
               {active && <Check className="h-4 w-4 text-foreground" />}
@@ -97,12 +97,21 @@ function BackgroundPicker() {
 function OshiCard({ o }: { o: Oshi }) {
   const light = isWhitish(o.color);
   return (
-    <div className="card-soft overflow-hidden" style={light ? { background: "var(--secondary)" } : undefined}>
-      <div className="h-14 border-b border-border/40" style={{ background: o.color }} />
+    <div
+      className={light ? "card-soft overflow-hidden" : "satin-dark overflow-hidden rounded-2xl"}
+      style={light ? { background: "var(--secondary)" } : undefined}
+    >
+      <div
+        className="h-14 border-b"
+        style={{
+          background: `linear-gradient(135deg, color-mix(in oklab, ${o.color} 86%, #ffffff), ${o.color})`,
+          borderColor: light ? undefined : "color-mix(in oklab, #ffffff 14%, transparent)",
+        }}
+      />
       <div className="-mt-9 flex items-end gap-3 px-5">
         <label className="press blue-ring relative grid cursor-pointer place-items-center rounded-full bg-card p-[3px]">
           <OshiAvatar {...o} size={68} />
-          <span className="absolute bottom-0 right-0 grid h-6 w-6 place-items-center rounded-full bg-card shadow-soft"><Camera className="h-3.5 w-3.5" /></span>
+          <span className="absolute bottom-0 right-0 grid h-6 w-6 place-items-center rounded-full bg-card shadow-soft text-[var(--clear-blue)]"><Camera className="h-3.5 w-3.5" /></span>
           <input type="file" accept="image/*" hidden onChange={(e) => {
             const f = e.target.files?.[0];
             if (f) readPhoto(f, (photo) => actions.updateOshi(o.id, { photo }));
@@ -111,17 +120,17 @@ function OshiCard({ o }: { o: Oshi }) {
         <input
           value={o.name}
           onChange={(e) => actions.updateOshi(o.id, { name: e.target.value })}
-          className="mb-1 min-w-0 flex-1 rounded-xl bg-transparent px-2 py-1 text-lg font-bold outline-none focus:bg-muted"
+          className={`mb-1 min-w-0 flex-1 rounded-xl bg-transparent px-2 py-1 text-lg font-bold outline-none focus:bg-muted ${light ? "" : "text-hero-foreground focus:bg-white/10"}`}
         />
-        <Button variant="unstyled" size="auto" onClick={() => confirm(`${o.name}を削除しますか？`) && actions.deleteOshi(o.id)} className="press mb-2 text-muted-foreground" aria-label="削除">
+        <Button variant="unstyled" size="auto" onClick={() => confirm(`${o.name}を削除しますか？`) && actions.deleteOshi(o.id)} className="press mb-2 grid h-8 w-8 shrink-0 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-[var(--clear-blue)]" aria-label="削除">
           <Trash2 className="h-4 w-4" />
         </Button>
       </div>
       <div className="flex flex-wrap items-center gap-2 px-5 py-4">
-        <span className="text-xs font-bold text-muted-foreground">イメージカラー</span>
+        <span className={`text-xs font-bold ${light ? "text-muted-foreground" : "text-hero-foreground/60"}`}>イメージカラー</span>
         {OSHI_COLORS.map((c) => (
           <Button variant="unstyled" size="auto" key={c} onClick={() => actions.updateOshi(o.id, { color: c })}
-            className={`press h-7 w-7 rounded-full border-2 ${o.color === c ? "border-foreground" : "border-border"}`}
+            className={`press h-7 w-7 rounded-full border-2 ${o.color === c ? "blue-ring border-transparent" : "border-border"}`}
             style={{ background: c }} aria-label={c} />
         ))}
         <input type="color" value={o.color} onChange={(e) => actions.updateOshi(o.id, { color: e.target.value })} className="h-7 w-7 cursor-pointer rounded-full bg-transparent" />
