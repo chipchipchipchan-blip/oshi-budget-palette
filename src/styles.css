@@ -185,7 +185,7 @@
 }
 /* 横長ボタン用：支払いボタンと同じ色系で、薄い部分を詰めて左側から濃く見えるグラデ */
 @utility blue-glass-wide {
-  background: linear-gradient(115deg, #e2c8c1 0%, #d4b2ab 25%, #c9a49c 60%, #b8918a 100%);
+  background: linear-gradient(115deg, #e5ccc6 0%, #dabfb7 35%, #cfaca5 100%);
   border: 1px solid var(--blue-glass-border);
   box-shadow: var(--shadow-blue-glass);
 }
