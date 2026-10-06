@@ -95,17 +95,14 @@ function BackgroundPicker() {
 }
 
 function OshiCard({ o }: { o: Oshi }) {
-  const light = isWhitish(o.color);
+  const dark = !isWhitish(o.color);
   return (
-    <div
-      className={light ? "card-soft overflow-hidden" : "satin-dark overflow-hidden rounded-2xl"}
-      style={light ? { background: "var(--secondary)" } : undefined}
-    >
+    <div className="blush-card overflow-hidden">
       <div
         className="h-14 border-b"
         style={{
-          background: `linear-gradient(135deg, color-mix(in oklab, ${o.color} 86%, #ffffff), ${o.color})`,
-          borderColor: light ? undefined : "color-mix(in oklab, #ffffff 14%, transparent)",
+          background: `linear-gradient(135deg, color-mix(in oklab, ${o.color} ${dark ? 46 : 86}%, #ffffff), color-mix(in oklab, ${o.color} ${dark ? 24 : 100}%, #ffffff))`,
+          borderColor: "color-mix(in oklab, #c8a29a 24%, oklch(1 0 0))",
         }}
       />
       <div className="-mt-9 flex items-end gap-3 px-5">
@@ -120,14 +117,14 @@ function OshiCard({ o }: { o: Oshi }) {
         <input
           value={o.name}
           onChange={(e) => actions.updateOshi(o.id, { name: e.target.value })}
-          className={`mb-1 min-w-0 flex-1 rounded-xl bg-transparent px-2 py-1 text-lg font-bold outline-none focus:bg-muted ${light ? "" : "text-hero-foreground focus:bg-white/10"}`}
+          className="mb-1 min-w-0 flex-1 rounded-xl bg-transparent px-2 py-1 text-lg font-bold text-foreground outline-none focus:bg-muted"
         />
         <Button variant="unstyled" size="auto" onClick={() => confirm(`${o.name}を削除しますか？`) && actions.deleteOshi(o.id)} className="press mb-2 grid h-8 w-8 shrink-0 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-[var(--clear-blue)]" aria-label="削除">
           <Trash2 className="h-4 w-4" />
         </Button>
       </div>
       <div className="flex flex-wrap items-center gap-2 px-5 py-4">
-        <span className={`text-xs font-bold ${light ? "text-muted-foreground" : "text-hero-foreground/60"}`}>イメージカラー</span>
+        <span className="text-xs font-bold text-muted-foreground">イメージカラー</span>
         {OSHI_COLORS.map((c) => (
           <Button variant="unstyled" size="auto" key={c} onClick={() => actions.updateOshi(o.id, { color: c })}
             className={`press h-7 w-7 rounded-full border-2 ${o.color === c ? "blue-ring border-transparent" : "border-border"}`}
