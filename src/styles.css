@@ -42,6 +42,8 @@
   --color-silver: var(--silver);
   --color-glass: var(--glass);
   --color-glass-border: var(--glass-border);
+  --color-clear-blue: var(--clear-blue);
+  --color-clear-blue-foreground: var(--clear-blue-foreground);
 }
 
 :root {
@@ -83,6 +85,14 @@
   --shadow-soft: 0 10px 35px -12px oklch(0.3 0.005 247 / 0.1), 0 2px 8px oklch(0.3 0.005 247 / 0.025);
   --shadow-glass: inset 0 1px 0 oklch(1 0 0 / 0.95), 0 14px 40px -14px oklch(0.25 0.005 247 / 0.16);
   --shadow-hero: inset 0 1px 0 oklch(1 0 0 / 0.15), 0 16px 36px -16px oklch(0.1 0 0 / 0.32);
+  --clear-blue: #267bab;
+  --clear-blue-foreground: #ffffff;
+  --blue-glass-border: oklch(1 0 0 / 0.65);
+  --gradient-blue-glass: linear-gradient(145deg, #b7e5fa 0%, #72bee7 36%, #419bd0 72%, #3188bd 100%);
+  --gradient-silver-ink: linear-gradient(110deg, #ffffff 0%, #dce6ec 40%, #b9d7e8 68%, #f5f9fc 100%);
+  --silver-glow: #cce8f7;
+  --shadow-blue-glass: inset 0 1px 2px oklch(1 0 0 / 0.85), inset 0 -2px 4px oklch(0.4 0.08 240 / 0.16), 0 8px 22px -6px oklch(0.6 0.1 240 / 0.4);
+  --shadow-silver-glow: 0 0 12px oklch(0.86 0.035 235 / 0.25);
 }
 
 @layer base {
@@ -130,6 +140,21 @@
 @utility satin-field {
   background: color-mix(in oklab, var(--card) 70%, transparent);
   box-shadow: inset 0 1px 3px oklch(0.25 0 0 / 0.025);
+}
+@utility blue-glass {
+  background: var(--gradient-blue-glass);
+  border: 1px solid var(--blue-glass-border);
+  box-shadow: var(--shadow-blue-glass);
+}
+@utility silver-ink {
+  color: var(--silver-glow);
+  background-image: var(--gradient-silver-ink);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@utility silver-glow {
+  color: var(--silver-glow);
+  filter: drop-shadow(var(--shadow-silver-glow));
 }
 @utility press {
   transition: transform .18s ease, box-shadow .2s ease, background-color .2s ease;

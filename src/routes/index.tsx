@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, Tooltip } from "recharts";
 import { Sparkles, Plus, Heart } from "lucide-react";
 import { AppShell, OshiAvatar } from "@/components/AppShell";
+import { Button } from "@/components/ui/button";
 import { useStore, CATEGORIES, MONO, yen } from "@/lib/store";
 
 export const Route = createFileRoute("/")({
@@ -36,9 +37,9 @@ function Dashboard() {
   return (
     <AppShell title="ダッシュボード">
       <section className="satin-dark relative overflow-hidden rounded-3xl p-7 text-hero-foreground">
-        <Sparkles className="absolute right-5 top-5 h-6 w-6 text-hero-foreground/60" />
+        <Sparkles className="silver-glow absolute right-5 top-5 h-6 w-6" />
         <p className="text-xs font-light text-hero-foreground/70">{now.getMonth() + 1}月の推し活合計</p>
-        <p className="mt-5 break-all font-display text-5xl font-light">{yen(total)}</p>
+        <p className="silver-ink mt-5 w-fit break-all font-display text-5xl font-light">{yen(total)}</p>
         <p className="mt-5 inline-flex rounded-full border border-hero-foreground/15 bg-hero-foreground/5 px-4 py-2 text-[11px] text-hero-foreground/80 backdrop-blur-sm">
           {month.length}件の愛を記録中
         </p>
@@ -101,9 +102,9 @@ function Dashboard() {
         </div>
       </section>
 
-      <Link to="/add" aria-label="支出を記録" title="支出を記録" className="press satin-dark fixed bottom-28 right-[max(1.5rem,calc(50%-12rem))] z-30 grid h-14 w-14 place-items-center rounded-full text-primary-foreground">
-        <Plus className="h-7 w-7" />
-      </Link>
+      <Button asChild variant="blueGlass" size="auto" className="fixed bottom-28 right-[max(1.5rem,calc(50%-12rem))] z-30 h-14 w-14 rounded-full">
+        <Link to="/add" aria-label="支出を記録" title="支出を記録"><Plus className="h-7 w-7" /></Link>
+      </Button>
     </AppShell>
   );
 }

@@ -30,7 +30,7 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
             to={to}
             activeOptions={{ exact: true }}
             className="press flex flex-1 flex-col items-center gap-1 rounded-2xl py-2.5 text-[10px] text-muted-foreground"
-            activeProps={{ className: "silver-surface !text-secondary-foreground font-medium" }}
+            activeProps={{ className: "!text-clear-blue font-medium" }}
           >
             <Icon className="h-5 w-5" />
             {label}
