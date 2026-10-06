@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Check, LayoutGrid, CalendarDays, PenLine, Wallet } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
@@ -66,12 +66,18 @@ function AddPage() {
           </div>
         </div>
 
-        <label className="block">
-          <span className="mb-1 block text-sm font-light text-foreground/80">推し</span>
-          <select value={selected} onChange={(e) => setOshiId(e.target.value)} className={field}>
-            {oshis.map((o) => <option key={o.id} value={o.id}>{o.name}</option>)}
-          </select>
-        </label>
+        {oshis.length === 0 ? (
+          <div className="rounded-lg border border-dashed border-border bg-card p-4 text-center text-sm font-light text-muted-foreground">
+            まずは<Link to="/oshi" className="mx-1 text-primary underline underline-offset-2">推しを登録</Link>してください
+          </div>
+        ) : (
+          <label className="block">
+            <span className="mb-1 block text-sm font-light text-foreground/80">推し</span>
+            <select value={selected} onChange={(e) => setOshiId(e.target.value)} className={field}>
+              {oshis.map((o) => <option key={o.id} value={o.id}>{o.name}</option>)}
+            </select>
+          </label>
+        )}
 
         <div>
           <span className="mb-2 flex items-center gap-1.5 text-sm font-light text-foreground/80"><LayoutGrid className="h-3.5 w-3.5 text-primary" /> カテゴリ</span>
