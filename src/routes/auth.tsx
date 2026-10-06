@@ -22,7 +22,7 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"in" | "up">("in");
+  const [mode, setMode] = useState<"in" | "up" | "reset">("in");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
@@ -56,6 +56,18 @@ function AuthPage() {
     }
   };
 
+  const sendReset = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setBusy(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/auth/reset`,
+    });
+    setBusy(false);
+    if (error) { toast.error("送信できませんでした", { description: jpError(error.message) }); return; }
+    toast.success("再設定メールを送りました", { description: "メールに届いたリンクから新しいパスワードを設定してください。届かない場合は迷惑メールフォルダもご確認ください。" });
+    setMode("in");
+  };
+
   const google = async () => {
     const r = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
     if (r.error) { toast.error("Googleでログインできませんでした"); return; }
@@ -67,7 +79,7 @@ function AuthPage() {
   const field = "satin-field w-full rounded-2xl px-4 py-3 text-sm font-light outline-none";
 
   return (
-    <AppShell title={mode === "in" ? "ログイン" : "新規登録"}>
+    <AppShell title={mode === "in" ? "ログイン" : mode === "up" ? "新規登録" : "パスワードの再設定"}>
       <p className="mb-6 text-sm font-light text-muted-foreground">ログインすると、スマホとPCのどちらからでも同じデータを確認・更新できます。</p>
       {sent ? (
         <div className="card-soft space-y-2 rounded-3xl p-6">
@@ -79,6 +91,21 @@ function AuthPage() {
             メールが届かない場合は、迷惑メールフォルダもご確認ください。数分待ってから、この画面を開き直すともう一度登録できます。
           </p>
         </div>
+      ) : mode === "reset" ? (
+        <div className="card-soft space-y-4 rounded-3xl p-6">
+          <p className="text-sm font-light text-muted-foreground">
+            ご登録のメールアドレスを入力してください。パスワード再設定用のリンクをお送りします。
+          </p>
+          <form onSubmit={sendReset} className="space-y-3">
+            <input type="email" required placeholder="メールアドレス" value={email} onChange={(e) => setEmail(e.target.value)} className={field} />
+            <Button type="submit" variant="blueGlass" disabled={busy} className="w-full font-light">
+              再設定メールを送る
+            </Button>
+          </form>
+          <button type="button" onClick={() => setMode("in")} className="w-full text-center text-xs font-light text-muted-foreground underline-offset-4 hover:underline">
+            ログイン画面に戻る
+          </button>
+        </div>
       ) : (
         <div className="card-soft space-y-4 rounded-3xl p-6">
           <Button variant="silver" className="w-full font-light" onClick={google}>Googleで続ける</Button>
@@ -89,10 +116,14 @@ function AuthPage() {
             <Button type="submit" variant="blueGlass" disabled={busy} className="w-full font-light">
               {mode === "in" ? "ログイン" : "登録する"}
             </Button>
-            {mode === "up" && (
+            {mode === "up" ? (
               <p className="text-center text-[11px] font-light text-muted-foreground">
                 登録ボタンを押すと、確認メールが届きます。メールのリンクを開いて登録を完了してください。
               </p>
+            ) : (
+              <button type="button" onClick={() => setMode("reset")} className="w-full text-center text-[11px] font-light text-muted-foreground underline-offset-4 hover:underline">
+                パスワードをお忘れですか？
+              </button>
             )}
           </form>
           <button type="button" onClick={() => setMode(mode === "in" ? "up" : "in")} className="w-full text-center text-xs font-light text-muted-foreground underline-offset-4 hover:underline">
