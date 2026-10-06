@@ -3,7 +3,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, Tooltip
 import { Sparkles, Plus, Heart } from "lucide-react";
 import { AppShell, OshiAvatar } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
-import { useStore, CATEGORIES, MONO, yen } from "@/lib/store";
+import { useStore, CATEGORIES, PIE_COLORS, yen } from "@/lib/store";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -55,7 +55,7 @@ function Dashboard() {
               <ResponsiveContainer>
                 <PieChart>
                   <Pie data={byOshi} dataKey="value" innerRadius={42} outerRadius={70} paddingAngle={byOshi.length > 1 ? 4 : 0} cornerRadius={2} stroke="var(--card)" strokeWidth={1}>
-                    {byOshi.map((o, i) => <Cell key={o.id} fill={MONO[i % MONO.length] ?? "var(--primary)"} />)}
+                    {byOshi.map((o, i) => <Cell key={o.id} fill={PIE_COLORS[i % PIE_COLORS.length] ?? "var(--primary)"} />)}
                   </Pie>
                 </PieChart>
               </ResponsiveContainer>
@@ -63,7 +63,7 @@ function Dashboard() {
             <ul className="min-w-36 flex-1 space-y-3">
               {byOshi.map((o) => (
                 <li key={o.id} className="flex items-center gap-2 text-sm">
-                  <span className="h-3 w-3 shrink-0" style={{ background: MONO[byOshi.indexOf(o) % MONO.length] ?? "var(--primary)" }} />
+                  <span className="h-3 w-3 shrink-0 rounded-full" style={{ background: PIE_COLORS[byOshi.indexOf(o) % PIE_COLORS.length] ?? "var(--primary)" }} />
                   <OshiAvatar {...o} size={26} />
                   <span className="flex flex-1 items-center gap-1 truncate font-bold">{o.name}<Heart className="h-3.5 w-3.5 fill-card text-foreground" /></span>
                   <span className="text-muted-foreground">{Math.round((o.value / total) * 100)}%</span>
