@@ -3,7 +3,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, Tooltip
 import { Sparkles, Plus, Heart } from "lucide-react";
 import { AppShell, OshiAvatar } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
-import { useStore, CATEGORIES, MONO, yen } from "@/lib/store";
+import { useStore, CATEGORIES, MONO, PIE_COLORS, yen } from "@/lib/store";
 
 export const Route = createFileRoute("/")({
   head: () => ({
