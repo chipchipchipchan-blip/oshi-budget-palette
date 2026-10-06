@@ -45,7 +45,7 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
 export function OshiAvatar({ name, color, photo, size = 40 }: { name: string; color: string; photo?: string; size?: number }) {
   return (
     <div
-      className="grid shrink-0 place-items-center overflow-hidden rounded-full border-2 border-card font-bold text-ink"
+      className="grid shrink-0 place-items-center overflow-hidden rounded-full border-2 border-card font-light text-ink"
       style={{
         width: size,
         height: size,
