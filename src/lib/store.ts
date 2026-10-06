@@ -55,7 +55,8 @@ function load() {
       const used = new Set(state.expenses.map((e) => e.oshiId));
       const kept = state.oshis.filter((o) => !(["a", "b"].includes(o.id) && !used.has(o.id)));
       const add = initial.oshis.filter((o) => !kept.some((k) => k.name === o.name));
-      state = { ...state, oshis: [...add, ...kept], mono: true, bgColor: undefined };
+      const { bgColor: _b, ...rest } = state;
+      state = { ...rest, oshis: [...add, ...kept], mono: true };
       localStorage.setItem(KEY, JSON.stringify(state));
     }
   } catch {}
