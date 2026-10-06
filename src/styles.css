@@ -85,14 +85,14 @@
   --shadow-soft: 0 10px 35px -12px oklch(0.3 0.005 247 / 0.1), 0 2px 8px oklch(0.3 0.005 247 / 0.025);
   --shadow-glass: inset 0 1px 0 oklch(1 0 0 / 0.95), 0 14px 40px -14px oklch(0.25 0.005 247 / 0.16);
   --shadow-hero: inset 0 1px 0 oklch(1 0 0 / 0.15), 0 16px 36px -16px oklch(0.1 0 0 / 0.32);
-  --clear-blue: #267bab;
+  --clear-blue: #b76e79;
   --clear-blue-foreground: #ffffff;
   --blue-glass-border: oklch(1 0 0 / 0.65);
-  --gradient-blue-glass: linear-gradient(145deg, #b7e5fa 0%, #72bee7 36%, #419bd0 72%, #3188bd 100%);
-  --gradient-silver-ink: linear-gradient(110deg, #ffffff 0%, #dce6ec 40%, #b9d7e8 68%, #f5f9fc 100%);
-  --silver-glow: #cce8f7;
-  --shadow-blue-glass: inset 0 1px 2px oklch(1 0 0 / 0.85), inset 0 -2px 4px oklch(0.4 0.08 240 / 0.16), 0 8px 22px -6px oklch(0.6 0.1 240 / 0.4);
-  --shadow-silver-glow: 0 0 12px oklch(0.86 0.035 235 / 0.25);
+  --gradient-blue-glass: linear-gradient(145deg, #f3ddd2 0%, #e0b3a6 36%, #c98f8a 72%, #b76e79 100%);
+  --gradient-silver-ink: linear-gradient(110deg, #ffffff 0%, #f0e2da 40%, #e3c4ba 68%, #faf4f0 100%);
+  --silver-glow: #f0d9cf;
+  --shadow-blue-glass: inset 0 1px 2px oklch(1 0 0 / 0.85), inset 0 -2px 4px oklch(0.55 0.06 20 / 0.16), 0 8px 22px -6px oklch(0.68 0.07 20 / 0.4);
+  --shadow-silver-glow: 0 0 12px oklch(0.88 0.04 25 / 0.3);
 }
 
 @layer base {
@@ -157,7 +157,7 @@
   filter: drop-shadow(var(--shadow-silver-glow));
 }
 @utility blue-ring {
-  box-shadow: 0 0 0 1.5px color-mix(in oklab, var(--clear-blue) 32%, transparent), 0 4px 18px -6px oklch(0.72 0.07 235 / 0.38);
+  box-shadow: 0 0 0 1.5px color-mix(in oklab, var(--clear-blue) 32%, transparent), 0 4px 18px -6px oklch(0.75 0.06 25 / 0.38);
 }
 @utility press {
   transition: transform .18s ease, box-shadow .2s ease, background-color .2s ease;
