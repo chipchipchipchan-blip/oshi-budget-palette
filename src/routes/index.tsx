@@ -42,7 +42,7 @@ function Dashboard() {
         <p className="text-xs font-light text-hero-foreground/70">{now.getMonth() + 1}月の推し活合計</p>
         <p className="silver-ink mt-6 w-fit break-all font-display text-6xl font-extralight leading-none">{yen(total)}</p>
         <p className="mt-5 inline-flex rounded-full border border-hero-foreground/15 bg-hero-foreground/5 px-4 py-2 text-[11px] text-hero-foreground/80 backdrop-blur-sm">
-          {month.length}件の愛を記録中
+          {month.length}件の記録
         </p>
       </section>
 
