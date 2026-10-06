@@ -88,13 +88,15 @@ function Dashboard() {
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <div className="mt-3 grid grid-cols-2 gap-2">
+        <div className="mt-4 grid grid-cols-1 gap-1">
           {byCat.map((c) => (
-            <div key={c.id} className="flex min-w-0 items-center gap-2 border-b border-border/50 py-3 text-sm">
-              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg shadow-soft" style={{ background: c.color, color: c.fg }}><c.icon className="h-4 w-4" /></span>
-              <div className="leading-tight">
+            <div key={c.id} className="flex min-w-0 items-center gap-4 border-b border-border/40 py-3.5 text-sm last:border-b-0">
+              <span className="blue-glass press grid h-12 w-12 shrink-0 place-items-center rounded-full">
+                <c.icon className="h-5 w-5 text-hero-foreground" style={{ filter: "drop-shadow(0 1px 2px oklch(0.45 0.06 20 / 0.4))" }} />
+              </span>
+              <div className="flex-1 leading-tight">
                 <p className="text-[11px] text-muted-foreground">{c.label}</p>
-                <p className="break-all font-display text-base font-normal">{yen(c.value)}</p>
+                <p className="mt-1 break-all font-display text-base font-normal">{yen(c.value)}</p>
               </div>
             </div>
           ))}
