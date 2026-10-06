@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Check, LayoutGrid, CalendarDays, PenLine, Wallet } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
-import { useStore, actions, CATEGORIES, PAYMENTS, type Category, type PaymentMethod } from "@/lib/store";
+import { useStore, actions, CATEGORIES, PAYMENTS, todayLocal, type Category, type PaymentMethod } from "@/lib/store";
 
 export const Route = createFileRoute("/add")({
   head: () => ({
