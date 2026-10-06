@@ -2,38 +2,42 @@ import { useSyncExternalStore } from "react";
 import { Gift, Ticket, TrainFront, Mail, Sparkles, type LucideIcon } from "lucide-react";
 
 export type Category = "goods" | "ticket" | "travel" | "fc" | "other";
-export const CATEGORIES: { id: Category; label: string; icon: LucideIcon; color: string }[] = [
-  { id: "goods", label: "グッズ", icon: Gift, color: "var(--pink)" },
-  { id: "ticket", label: "チケット", icon: Ticket, color: "var(--lilac)" },
-  { id: "travel", label: "遠征費", icon: TrainFront, color: "var(--mint)" },
-  { id: "fc", label: "FC・月額", icon: Mail, color: "var(--peach)" },
-  { id: "other", label: "その他", icon: Sparkles, color: "var(--sky)" },
+export const CATEGORIES: { id: Category; label: string; icon: LucideIcon; color: string; fg: string }[] = [
+  { id: "goods", label: "グッズ", icon: Gift, color: "var(--pink)", fg: "#fff" },
+  { id: "ticket", label: "チケット", icon: Ticket, color: "var(--lilac)", fg: "#fff" },
+  { id: "travel", label: "遠征費", icon: TrainFront, color: "var(--mint)", fg: "#fff" },
+  { id: "fc", label: "FC・月額", icon: Mail, color: "var(--peach)", fg: "var(--ink)" },
+  { id: "other", label: "その他", icon: Sparkles, color: "var(--sky)", fg: "var(--ink)" },
 ];
 
-export const OSHI_COLORS = ["#FFFFFF", "#E8E6E3", "#F2B8C6", "#C9B6E4", "#A8DCCB", "#F6CBA5", "#AFCBEA", "#F3E1A0"];
+/** グラフ用モノトーン（推しが全員白でも区別できるよう濃淡で塗り分け） */
+export const MONO = ["oklch(0.14 0 0)", "oklch(0.42 0 0)", "oklch(0.72 0 0)", "oklch(0.86 0 0)", "oklch(0.3 0 0)", "oklch(0.58 0 0)"];
+
+export const OSHI_COLORS = ["#FFFFFF", "#F2F2F2", "#E8E6E3", "#C8C8C8", "#8A8A8A", "#4A4A4A", "#1A1A1A"];
 
 export const BG_PRESETS: { label: string; color: string | null }[] = [
-  { label: "デフォルト", color: null },
-  { label: "ミント", color: "#E7F5EF" },
-  { label: "ラベンダー", color: "#F1ECFA" },
-  { label: "ピーチ", color: "#FBEFE4" },
-  { label: "スカイ", color: "#E8F1FA" },
-  { label: "クリーム", color: "#FAF6EA" },
+  { label: "オフホワイト", color: null },
+  { label: "ピュアホワイト", color: "#FFFFFF" },
+  { label: "ペールグレー", color: "#EFEFEF" },
+  { label: "ストーン", color: "#E6E4E0" },
+  { label: "シルバー", color: "#E2E4E6" },
 ];
 
 export type Oshi = { id: string; name: string; color: string; photo?: string };
 export type Expense = {
   id: string; amount: number; date: string; memo: string; oshiId: string; category: Category;
 };
-type State = { oshis: Oshi[]; expenses: Expense[]; bgColor?: string };
+type State = { oshis: Oshi[]; expenses: Expense[]; bgColor?: string; mono?: boolean };
 
 const KEY = "oshikatsu-wallet-v1";
 const initial: State = {
   oshis: [
-    { id: "a", name: "推しA", color: "#F2B8C6" },
-    { id: "b", name: "推しB", color: "#C9B6E4" },
+    { id: "idol", name: "アイドル", color: "#FFFFFF" },
+    { id: "anime", name: "アニメ", color: "#FFFFFF" },
+    { id: "seiyu", name: "声優", color: "#FFFFFF" },
   ],
   expenses: [],
+  mono: true,
 };
 
 let state: State = initial;
@@ -46,6 +50,15 @@ function load() {
   try {
     const raw = localStorage.getItem(KEY);
     if (raw) state = JSON.parse(raw);
+    if (!state.mono) {
+      // モノトーン版へ移行：3人の白の推しを登録し、未使用の初期サンプル推しを外す
+      const used = new Set(state.expenses.map((e) => e.oshiId));
+      const kept = state.oshis.filter((o) => !(["a", "b"].includes(o.id) && !used.has(o.id)));
+      const add = initial.oshis.filter((o) => !kept.some((k) => k.name === o.name));
+      const { bgColor: _b, ...rest } = state;
+      state = { ...rest, oshis: [...add, ...kept], mono: true };
+      localStorage.setItem(KEY, JSON.stringify(state));
+    }
   } catch {}
 }
 function set(next: State) {

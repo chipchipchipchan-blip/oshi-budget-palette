@@ -34,19 +34,19 @@ function AddPage() {
     nav({ to: "/history" });
   };
 
-  const field = "w-full rounded-2xl border bg-card px-4 py-3 outline-none focus:ring-2 focus:ring-ring";
+  const field = "w-full rounded-lg border bg-card px-4 py-3 outline-none focus:ring-2 focus:ring-ring";
 
   return (
     <AppShell title="支出を記録">
       <form onSubmit={submit} className="card-soft space-y-5 p-5">
-        <div className="rounded-3xl bg-hero p-5 text-center">
-          <p className="text-xs font-bold text-ink/70">金額</p>
-          <div className="flex items-center justify-center font-display text-4xl font-bold text-ink">
+        <div className="rounded-lg bg-hero p-5 text-center text-hero-foreground">
+          <p className="text-xs font-bold text-hero-foreground/60 tracking-[0.3em]">金額</p>
+          <div className="flex items-center justify-center font-display text-4xl font-bold">
             ¥
             <input
               inputMode="numeric" value={amount} placeholder="0"
               onChange={(e) => setAmount(e.target.value.replace(/\D/g, ""))}
-              className="w-48 bg-transparent text-center outline-none placeholder:text-ink/40"
+              className="w-48 bg-transparent text-center outline-none placeholder:text-hero-foreground/40"
             />
           </div>
         </div>
@@ -54,7 +54,7 @@ function AddPage() {
         <label className="block">
           <span className="mb-1 flex items-center gap-1.5 text-sm font-bold"><Heart className="h-4 w-4 text-primary" /> 誰のための支出？</span>
           <select value={selected} onChange={(e) => setOshiId(e.target.value)} className={field}>
-            {oshis.map((o) => <option key={o.id} value={o.id}>{o.name}</option>)}
+            {oshis.map((o) => <option key={o.id} value={o.id}>{o.name} ♡</option>)}
           </select>
         </label>
 
@@ -64,10 +64,10 @@ function AddPage() {
             {CATEGORIES.map((c) => (
               <button
                 type="button" key={c.id} onClick={() => setCategory(c.id)}
-                className={`press flex flex-col items-center gap-1 rounded-2xl border-2 py-3 text-xs font-bold ${category === c.id ? "border-primary" : "border-transparent"}`}
-                style={{ background: c.color }}
+                className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-bold ${category === c.id ? "border-primary" : "border-border bg-card"}`}
+                style={category === c.id ? { background: c.color, color: c.fg } : undefined}
               >
-                <c.icon className="h-6 w-6 text-ink" />{c.label}
+                <c.icon className="h-6 w-6" />{c.label}
               </button>
             ))}
           </div>
