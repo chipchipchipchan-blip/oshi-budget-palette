@@ -1,13 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Pencil, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { ChevronLeft, ChevronRight, Pencil, Trash2 } from "lucide-react";
+import { useMemo, useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useStore, actions, catOf, payOf, yen } from "@/lib/store";
+import { useStore, actions, catOf, payOf, yen, todayLocal } from "@/lib/store";
 
 export const Route = createFileRoute("/history")({
   head: () => ({
@@ -26,16 +26,58 @@ export const Route = createFileRoute("/history")({
 function HistoryPage() {
   const { expenses, oshis } = useStore();
   const [pendingDelete, setPendingDelete] = useState<{ id: string; label: string } | null>(null);
-  const sorted = [...expenses].sort((a, b) => b.date.localeCompare(a.date));
+  const [month, setMonth] = useState(() => todayLocal().slice(0, 7)); // "YYYY-MM"
+
+  const shiftMonth = (delta: number) => {
+    const [y = 0, m = 1] = month.split("-").map(Number);
+    const d = new Date(y, m - 1 + delta, 1);
+    setMonth(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`);
+  };
+  const monthLabel = useMemo(() => {
+    const [y, m] = month.split("-").map(Number);
+    return `${y}年${m}月`;
+  }, [month]);
+
+  const sorted = [...expenses]
+    .filter((e) => e.date.startsWith(month))
+    .sort((a, b) => b.date.localeCompare(a.date));
   const groups = sorted.reduce<Record<string, typeof sorted>>((acc, e) => {
     (acc[e.date] ??= []).push(e);
     return acc;
   }, {});
+  const monthTotal = sorted.reduce((sum, e) => sum + e.amount, 0);
 
   return (
     <AppShell title="履歴">
+      {/* 月切り替え */}
+      <div className="mb-5 flex items-center justify-center gap-2">
+        <Button
+          variant="unstyled" size="auto"
+          onClick={() => shiftMonth(-1)}
+          aria-label="前の月"
+          className="grid h-9 w-9 place-items-center rounded-full text-muted-foreground/70 transition-colors hover:text-clear-blue"
+        >
+          <ChevronLeft className="h-4 w-4" strokeWidth={1.5} />
+        </Button>
+        <p className="min-w-28 text-center font-display text-sm font-light tracking-wide text-foreground/80">
+          {monthLabel}
+        </p>
+        <Button
+          variant="unstyled" size="auto"
+          onClick={() => shiftMonth(1)}
+          aria-label="次の月"
+          className="grid h-9 w-9 place-items-center rounded-full text-muted-foreground/70 transition-colors hover:text-clear-blue"
+        >
+          <ChevronRight className="h-4 w-4" strokeWidth={1.5} />
+        </Button>
+      </div>
+      {sorted.length > 0 && (
+        <p className="mb-4 ml-1 text-[11px] font-light tracking-wide text-muted-foreground">
+          {monthLabel}の支出 合計 {yen(monthTotal)}
+        </p>
+      )}
       {sorted.length === 0 && (
-        <p className="card-soft p-8 text-center text-sm text-muted-foreground">まだ記録がありません</p>
+        <p className="card-soft p-8 text-center text-sm text-muted-foreground">この月の記録はありません</p>
       )}
       <div className="space-y-6">
         {Object.entries(groups).map(([date, list]) => (
