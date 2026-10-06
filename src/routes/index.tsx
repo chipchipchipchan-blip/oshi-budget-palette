@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
-import { Sparkles, Plus, Heart } from "lucide-react";
+import { Sparkles, Plus } from "lucide-react";
 import { AppShell, OshiAvatar } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
 import { useStore, CATEGORIES, PIE_COLORS, yen } from "@/lib/store";
