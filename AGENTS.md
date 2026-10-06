@@ -13,3 +13,4 @@
 - Use the shared Button component for button controls, keeping native form behavior and accessibility consistent.
 - Savings goals use stable IDs in a bounded collection, migrating the legacy single goal on load; this preserves existing savings and keeps edits and deposits isolated to the selected goal.
 - Keep savings management on the /savings leaf route and home limited to a linked aggregate summary; both read the same goal collection so navigation never duplicates or resets balances.
+- Cloud sync: wallet_data table (one JSON row per user), local-first store pushes debounced; remote wins on login, local uploaded if none. Why: keeps offline/local behavior intact.
