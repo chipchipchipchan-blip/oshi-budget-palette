@@ -45,7 +45,7 @@ function AddPage() {
         <div className="satin-dark rounded-3xl p-7 text-center text-hero-foreground">
           <p className="text-xs font-bold text-hero-foreground/60 tracking-[0.3em]">金額</p>
           <div className="mt-3 flex items-center justify-center font-display text-5xl font-light">
-            ¥
+            <span className="silver-ink">¥</span>
             <input
               aria-label="金額" inputMode="numeric" value={amount} placeholder="0"
               onChange={(e) => setAmount(e.target.value.replace(/\D/g, ""))}
@@ -67,8 +67,7 @@ function AddPage() {
             {CATEGORIES.map((c) => (
               <Button variant="unstyled" size="auto"
                 type="button" key={c.id} onClick={() => setCategory(c.id)}
-                className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-bold ${category === c.id ? "border-primary" : "border-border bg-card"}`}
-                style={category === c.id ? { background: c.color, color: c.fg } : undefined}
+                className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-bold ${category === c.id ? "blue-glass blue-ring text-white" : "border-border bg-card"}`}
               >
                 <c.icon className="h-6 w-6" />{c.label}
               </Button>
@@ -86,7 +85,7 @@ function AddPage() {
           <input value={memo} onChange={(e) => setMemo(e.target.value)} placeholder="アクスタ購入、ライブ当選…" className={field} />
         </label>
 
-        <Button variant="unstyled" size="auto" disabled={!Number(amount)} className="satin-dark flex w-full items-center justify-center gap-2 rounded-2xl py-4 font-medium text-primary-foreground">
+        <Button variant="unstyled" size="auto" disabled={!Number(amount)} className="blue-glass blue-ring press flex w-full items-center justify-center gap-2 rounded-2xl py-4 font-medium text-white">
           <Check className="h-5 w-5" /> 記録する
         </Button>
       </form>
