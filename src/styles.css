@@ -86,6 +86,8 @@
   --shadow-soft: 0 10px 35px -12px oklch(0.3 0.005 247 / 0.1), 0 2px 8px oklch(0.3 0.005 247 / 0.025);
   --shadow-glass: inset 0 1px 0 oklch(1 0 0 / 0.95), 0 14px 40px -14px oklch(0.25 0.005 247 / 0.16);
   --shadow-hero: inset 0 1px 0 oklch(1 0 0 / 0.22), 0 18px 42px -16px oklch(0.08 0 0 / 0.38), 0 0 0 1px oklch(0.82 0.03 30 / 0.14);
+  --budget-warn: #d19a7c;
+  --budget-over: #c27a74;
   --clear-blue: #c8a29a;
   --clear-blue-foreground: #ffffff;
   --blue-glass-border: oklch(1 0 0 / 0.65);
