@@ -98,7 +98,7 @@ function HistoryPage() {
           </AlertDialogHeader>
           <AlertDialogFooter className="flex-row gap-2">
             <AlertDialogCancel asChild>
-              <Button variant="satin" size="sm" className="flex-1 rounded-full font-light">やめる</Button>
+              <Button variant="silver" size="sm" className="flex-1 rounded-full font-light">やめる</Button>
             </AlertDialogCancel>
             <AlertDialogAction asChild>
               <Button size="sm" className="flex-1 rounded-full font-light" onClick={() => { if (pendingDelete) actions.deleteExpense(pendingDelete.id); setPendingDelete(null); }}>削除する</Button>
