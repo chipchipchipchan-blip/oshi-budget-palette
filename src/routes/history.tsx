@@ -77,7 +77,7 @@ function HistoryPage() {
                     <Button asChild variant="unstyled" size="auto" className="grid h-8 w-8 place-items-center rounded-full text-muted-foreground/70 transition-colors hover:text-clear-blue">
                       <Link to="/add" search={{ edit: e.id }} aria-label="編集" title="編集"><Pencil className="h-3.5 w-3.5" strokeWidth={1.5} /></Link>
                     </Button>
-                    <Button variant="unstyled" size="auto" onClick={() => actions.deleteExpense(e.id)} aria-label="削除" title="削除" className="grid h-8 w-8 place-items-center rounded-full text-muted-foreground/70 transition-colors hover:text-clear-blue">
+                    <Button variant="unstyled" size="auto" onClick={() => setPendingDelete({ id: e.id, label: c.label })} aria-label="削除" title="削除" className="grid h-8 w-8 place-items-center rounded-full text-muted-foreground/70 transition-colors hover:text-clear-blue">
                       <Trash2 className="h-3.5 w-3.5" strokeWidth={1.5} />
                     </Button>
                     </div>
