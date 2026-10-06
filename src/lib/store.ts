@@ -71,7 +71,10 @@ export const actions = {
   updateOshi: (id: string, o: Partial<Oshi>) =>
     set({ ...state, oshis: state.oshis.map((x) => (x.id === id ? { ...x, ...o } : x)) }),
   deleteOshi: (id: string) => set({ ...state, oshis: state.oshis.filter((x) => x.id !== id) }),
-  setBgColor: (c: string | null) => set({ ...state, bgColor: c ?? undefined }),
+  setBgColor: (c: string | null) => {
+    const { bgColor: _drop, ...rest } = state;
+    set(c ? { ...rest, bgColor: c } : rest);
+  },
 };
 
 export const yen = (n: number) => "¥" + n.toLocaleString("ja-JP");
