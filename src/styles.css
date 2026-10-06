@@ -183,6 +183,12 @@
   border: 1px solid var(--blue-glass-border);
   box-shadow: var(--shadow-blue-glass);
 }
+/* 横長ボタン用：同じ色でも面積が大きいと薄く見えるため、濃い側のトーンに詰めたグラデーション */
+@utility blue-glass-wide {
+  background: linear-gradient(145deg, #eecfc8 0%, #dcbfb7 35%, #c69a92 70%, #b8918a 100%);
+  border: 1px solid var(--blue-glass-border);
+  box-shadow: var(--shadow-blue-glass);
+}
 @utility silver-ink {
   color: var(--silver-glow);
   background-image: var(--gradient-silver-ink);
