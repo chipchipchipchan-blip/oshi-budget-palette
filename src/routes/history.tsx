@@ -50,7 +50,7 @@ function HistoryPage() {
                       </span>
                     </div>
                     <p className="font-display font-bold">{yen(e.amount)}</p>
-                    <Button onClick={() => actions.deleteExpense(e.id)} aria-label="削除" title="削除" className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-muted-foreground">
+                    <Button variant="unstyled" size="auto" onClick={() => actions.deleteExpense(e.id)} aria-label="削除" title="削除" className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-muted-foreground">
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </li>

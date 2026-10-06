@@ -65,7 +65,7 @@ function AddPage() {
           <span className="mb-2 flex items-center gap-1.5 text-sm font-bold"><LayoutGrid className="h-4 w-4 text-primary" /> カテゴリ</span>
           <div className="grid grid-cols-3 gap-2">
             {CATEGORIES.map((c) => (
-              <Button
+              <Button variant="unstyled" size="auto"
                 type="button" key={c.id} onClick={() => setCategory(c.id)}
                 className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-bold ${category === c.id ? "border-primary" : "border-border bg-card"}`}
                 style={category === c.id ? { background: c.color, color: c.fg } : undefined}
@@ -86,7 +86,7 @@ function AddPage() {
           <input value={memo} onChange={(e) => setMemo(e.target.value)} placeholder="アクスタ購入、ライブ当選…" className={field} />
         </label>
 
-        <Button disabled={!Number(amount)} className="satin-dark flex w-full items-center justify-center gap-2 rounded-2xl py-4 font-medium text-primary-foreground">
+        <Button variant="unstyled" size="auto" disabled={!Number(amount)} className="satin-dark flex w-full items-center justify-center gap-2 rounded-2xl py-4 font-medium text-primary-foreground">
           <Check className="h-5 w-5" /> 記録する
         </Button>
       </form>

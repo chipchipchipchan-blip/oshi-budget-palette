@@ -52,7 +52,7 @@ function OshiPage() {
         className="card-soft mt-5 flex gap-2 p-3"
       >
         <input value={name} onChange={(e) => setName(e.target.value)} placeholder="新しい推しの名前" className="min-w-0 flex-1 rounded-lg bg-muted/50 px-3 outline-none" />
-        <Button aria-label="推しを追加" title="推しを追加" className="satin-dark grid h-11 w-11 shrink-0 place-items-center rounded-xl text-primary-foreground"><Plus /></Button>
+        <Button variant="unstyled" size="auto" aria-label="推しを追加" title="推しを追加" className="satin-dark grid h-11 w-11 shrink-0 place-items-center rounded-xl text-primary-foreground"><Plus /></Button>
       </form>
       <BackgroundPicker />
     </AppShell>
@@ -71,7 +71,7 @@ function BackgroundPicker() {
         {BG_PRESETS.map((p) => {
           const active = bgColor === p.color;
           return (
-            <Button
+            <Button variant="unstyled" size="auto"
               key={p.label}
               onClick={() => actions.setBgColor(p.color)}
               aria-label={`背景を${p.label}にする`}
@@ -113,14 +113,14 @@ function OshiCard({ o }: { o: Oshi }) {
           onChange={(e) => actions.updateOshi(o.id, { name: e.target.value })}
           className="mb-1 min-w-0 flex-1 rounded-xl bg-transparent px-2 py-1 text-lg font-bold outline-none focus:bg-muted"
         />
-        <Button onClick={() => confirm(`${o.name}を削除しますか？`) && actions.deleteOshi(o.id)} className="press mb-2 text-muted-foreground" aria-label="削除">
+        <Button variant="unstyled" size="auto" onClick={() => confirm(`${o.name}を削除しますか？`) && actions.deleteOshi(o.id)} className="press mb-2 text-muted-foreground" aria-label="削除">
           <Trash2 className="h-4 w-4" />
         </Button>
       </div>
       <div className="flex flex-wrap items-center gap-2 px-5 py-4">
         <span className="text-xs font-bold text-muted-foreground">イメージカラー</span>
         {OSHI_COLORS.map((c) => (
-          <Button key={c} onClick={() => actions.updateOshi(o.id, { color: c })}
+          <Button variant="unstyled" size="auto" key={c} onClick={() => actions.updateOshi(o.id, { color: c })}
             className={`press h-7 w-7 rounded-full border-2 ${o.color === c ? "border-foreground" : "border-border"}`}
             style={{ background: c }} aria-label={c} />
         ))}
