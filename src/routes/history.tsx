@@ -50,18 +50,20 @@ function HistoryPage() {
                     </span>
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium">{e.memo || c.label}</p>
-                      <span className="mt-1.5 inline-flex items-center gap-1.5">
-                        <span className="inline-flex items-center rounded-full bg-foreground px-2.5 py-0.5 text-[10px] font-medium tracking-wide text-background">
-                          {o?.name ?? "削除された推し"}
+                      <span className="mt-1.5 inline-flex items-center">
+                        <span className="inline-flex max-w-full items-center rounded-full bg-foreground px-2.5 py-0.5 text-[10px] font-medium tracking-wide text-background">
+                          <span className="truncate">{o?.name ?? "削除された推し"}</span>
                         </span>
-                        {p && (
-                          <span className="inline-flex items-center gap-1 whitespace-nowrap rounded-full border border-border px-2 py-0.5 text-[10px] font-light tracking-wide text-muted-foreground">
-                            <p.icon className="h-3 w-3" />{p.label}
-                          </span>
-                        )}
                       </span>
                     </div>
-                    <p className="shrink-0 break-all text-right font-display text-xl font-extralight leading-none tracking-tight">{yen(e.amount)}</p>
+                    <div className="flex shrink-0 flex-col items-end gap-1.5">
+                      <p className="break-all text-right font-display text-xl font-extralight leading-none tracking-tight">{yen(e.amount)}</p>
+                      {p && (
+                        <span className="inline-flex items-center gap-1 whitespace-nowrap text-[10px] font-light tracking-wide text-muted-foreground/80">
+                          <p.icon className="h-3 w-3" />{p.label}
+                        </span>
+                      )}
+                    </div>
                     <Button variant="unstyled" size="auto" onClick={() => actions.deleteExpense(e.id)} aria-label="削除" title="削除" className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-muted-foreground">
                       <Trash2 className="h-4 w-4" />
                     </Button>
