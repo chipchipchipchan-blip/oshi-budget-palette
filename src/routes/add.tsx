@@ -1,9 +1,9 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Check, Heart, LayoutGrid, CalendarDays, PenLine } from "lucide-react";
+import { Check, Heart, LayoutGrid, CalendarDays, PenLine, Wallet } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
-import { useStore, actions, CATEGORIES, type Category } from "@/lib/store";
+import { useStore, actions, CATEGORIES, PAYMENTS, type Category, type PaymentMethod } from "@/lib/store";
 
 export const Route = createFileRoute("/add")({
   head: () => ({
@@ -27,13 +27,14 @@ function AddPage() {
   const [memo, setMemo] = useState("");
   const [oshiId, setOshiId] = useState("");
   const [category, setCategory] = useState<Category>("goods");
+  const [payment, setPayment] = useState<PaymentMethod>("cash");
   const selected = oshiId || oshis[0]?.id || "";
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     const n = Number(amount);
     if (!n || !selected) return;
-    actions.addExpense({ amount: n, date, memo, oshiId: selected, category });
+    actions.addExpense({ amount: n, date, memo, oshiId: selected, category, payment });
     nav({ to: "/history" });
   };
 
