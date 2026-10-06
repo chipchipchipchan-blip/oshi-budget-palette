@@ -6,6 +6,8 @@ import { toast } from "sonner";
 import { AppShell, OshiAvatar } from "@/components/AppShell";
 import { useAccount, saveNickname } from "@/hooks/use-account";
 import { Button } from "@/components/ui/button";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { resetAllData } from "@/lib/cloud-sync";
 import { useStore, actions, exportData, importData, OSHI_COLORS, BG_PRESETS, isWhitish, type Oshi } from "@/lib/store";
 
 export const Route = createFileRoute("/oshi")({
@@ -60,6 +62,8 @@ function OshiPage() {
       <BackgroundPicker />
       <AccountSection />
       <BackupSection />
+      <ResetSection />
+
     </AppShell>
   );
 }
@@ -93,6 +97,38 @@ function AccountSection() {
         </>
       )}
     </section>
+  );
+}
+
+function ResetSection() {
+  const [open, setOpen] = useState(false);
+  const [busy, setBusy] = useState(false);
+  return (
+    <div className="card-soft mt-5 p-5">
+      <p className="mb-1 text-sm font-light text-foreground/80">データの初期化</p>
+      <p className="mb-3 text-xs font-light text-muted-foreground">支出記録・推し・予算・貯金をすべて削除し、はじめの状態に戻します。</p>
+      <Button variant="silver" className="w-full font-light text-[var(--budget-over)]" onClick={() => setOpen(true)}>すべてのデータを初期化する</Button>
+      <AlertDialog open={open} onOpenChange={setOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-light">データを初期化しますか？</AlertDialogTitle>
+            <AlertDialogDescription className="font-light">すべての支出記録や推しデータが削除されます。本当によろしいですか？この操作は元に戻せません。</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="font-light">やめる</AlertDialogCancel>
+            <AlertDialogAction className="font-light" disabled={busy} onClick={async (e) => {
+              e.preventDefault();
+              setBusy(true);
+              const err = await resetAllData();
+              setBusy(false);
+              setOpen(false);
+              if (err) toast.error("初期化できませんでした", { description: err });
+              else toast.success("すべてのデータを初期化しました");
+            }}>OK</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
   );
 }
 
