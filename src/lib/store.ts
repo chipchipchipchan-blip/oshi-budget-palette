@@ -124,6 +124,17 @@ export function replaceFromCloud(data: unknown) {
   syncHandler = h;
 }
 
+/** 初期状態（未登録）に戻す。直前のデータは念のためバックアップキーへ退避。クラウドへは送らない */
+export function resetLocal() {
+  try {
+    const current = localStorage.getItem(KEY);
+    if (current) localStorage.setItem(BACKUP_KEY, current);
+  } catch {}
+  const h = syncHandler; syncHandler = null;
+  set({ ...initial, oshis: [], expenses: [] });
+  syncHandler = h;
+}
+
 function set(next: State) {
   state = next;
   syncHandler?.(state);
