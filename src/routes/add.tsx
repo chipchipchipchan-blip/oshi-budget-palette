@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Check, Heart, LayoutGrid, CalendarDays, PenLine, Wallet } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
@@ -16,32 +16,43 @@ export const Route = createFileRoute("/add")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  validateSearch: (s: Record<string, unknown>): { edit?: string } => (typeof s["edit"] === "string" ? { edit: s["edit"] } : {}),
   component: AddPage,
 });
 
 function AddPage() {
-  const { oshis } = useStore();
+  const { oshis, expenses } = useStore();
   const nav = useNavigate();
+  const { edit } = Route.useSearch();
+  const editing = edit ? expenses.find((x) => x.id === edit) : undefined;
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10));
   const [memo, setMemo] = useState("");
   const [oshiId, setOshiId] = useState("");
   const [category, setCategory] = useState<Category>("goods");
   const [payment, setPayment] = useState<PaymentMethod>("cash");
+  useEffect(() => {
+    if (!editing) return;
+    setAmount(String(editing.amount)); setDate(editing.date); setMemo(editing.memo ?? "");
+    setOshiId(editing.oshiId); setCategory(editing.category); setPayment(editing.payment ?? "cash");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editing?.id]);
   const selected = oshiId || oshis[0]?.id || "";
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     const n = Number(amount);
     if (!n || !selected) return;
-    actions.addExpense({ amount: n, date, memo, oshiId: selected, category, payment });
+    const data = { amount: n, date, memo, oshiId: selected, category, payment };
+    if (editing) actions.updateExpense(editing.id, data);
+    else actions.addExpense(data);
     nav({ to: "/history" });
   };
 
   const field = "satin-field w-full rounded-lg border px-4 py-3 outline-none focus:ring-2 focus:ring-ring";
 
   return (
-    <AppShell title="支出を記録">
+    <AppShell title={editing ? "記録を編集" : "支出を記録"}>
       <form onSubmit={submit} className="space-y-6">
         <div className="satin-dark relative overflow-hidden rounded-3xl p-7 text-center text-hero-foreground">
           <p className="text-xs font-light text-hero-foreground/70">金額</p>
@@ -101,7 +112,7 @@ function AddPage() {
         </label>
 
         <Button variant="unstyled" size="auto" disabled={!Number(amount)} className="blue-glass blue-ring press flex w-full items-center justify-center gap-2 rounded-2xl py-4 font-medium text-white">
-          <Check className="h-5 w-5" /> 記録する
+          <Check className="h-5 w-5" /> {editing ? "保存する" : "記録する"}
         </Button>
       </form>
     </AppShell>
