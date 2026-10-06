@@ -65,7 +65,7 @@ function BackgroundPicker() {
     <div className="card-soft mt-5 p-5">
       <div className="mb-3 flex items-center gap-2">
         <Palette className="h-4 w-4 text-primary" />
-        <span className="text-sm font-bold">アプリの背景色</span>
+        <span className="text-sm font-light text-foreground/80">アプリの背景色</span>
       </div>
       <div className="flex items-center gap-2">
         {BG_PRESETS.map((p) => {
@@ -86,7 +86,7 @@ function BackgroundPicker() {
           type="color"
           value={bgColor ?? "#f8f9fa"}
           onChange={(e) => actions.setBgColor(e.target.value)}
-          className="h-9 w-9 cursor-pointer rounded-full bg-transparent"
+          className="swatch-round h-9 w-9"
           aria-label="背景を好きな色にする"
         />
       </div>
@@ -117,20 +117,20 @@ function OshiCard({ o }: { o: Oshi }) {
         <input
           value={o.name}
           onChange={(e) => actions.updateOshi(o.id, { name: e.target.value })}
-          className="mb-1 min-w-0 flex-1 rounded-xl bg-transparent px-2 py-1 text-lg font-bold text-foreground outline-none focus:bg-muted"
+          className="mb-1 min-w-0 flex-1 rounded-xl bg-transparent px-2 py-1 text-lg font-light text-foreground outline-none focus:bg-muted"
         />
         <Button variant="unstyled" size="auto" onClick={() => confirm(`${o.name}を削除しますか？`) && actions.deleteOshi(o.id)} className="press mb-2 grid h-8 w-8 shrink-0 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-[var(--clear-blue)]" aria-label="削除">
           <Trash2 className="h-4 w-4" />
         </Button>
       </div>
       <div className="flex flex-wrap items-center gap-2 px-5 py-4">
-        <span className="text-xs font-bold text-muted-foreground">イメージカラー</span>
+        <span className="text-xs font-light tracking-wide text-foreground/70">イメージカラー</span>
         {OSHI_COLORS.map((c) => (
           <Button variant="unstyled" size="auto" key={c} onClick={() => actions.updateOshi(o.id, { color: c })}
             className={`press h-7 w-7 rounded-full border-2 ${o.color === c ? "blue-ring border-transparent" : "border-border"}`}
             style={{ background: c }} aria-label={c} />
         ))}
-        <input type="color" value={o.color} onChange={(e) => actions.updateOshi(o.id, { color: e.target.value })} className="h-7 w-7 cursor-pointer rounded-full bg-transparent" />
+        <input type="color" value={o.color} onChange={(e) => actions.updateOshi(o.id, { color: e.target.value })} className="swatch-round h-7 w-7" aria-label="好きな色を選ぶ" />
       </div>
     </div>
   );
