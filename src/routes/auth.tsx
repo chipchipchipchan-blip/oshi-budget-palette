@@ -28,13 +28,22 @@ function AuthPage() {
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
 
+  const jpError = (msg: string): string => {
+    const m = msg.toLowerCase();
+    if (m.includes("already registered")) return "このメールアドレスはすでに登録されています。ログインをお試しください。";
+    if (m.includes("at least 6") || m.includes("password should")) return "パスワードは6文字以上で入力してください。";
+    if (m.includes("invalid")) return "メールアドレスまたはパスワードの形式を確認してください。";
+    if (m.includes("rate limit")) return "しばらく時間をおいてから、もう一度お試しください。";
+    return "入力内容を確認してもう一度お試しください。";
+  };
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setBusy(true);
     if (mode === "up") {
       const { error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: window.location.origin } });
       setBusy(false);
-      if (error) { toast.error("登録できませんでした", { description: error.message }); return; }
+      if (error) { toast.error("登録できませんでした", { description: jpError(error.message) }); return; }
       setSent(true);
     } else {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -59,8 +68,14 @@ function AuthPage() {
     <AppShell title={mode === "in" ? "ログイン" : "新規登録"}>
       <p className="mb-6 text-sm font-light text-muted-foreground">ログインすると、スマホとPCのどちらからでも同じデータを確認・更新できます。</p>
       {sent ? (
-        <div className="card-soft rounded-3xl p-6 text-sm font-light text-foreground/80">
-          確認メールを送りました。メール内のリンクを開くと登録が完了します。
+        <div className="card-soft space-y-2 rounded-3xl p-6">
+          <p className="text-sm font-light text-foreground/80">
+            確認メールを送りました。<br />
+            <span className="text-foreground/60">{email}</span> 宛のメールに届いたリンクを開くと、登録が完了します。
+          </p>
+          <p className="text-xs font-light text-muted-foreground">
+            メールが届かない場合は、迷惑メールフォルダもご確認ください。数分待ってから、この画面を開き直すともう一度登録できます。
+          </p>
         </div>
       ) : (
         <div className="card-soft space-y-4 rounded-3xl p-6">
@@ -72,6 +87,11 @@ function AuthPage() {
             <Button type="submit" variant="blueGlass" disabled={busy} className="w-full font-light">
               {mode === "in" ? "ログイン" : "登録する"}
             </Button>
+            {mode === "up" && (
+              <p className="text-center text-[11px] font-light text-muted-foreground">
+                登録ボタンを押すと、確認メールが届きます。メールのリンクを開いて登録を完了してください。
+              </p>
+            )}
           </form>
           <button type="button" onClick={() => setMode(mode === "in" ? "up" : "in")} className="w-full text-center text-xs font-light text-muted-foreground underline-offset-4 hover:underline">
             {mode === "in" ? "はじめての方は新規登録" : "アカウントをお持ちの方はログイン"}
