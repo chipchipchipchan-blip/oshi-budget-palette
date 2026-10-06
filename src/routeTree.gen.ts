@@ -15,7 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as OshiRouteImport } from './routes/oshi'
 import { Route as SavingsRouteImport } from './routes/savings'
-import { Route as AuthResetRouteImport } from './routes/auth/reset'
+import { Route as AuthResetRouteImport } from './routes/auth.reset'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
