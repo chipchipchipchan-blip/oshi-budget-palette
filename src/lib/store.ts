@@ -13,6 +13,16 @@ export const CATEGORIES: { id: Category; label: string; icon: LucideIcon; color:
 /** グラフ用モノトーン（推しが全員白でも区別できるよう濃淡で塗り分け） */
 export const MONO = ["oklch(0.14 0 0)", "oklch(0.42 0 0)", "oklch(0.72 0 0)", "oklch(0.86 0 0)", "oklch(0.3 0 0)", "oklch(0.58 0 0)"];
 
+/** 推し別円グラフの配色：ローズゴールド → ライトグレー → チャコール（以下は濃淡で補完） */
+export const PIE_COLORS = [
+  "var(--clear-blue)",
+  "#DAD7D3",
+  "oklch(0.42 0.01 30)",
+  "#B4AFA8",
+  "oklch(0.22 0.008 30)",
+  "#8F8A83",
+];
+
 export const OSHI_COLORS = ["#FFFFFF", "#F2F2F2", "#E8E6E3", "#C8C8C8", "#8A8A8A", "#4A4A4A", "#1A1A1A"];
 
 export const BG_PRESETS: { label: string; color: string | null }[] = [
