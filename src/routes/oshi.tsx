@@ -1,5 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Camera, Check, Download, Palette, Plus, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { AppShell, OshiAvatar } from "@/components/AppShell";
@@ -56,8 +57,35 @@ function OshiPage() {
         <Button variant="blueGlass" size="auto" aria-label="推しを追加" title="推しを追加" className="grid h-11 w-11 shrink-0 place-items-center rounded-xl"><Plus /></Button>
       </form>
       <BackgroundPicker />
+      <AccountSection />
       <BackupSection />
     </AppShell>
+  );
+}
+
+function AccountSection() {
+  const [email, setEmail] = useState<string | null | undefined>(undefined);
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setEmail(data.user?.email ?? null));
+    const { data } = supabase.auth.onAuthStateChange((_e, s) => setEmail(s?.user?.email ?? null));
+    return () => data.subscription.unsubscribe();
+  }, []);
+  if (email === undefined) return null;
+  return (
+    <section className="card-soft mt-8 rounded-3xl p-5">
+      <p className="mb-1 text-sm font-light text-foreground/80">アカウント</p>
+      {email ? (
+        <>
+          <p className="mb-4 text-xs font-light text-muted-foreground">{email} でログイン中。スマホとPCでデータが同期されます。</p>
+          <Button variant="silver" className="w-full font-light" onClick={async () => { await supabase.auth.signOut(); toast.success("ログアウトしました"); }}>ログアウト</Button>
+        </>
+      ) : (
+        <>
+          <p className="mb-4 text-xs font-light text-muted-foreground">ログインすると、スマホとPCのどちらからでも同じデータを使えます。</p>
+          <Button asChild variant="blueGlass" className="w-full font-light"><Link to="/auth">ログイン・新規登録</Link></Button>
+        </>
+      )}
+    </section>
   );
 }
 
