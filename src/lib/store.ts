@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from "react";
-import { Gift, Ticket, TrainFront, Mail, Sparkles, type LucideIcon } from "lucide-react";
+import { Gift, Ticket, TrainFront, Mail, Sparkles, Banknote, CreditCard, Smartphone, type LucideIcon } from "lucide-react";
 
 export type Category = "goods" | "ticket" | "travel" | "fc" | "other";
 export const CATEGORIES: { id: Category; label: string; icon: LucideIcon; color: string; fg: string }[] = [
@@ -8,6 +8,13 @@ export const CATEGORIES: { id: Category; label: string; icon: LucideIcon; color:
   { id: "travel", label: "遠征費", icon: TrainFront, color: "var(--mint)", fg: "#fff" },
   { id: "fc", label: "FC・月額", icon: Mail, color: "var(--peach)", fg: "var(--ink)" },
   { id: "other", label: "その他", icon: Sparkles, color: "var(--sky)", fg: "var(--ink)" },
+];
+
+export type PaymentMethod = "cash" | "card" | "emoney";
+export const PAYMENTS: { id: PaymentMethod; label: string; icon: LucideIcon }[] = [
+  { id: "cash", label: "現金", icon: Banknote },
+  { id: "card", label: "クレジットカード", icon: CreditCard },
+  { id: "emoney", label: "電子マネー", icon: Smartphone },
 ];
 
 /** グラフ用モノトーン（推しが全員白でも区別できるよう濃淡で塗り分け） */
@@ -35,7 +42,7 @@ export const BG_PRESETS: { label: string; color: string | null }[] = [
 
 export type Oshi = { id: string; name: string; color: string; photo?: string };
 export type Expense = {
-  id: string; amount: number; date: string; memo: string; oshiId: string; category: Category;
+  id: string; amount: number; date: string; memo: string; oshiId: string; category: Category; payment?: PaymentMethod;
 };
 type State = { oshis: Oshi[]; expenses: Expense[]; bgColor?: string; mono?: boolean; budget?: number };
 
@@ -106,6 +113,7 @@ export const actions = {
 
 export const yen = (n: number) => "¥" + n.toLocaleString("ja-JP");
 export const catOf = (id: Category) => CATEGORIES.find((c) => c.id === id) ?? CATEGORIES[4]!;
+export const payOf = (id?: PaymentMethod) => PAYMENTS.find((p) => p.id === id);
 /** 白・オフホワイトなど、カード背景に溶ける色かどうか（カラーピッカーの手入力にも対応） */
 export const isWhitish = (color: string) => {
   const hex = color.replace("#", "");
