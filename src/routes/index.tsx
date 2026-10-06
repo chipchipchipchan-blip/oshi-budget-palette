@@ -11,6 +11,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "推し活の支出をモノトーンで上品に管理。推し別・カテゴリ別にひと目でわかるダッシュボード。" },
       { property: "og:title", content: "推し活ウォレット｜今月の推し活支出" },
       { property: "og:description", content: "推し活の支出を可愛く管理できる家計簿アプリ。" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Dashboard,
@@ -33,34 +35,34 @@ function Dashboard() {
 
   return (
     <AppShell title="ダッシュボード">
-      <section className="relative overflow-hidden rounded-xl bg-hero p-7 text-hero-foreground shadow-soft">
+      <section className="satin-dark relative overflow-hidden rounded-3xl p-7 text-hero-foreground">
         <Sparkles className="absolute right-5 top-5 h-6 w-6 text-hero-foreground/60" />
-        <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-hero-foreground/60">{now.getMonth() + 1}月の推し活合計</p>
-        <p className="mt-2 font-display text-6xl font-semibold tracking-tight">{yen(total)}</p>
-        <p className="mt-3 inline-flex border border-hero-foreground/30 px-3 py-1 text-[11px] tracking-widest">
+        <p className="text-xs font-light text-hero-foreground/70">{now.getMonth() + 1}月の推し活合計</p>
+        <p className="mt-5 break-all font-display text-5xl font-light">{yen(total)}</p>
+        <p className="mt-5 inline-flex rounded-full border border-hero-foreground/15 bg-hero-foreground/5 px-4 py-2 text-[11px] text-hero-foreground/80 backdrop-blur-sm">
           {month.length}件の愛を記録中
         </p>
       </section>
 
-      <section className="card-soft mt-5 p-5">
-        <h2 className="mb-2 text-xs font-bold uppercase tracking-[0.2em]">推し別の割合</h2>
+      <section className="mt-8">
+        <h2 className="mb-4 px-1 text-xs font-normal text-muted-foreground">推し別の割合</h2>
         {byOshi.length === 0 ? (
           <Empty />
         ) : (
-          <div className="flex items-center gap-4">
-            <div className="h-40 w-40 shrink-0">
+          <div className="card-soft flex flex-wrap items-center justify-center gap-3 p-4">
+            <div className="h-36 w-36 shrink-0">
               <ResponsiveContainer>
                 <PieChart>
                   <Pie data={byOshi} dataKey="value" innerRadius={42} outerRadius={70} paddingAngle={byOshi.length > 1 ? 4 : 0} cornerRadius={2} stroke="var(--card)" strokeWidth={1}>
-                    {byOshi.map((o, i) => <Cell key={o.id} fill={MONO[i % MONO.length]!} />)}
+                    {byOshi.map((o, i) => <Cell key={o.id} fill={MONO[i % MONO.length] ?? "var(--primary)"} />)}
                   </Pie>
                 </PieChart>
               </ResponsiveContainer>
             </div>
-            <ul className="flex-1 space-y-2">
+            <ul className="min-w-36 flex-1 space-y-3">
               {byOshi.map((o) => (
                 <li key={o.id} className="flex items-center gap-2 text-sm">
-                  <span className="h-3 w-3 shrink-0" style={{ background: MONO[byOshi.indexOf(o) % MONO.length]! }} />
+                  <span className="h-3 w-3 shrink-0" style={{ background: MONO[byOshi.indexOf(o) % MONO.length] ?? "var(--primary)" }} />
                   <OshiAvatar {...o} size={26} />
                   <span className="flex flex-1 items-center gap-1 truncate font-bold">{o.name}<Heart className="h-3.5 w-3.5 fill-card text-foreground" /></span>
                   <span className="text-muted-foreground">{Math.round((o.value / total) * 100)}%</span>
@@ -71,8 +73,9 @@ function Dashboard() {
         )}
       </section>
 
-      <section className="card-soft mt-5 p-5">
-        <h2 className="mb-3 text-xs font-bold uppercase tracking-[0.2em]">カテゴリ別</h2>
+      <section className="mt-8">
+        <h2 className="mb-4 px-1 text-xs font-normal text-muted-foreground">カテゴリ別</h2>
+        <div className="card-soft p-5">
         <div className="h-40">
           <ResponsiveContainer>
             <BarChart data={byCat}>
@@ -86,18 +89,19 @@ function Dashboard() {
         </div>
         <div className="mt-3 grid grid-cols-2 gap-2">
           {byCat.map((c) => (
-            <div key={c.id} className="flex items-center gap-2 rounded-md bg-muted px-3 py-2 text-sm">
-              <span className="grid h-8 w-8 place-items-center rounded-md " style={{ background: c.color, color: c.fg }}><c.icon className="h-4 w-4" /></span>
+            <div key={c.id} className="flex min-w-0 items-center gap-2 border-b border-border/50 py-3 text-sm">
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg shadow-soft" style={{ background: c.color, color: c.fg }}><c.icon className="h-4 w-4" /></span>
               <div className="leading-tight">
                 <p className="text-[11px] text-muted-foreground">{c.label}</p>
-                <p className="font-bold">{yen(c.value)}</p>
+                <p className="break-all font-display text-base font-normal">{yen(c.value)}</p>
               </div>
             </div>
           ))}
         </div>
+        </div>
       </section>
 
-      <Link to="/add" className="press fixed bottom-24 right-[max(1.25rem,calc(50%-12rem))] z-30 grid h-14 w-14 place-items-center rounded-full bg-primary text-primary-foreground shadow-soft">
+      <Link to="/add" aria-label="支出を記録" title="支出を記録" className="press satin-dark fixed bottom-28 right-[max(1.5rem,calc(50%-12rem))] z-30 grid h-14 w-14 place-items-center rounded-full text-primary-foreground">
         <Plus className="h-7 w-7" />
       </Link>
     </AppShell>
@@ -105,5 +109,5 @@ function Dashboard() {
 }
 
 function Empty() {
-  return <p className="py-6 text-center text-sm text-muted-foreground">まだ今月の記録がありません<br />右下の＋から登録してね</p>;
+  return <p className="card-soft py-10 text-center text-[13px] leading-7 text-muted-foreground">まだ今月の記録がありません<br />右下の＋から登録してね</p>;
 }
