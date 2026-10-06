@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Camera, Check, Download, Palette, Plus, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { AppShell, OshiAvatar } from "@/components/AppShell";
+import { useAccount, saveNickname } from "@/hooks/use-account";
 import { Button } from "@/components/ui/button";
 import { useStore, actions, exportData, importData, OSHI_COLORS, BG_PRESETS, isWhitish, type Oshi } from "@/lib/store";
 
@@ -64,19 +65,25 @@ function OshiPage() {
 }
 
 function AccountSection() {
-  const [email, setEmail] = useState<string | null | undefined>(undefined);
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => setEmail(data.user?.email ?? null));
-    const { data } = supabase.auth.onAuthStateChange((_e, s) => setEmail(s?.user?.email ?? null));
-    return () => data.subscription.unsubscribe();
-  }, []);
-  if (email === undefined) return null;
+  const account = useAccount();
+  const [nick, setNick] = useState("");
+  useEffect(() => { if (account) setNick(account.nickname); }, [account]);
+  if (account === undefined) return null;
+  const email = account?.email;
   return (
     <section className="card-soft mt-8 rounded-3xl p-5">
       <p className="mb-1 text-sm font-light text-foreground/80">アカウント</p>
-      {email ? (
+      {account ? (
         <>
           <p className="mb-4 text-xs font-light text-muted-foreground">{email} でログイン中。スマホとPCでデータが同期されます。</p>
+          <label className="mb-2 block text-xs font-light text-foreground/80" htmlFor="nickname">ニックネーム</label>
+          <div className="mb-4 flex gap-2">
+            <input id="nickname" maxLength={20} placeholder="例：みき" value={nick} onChange={(e) => setNick(e.target.value)} className="satin-field min-w-0 flex-1 rounded-2xl px-4 py-2.5 text-sm font-light outline-none" />
+            <Button variant="blueGlass" className="font-light" disabled={nick.trim() === account.nickname} onClick={async () => {
+              const err = await saveNickname(nick);
+              if (err) toast.error("保存できませんでした"); else toast.success("ニックネームを保存しました");
+            }}>保存</Button>
+          </div>
           <Button variant="silver" className="w-full font-light" onClick={async () => { await supabase.auth.signOut(); toast.success("ログアウトしました"); }}>ログアウト</Button>
         </>
       ) : (

@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Home, PlusCircle, Clock, Heart, Wallet, PiggyBank } from "lucide-react";
 import { useEffect, type ReactNode } from "react";
+import { useAccount } from "@/hooks/use-account";
 import { applyBackground, isWhitish, useStore } from "@/lib/store";
 
 const tabs = [
@@ -13,12 +14,13 @@ const tabs = [
 
 export function AppShell({ title, children }: { title: string; children: ReactNode }) {
   const { bgColor } = useStore();
+  const account = useAccount();
   useEffect(() => { applyBackground(bgColor); }, [bgColor]);
   return (
     <div className="mx-auto min-h-screen max-w-md px-6 pb-36 pt-10">
       <header className="mb-8 flex items-center justify-between gap-3">
         <div>
-          <p className="mb-1 font-display text-[11px] font-light text-muted-foreground">OSHI WALLET</p>
+          <p className="mb-1 font-display text-[11px] font-light text-muted-foreground">OSHI WALLET{account?.nickname ? <span className="ml-2 font-sans">・{account.nickname}さん</span> : null}</p>
           <h1 className="text-2xl font-light">{title}</h1>
         </div>
         <div className="silver-surface grid h-12 w-12 shrink-0 place-items-center rounded-2xl text-muted-foreground"><Wallet className="h-5 w-5" /></div>
