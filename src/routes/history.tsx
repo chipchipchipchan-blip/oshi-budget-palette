@@ -25,6 +25,7 @@ export const Route = createFileRoute("/history")({
 
 function HistoryPage() {
   const { expenses, oshis } = useStore();
+  const [pendingDelete, setPendingDelete] = useState<{ id: string; label: string } | null>(null);
   const sorted = [...expenses].sort((a, b) => b.date.localeCompare(a.date));
   const groups = sorted.reduce<Record<string, typeof sorted>>((acc, e) => {
     (acc[e.date] ??= []).push(e);
