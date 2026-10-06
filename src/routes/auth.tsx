@@ -32,6 +32,7 @@ function AuthPage() {
     const m = msg.toLowerCase();
     if (m.includes("already registered")) return "このメールアドレスはすでに登録されています。ログインをお試しください。";
     if (m.includes("weak_password") || m.includes("weak password") || m.includes("easy to guess")) return "このパスワードは簡単に推測されてしまうため使えません。英数字を組み合わせた別のパスワードをお試しください。";
+    if (m.includes("not allowed") || m.includes("reserved")) return "このメールアドレスには確認メールを送れないようです。受信できるメールアドレスをご入力ください。";
     if (m.includes("at least 6") || m.includes("password should")) return "パスワードは6文字以上で入力してください。";
     if (m.includes("invalid")) return "メールアドレスまたはパスワードの形式を確認してください。";
     if (m.includes("rate limit")) return "しばらく時間をおいてから、もう一度お試しください。";
