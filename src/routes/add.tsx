@@ -67,19 +67,19 @@ function AddPage() {
         </div>
 
         <label className="block">
-          <span className="mb-1 flex items-center gap-1.5 text-sm font-bold"><Heart className="h-4 w-4 text-primary" /> 誰のための支出？</span>
+          <span className="mb-1 flex items-center gap-1.5 text-sm font-light text-foreground/80"><Heart className="h-3.5 w-3.5 text-primary" /> 推し</span>
           <select value={selected} onChange={(e) => setOshiId(e.target.value)} className={field}>
             {oshis.map((o) => <option key={o.id} value={o.id}>{o.name}</option>)}
           </select>
         </label>
 
         <div>
-          <span className="mb-2 flex items-center gap-1.5 text-sm font-bold"><LayoutGrid className="h-4 w-4 text-primary" /> カテゴリ</span>
+          <span className="mb-2 flex items-center gap-1.5 text-sm font-light text-foreground/80"><LayoutGrid className="h-3.5 w-3.5 text-primary" /> カテゴリ</span>
           <div className="grid grid-cols-3 gap-2">
             {CATEGORIES.map((c) => (
               <Button variant="unstyled" size="auto"
                 type="button" key={c.id} onClick={() => setCategory(c.id)}
-                className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-bold transition-colors ${category === c.id ? "blue-glass blue-ring text-white" : "border-border bg-card text-muted-foreground"}`}
+                className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-normal transition-colors ${category === c.id ? "blue-glass blue-ring text-white" : "border-border bg-card text-muted-foreground"}`}
               >
                 <c.icon className="h-6 w-6" />{c.label}
               </Button>
@@ -88,12 +88,12 @@ function AddPage() {
         </div>
 
         <div>
-          <span className="mb-2 flex items-center gap-1.5 text-sm font-bold"><Wallet className="h-4 w-4 text-primary" /> 支払い方法</span>
+          <span className="mb-2 flex items-center gap-1.5 text-sm font-light text-foreground/80"><Wallet className="h-3.5 w-3.5 text-primary" /> 支払い方法</span>
           <div className="grid grid-cols-3 gap-2">
             {PAYMENTS.map((p) => (
               <Button variant="unstyled" size="auto"
                 type="button" key={p.id} onClick={() => setPayment(p.id)}
-                className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-bold transition-colors ${payment === p.id ? "blue-glass blue-ring text-white" : "border-border bg-card text-muted-foreground"}`}
+                className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-normal transition-colors ${payment === p.id ? "blue-glass blue-ring text-white" : "border-border bg-card text-muted-foreground"}`}
               >
                 <p.icon className="h-6 w-6" />{p.label}
               </Button>
@@ -102,12 +102,12 @@ function AddPage() {
         </div>
 
         <label className="block">
-          <span className="mb-1 flex items-center gap-1.5 text-sm font-bold"><CalendarDays className="h-4 w-4 text-primary" /> 日付</span>
+          <span className="mb-1 flex items-center gap-1.5 text-sm font-light text-foreground/80"><CalendarDays className="h-3.5 w-3.5 text-primary" /> 日付</span>
           <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className={field} />
         </label>
 
         <label className="block">
-          <span className="mb-1 flex items-center gap-1.5 text-sm font-bold"><PenLine className="h-4 w-4 text-primary" /> メモ</span>
+          <span className="mb-1 flex items-center gap-1.5 text-sm font-light text-foreground/80"><PenLine className="h-3.5 w-3.5 text-primary" /> メモ</span>
           <input value={memo} onChange={(e) => setMemo(e.target.value)} placeholder="アクスタ購入、ライブ当選…" className={field} />
         </label>
 
