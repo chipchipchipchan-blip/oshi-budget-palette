@@ -67,11 +67,11 @@ function Dashboard() {
             </div>
             <ul className="min-w-36 flex-1 space-y-3">
               {byOshi.map((o) => (
-                <li key={o.id} className="flex items-center gap-2 text-sm">
+                <li key={o.id} className="flex items-center gap-2 text-[13px] font-light tracking-wide text-foreground/80">
                   <span className="h-3 w-3 shrink-0 rounded-full" style={{ background: PIE_COLORS[byOshi.indexOf(o) % PIE_COLORS.length] ?? "var(--primary)" }} />
                   <OshiAvatar {...o} size={26} />
-                  <span className="flex flex-1 items-center truncate font-bold">{o.name}</span>
-                  <span className="text-muted-foreground">{Math.round((o.value / total) * 100)}%</span>
+                  <span className="flex flex-1 items-center truncate">{o.name}</span>
+                  <span className="font-light text-muted-foreground">{Math.round((o.value / total) * 100)}%</span>
                 </li>
               ))}
             </ul>
