@@ -95,9 +95,12 @@ export function applyBackground(color?: string) {
     return;
   }
   const hex = color.replace("#", "");
-  let [r, g, b] = /^[0-9a-fA-F]{6}$/.test(hex)
-    ? [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16))
-    : [253, 243, 247];
+  let r = 253, g = 243, b = 247;
+  if (/^[0-9a-fA-F]{6}$/.test(hex)) {
+    r = parseInt(hex.slice(0, 2), 16);
+    g = parseInt(hex.slice(2, 4), 16);
+    b = parseInt(hex.slice(4, 6), 16);
+  }
   const lum = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
   if (lum < 0.78) {
     r = Math.round(r + (255 - r) * 0.75);
