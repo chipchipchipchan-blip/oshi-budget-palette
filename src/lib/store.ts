@@ -44,7 +44,8 @@ export type Oshi = { id: string; name: string; color: string; photo?: string };
 export type Expense = {
   id: string; amount: number; date: string; memo: string; oshiId: string; category: Category; payment?: PaymentMethod;
 };
-type State = { oshis: Oshi[]; expenses: Expense[]; bgColor?: string; mono?: boolean; budget?: number };
+export type SavingsGoal = { title: string; target: number; saved: number };
+type State = { oshis: Oshi[]; expenses: Expense[]; bgColor?: string; mono?: boolean; budget?: number; goal?: SavingsGoal };
 
 const KEY = "oshikatsu-wallet-v1";
 const initial: State = {
@@ -101,6 +102,14 @@ export const actions = {
   updateOshi: (id: string, o: Partial<Oshi>) =>
     set({ ...state, oshis: state.oshis.map((x) => (x.id === id ? { ...x, ...o } : x)) }),
   deleteOshi: (id: string) => set({ ...state, oshis: state.oshis.filter((x) => x.id !== id) }),
+  setGoal: (g: SavingsGoal | null) => {
+    const { goal: _g, ...rest } = state;
+    set(g ? { ...rest, goal: g } : rest);
+  },
+  addSaving: (n: number) => {
+    if (!state.goal || !(n > 0)) return;
+    set({ ...state, goal: { ...state.goal, saved: state.goal.saved + Math.round(n) } });
+  },
   setBudget: (n: number | null) => {
     const { budget: _b, ...rest } = state;
     set(n && n > 0 ? { ...rest, budget: Math.round(n) } : rest);
