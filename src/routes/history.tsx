@@ -29,7 +29,7 @@ function HistoryPage() {
   const [month, setMonth] = useState(() => todayLocal().slice(0, 7)); // "YYYY-MM"
 
   const shiftMonth = (delta: number) => {
-    const [y, m] = month.split("-").map(Number);
+    const [y = 0, m = 1] = month.split("-").map(Number);
     const d = new Date(y, m - 1 + delta, 1);
     setMonth(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`);
   };
