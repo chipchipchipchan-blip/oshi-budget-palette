@@ -115,8 +115,22 @@ function notifySaveFailure() {
   });
 }
 
+let syncHandler: ((s: State) => void) | null = null;
+/** ログイン中、変更をクラウドへ送る処理を登録する */
+export function setSyncHandler(h: ((s: unknown) => void) | null) { syncHandler = h; }
+export function getStateSnapshot(): unknown { load(); return state; }
+/** クラウドから取得したデータで置き換える（クラウドへは送り返さない） */
+export function replaceFromCloud(data: unknown) {
+  const d = data as Partial<State>;
+  if (!d || !Array.isArray(d.oshis) || !Array.isArray(d.expenses)) return;
+  const h = syncHandler; syncHandler = null;
+  set({ ...(d as State), mono: true });
+  syncHandler = h;
+}
+
 function set(next: State) {
   state = next;
+  syncHandler?.(state);
   try {
     localStorage.setItem(KEY, JSON.stringify(state));
   } catch {
