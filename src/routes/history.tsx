@@ -49,9 +49,8 @@ function HistoryPage() {
                     </span>
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium">{e.memo || c.label}</p>
-                      <span className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-foreground px-2.5 py-0.5 text-[10px] font-medium tracking-wide text-background">
+                      <span className="mt-1.5 inline-flex items-center rounded-full bg-foreground px-2.5 py-0.5 text-[10px] font-medium tracking-wide text-background">
                         {o?.name ?? "削除された推し"}
-                        {o && <Heart className="h-2.5 w-2.5 fill-background" />}
                       </span>
                     </div>
                     <p className="shrink-0 break-all text-right font-display text-xl font-extralight leading-none tracking-tight">{yen(e.amount)}</p>
