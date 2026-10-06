@@ -13,6 +13,6 @@
 - [x] Verify migration, management, and persistence in the browser.
 
 # Dedicated savings page
-- [ ] Replace home goal details with a linked aggregate summary.
-- [ ] Add /savings with existing goal management and bottom navigation access.
-- [ ] Verify navigation, totals, updates, and direct page refresh.
+- [x] Replace home goal details with a linked aggregate summary.
+- [x] Add /savings with existing goal management and bottom navigation access.
+- [x] Verify navigation, totals, updates, and direct page refresh.
