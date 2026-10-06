@@ -42,14 +42,14 @@ function AddPage() {
   return (
     <AppShell title="支出を記録">
       <form onSubmit={submit} className="space-y-6">
-        <div className="satin-dark rounded-3xl p-7 text-center text-hero-foreground">
-          <p className="text-xs font-bold text-hero-foreground/60 tracking-[0.3em]">金額</p>
-          <div className="mt-3 flex items-center justify-center font-display text-5xl font-light">
+        <div className="satin-dark relative overflow-hidden rounded-3xl p-7 text-center text-hero-foreground">
+          <p className="text-xs font-light text-hero-foreground/70">金額</p>
+          <div className="mt-6 flex items-center justify-center font-display text-6xl font-extralight leading-none">
             <span className="silver-ink">¥</span>
             <input
               aria-label="金額" inputMode="numeric" value={amount} placeholder="0"
               onChange={(e) => setAmount(e.target.value.replace(/\D/g, ""))}
-              className="w-48 bg-transparent text-center outline-none placeholder:text-hero-foreground/40"
+              className="silver-ink w-48 bg-transparent text-center outline-none"
             />
           </div>
         </div>
