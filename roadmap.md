@@ -5,4 +5,4 @@
 
 # Silver and clear-blue accents
 - [x] Add a clear-blue glass add button, silver total/star, and clear-blue active navigation text/icons without changing functionality.
-- [ ] Verify accent appearance and navigation in the browser.
+- [x] Verify accent appearance and navigation in the browser.
