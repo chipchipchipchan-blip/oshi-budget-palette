@@ -110,6 +110,7 @@
     -webkit-font-smoothing: antialiased;
   }
   input, select, button { font: inherit; }
+  .font-bold, .font-semibold { font-weight: 500; }
   /* ブラウザのオートコンプリート（自動入力）でも水色にならず、アプリの淡いグレーに馴染ませる */
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
