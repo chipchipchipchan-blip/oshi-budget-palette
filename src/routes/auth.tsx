@@ -56,6 +56,18 @@ function AuthPage() {
     }
   };
 
+  const sendReset = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setBusy(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/auth/reset`,
+    });
+    setBusy(false);
+    if (error) { toast.error("送信できませんでした", { description: jpError(error.message) }); return; }
+    toast.success("再設定メールを送りました", { description: "メールに届いたリンクから新しいパスワードを設定してください。届かない場合は迷惑メールフォルダもご確認ください。" });
+    setMode("in");
+  };
+
   const google = async () => {
     const r = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
     if (r.error) { toast.error("Googleでログインできませんでした"); return; }

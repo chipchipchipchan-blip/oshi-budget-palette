@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as OshiRouteImport } from './routes/oshi'
 import { Route as SavingsRouteImport } from './routes/savings'
+import { Route as AuthResetRouteImport } from './routes/auth/reset'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,44 +47,61 @@ const SavingsRoute = SavingsRouteImport.update({
   path: '/savings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthResetRoute = AuthResetRouteImport.update({
+  id: '/reset',
+  path: '/reset',
+  getParentRoute: () => AuthRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/add': typeof AddRoute
-  '/auth': typeof AuthRoute
+  '/auth': typeof AuthRouteWithChildren
   '/history': typeof HistoryRoute
   '/oshi': typeof OshiRoute
   '/savings': typeof SavingsRoute
+  '/auth/reset': typeof AuthResetRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/add': typeof AddRoute
-  '/auth': typeof AuthRoute
+  '/auth': typeof AuthRouteWithChildren
   '/history': typeof HistoryRoute
   '/oshi': typeof OshiRoute
   '/savings': typeof SavingsRoute
+  '/auth/reset': typeof AuthResetRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/add': typeof AddRoute
-  '/auth': typeof AuthRoute
+  '/auth': typeof AuthRouteWithChildren
   '/history': typeof HistoryRoute
   '/oshi': typeof OshiRoute
   '/savings': typeof SavingsRoute
+  '/auth/reset': typeof AuthResetRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/add' | '/auth' | '/history' | '/oshi' | '/savings'
+  fullPaths:
+    '/' | '/add' | '/auth' | '/history' | '/oshi' | '/savings' | '/auth/reset'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/add' | '/auth' | '/history' | '/oshi' | '/savings'
-  id: '__root__' | '/' | '/add' | '/auth' | '/history' | '/oshi' | '/savings'
+  to: '/' | '/add' | '/auth' | '/history' | '/oshi' | '/savings' | '/auth/reset'
+  id:
+    | '__root__'
+    | '/'
+    | '/add'
+    | '/auth'
+    | '/history'
+    | '/oshi'
+    | '/savings'
+    | '/auth/reset'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AddRoute: typeof AddRoute
-  AuthRoute: typeof AuthRoute
+  AuthRoute: typeof AuthRouteWithChildren
   HistoryRoute: typeof HistoryRoute
   OshiRoute: typeof OshiRoute
   SavingsRoute: typeof SavingsRoute
@@ -133,13 +151,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SavingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth/reset': {
+      id: '/auth/reset'
+      path: '/reset'
+      fullPath: '/auth/reset'
+      preLoaderRoute: typeof AuthResetRouteImport
+      parentRoute: typeof AuthRoute
+    }
   }
 }
+
+interface AuthRouteChildren {
+  AuthResetRoute: typeof AuthResetRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthResetRoute: AuthResetRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AddRoute: AddRoute,
-  AuthRoute: AuthRoute,
+  AuthRoute: AuthRouteWithChildren,
   HistoryRoute: HistoryRoute,
   OshiRoute: OshiRoute,
   SavingsRoute: SavingsRoute,
