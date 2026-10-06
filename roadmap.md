@@ -8,6 +8,6 @@
 - [x] Verify accent appearance and navigation in the browser.
 
 # Multiple savings goals
-- [ ] Preserve the existing savings goal and support up to three independent goals.
-- [ ] Add compact stacked goals with individual saving, editing, and deletion controls.
-- [ ] Verify migration, management, and persistence in the browser.
+- [x] Preserve the existing savings goal and support up to three independent goals.
+- [x] Add compact stacked goals with individual saving, editing, and deletion controls.
+- [x] Verify migration, management, and persistence in the browser.
