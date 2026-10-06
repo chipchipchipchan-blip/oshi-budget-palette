@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Camera, Check, Download, Palette, Plus, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { AppShell, OshiAvatar } from "@/components/AppShell";
+import { useAccount, saveNickname } from "@/hooks/use-account";
 import { Button } from "@/components/ui/button";
 import { useStore, actions, exportData, importData, OSHI_COLORS, BG_PRESETS, isWhitish, type Oshi } from "@/lib/store";
 

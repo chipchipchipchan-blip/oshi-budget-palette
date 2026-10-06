@@ -8,7 +8,7 @@ export function useAccount() {
   const [account, setAccount] = useState<Account | undefined>(undefined);
   useEffect(() => {
     const toAccount = (u: { email?: string; user_metadata?: Record<string, unknown> } | null | undefined): Account =>
-      u ? { email: u.email ?? null, nickname: typeof u.user_metadata?.nickname === "string" ? u.user_metadata.nickname : "" } : null;
+      u ? { email: u.email ?? null, nickname: typeof u.user_metadata?.["nickname"] === "string" ? u.user_metadata["nickname"] : "" } : null;
     supabase.auth.getUser().then(({ data }) => setAccount(toAccount(data.user)));
     const { data } = supabase.auth.onAuthStateChange((_e, s) => setAccount(toAccount(s?.user)));
     return () => data.subscription.unsubscribe();
