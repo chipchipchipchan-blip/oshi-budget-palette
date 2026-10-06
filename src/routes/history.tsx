@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Trash2, Heart } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
+import { Button } from "@/components/ui/button";
 import { useStore, actions, catOf, yen, isWhitish } from "@/lib/store";
 
 export const Route = createFileRoute("/history")({
@@ -10,6 +11,8 @@ export const Route = createFileRoute("/history")({
       { name: "description", content: "推し活の支出をタイムラインで振り返り。" },
       { property: "og:title", content: "履歴｜推し活ウォレット" },
       { property: "og:description", content: "推し活の支出をタイムラインで振り返り。" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: HistoryPage,
@@ -47,9 +50,9 @@ function HistoryPage() {
                       </span>
                     </div>
                     <p className="font-display font-bold">{yen(e.amount)}</p>
-                    <button onClick={() => actions.deleteExpense(e.id)} aria-label="削除" className="press text-muted-foreground">
+                    <Button variant="unstyled" size="auto" onClick={() => actions.deleteExpense(e.id)} aria-label="削除" title="削除" className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-muted-foreground">
                       <Trash2 className="h-4 w-4" />
-                    </button>
+                    </Button>
                   </li>
                 );
               })}

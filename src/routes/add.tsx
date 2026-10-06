@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Check, Heart, LayoutGrid, CalendarDays, PenLine } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
+import { Button } from "@/components/ui/button";
 import { useStore, actions, CATEGORIES, type Category } from "@/lib/store";
 
 export const Route = createFileRoute("/add")({
@@ -11,6 +12,8 @@ export const Route = createFileRoute("/add")({
       { name: "description", content: "グッズ・チケット・遠征費など推し活の支出をかんたん登録。" },
       { property: "og:title", content: "支出を記録｜推し活ウォレット" },
       { property: "og:description", content: "推し活の支出をかんたん登録。" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AddPage,
@@ -34,17 +37,17 @@ function AddPage() {
     nav({ to: "/history" });
   };
 
-  const field = "w-full rounded-lg border bg-card px-4 py-3 outline-none focus:ring-2 focus:ring-ring";
+  const field = "satin-field w-full rounded-lg border px-4 py-3 outline-none focus:ring-2 focus:ring-ring";
 
   return (
     <AppShell title="支出を記録">
-      <form onSubmit={submit} className="card-soft space-y-5 p-5">
-        <div className="rounded-lg bg-hero p-5 text-center text-hero-foreground">
+      <form onSubmit={submit} className="space-y-6">
+        <div className="satin-dark rounded-3xl p-7 text-center text-hero-foreground">
           <p className="text-xs font-bold text-hero-foreground/60 tracking-[0.3em]">金額</p>
-          <div className="flex items-center justify-center font-display text-4xl font-bold">
+          <div className="mt-3 flex items-center justify-center font-display text-5xl font-light">
             ¥
             <input
-              inputMode="numeric" value={amount} placeholder="0"
+              aria-label="金額" inputMode="numeric" value={amount} placeholder="0"
               onChange={(e) => setAmount(e.target.value.replace(/\D/g, ""))}
               className="w-48 bg-transparent text-center outline-none placeholder:text-hero-foreground/40"
             />
@@ -62,13 +65,13 @@ function AddPage() {
           <span className="mb-2 flex items-center gap-1.5 text-sm font-bold"><LayoutGrid className="h-4 w-4 text-primary" /> カテゴリ</span>
           <div className="grid grid-cols-3 gap-2">
             {CATEGORIES.map((c) => (
-              <button
+              <Button variant="unstyled" size="auto"
                 type="button" key={c.id} onClick={() => setCategory(c.id)}
                 className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-bold ${category === c.id ? "border-primary" : "border-border bg-card"}`}
                 style={category === c.id ? { background: c.color, color: c.fg } : undefined}
               >
                 <c.icon className="h-6 w-6" />{c.label}
-              </button>
+              </Button>
             ))}
           </div>
         </div>
@@ -83,9 +86,9 @@ function AddPage() {
           <input value={memo} onChange={(e) => setMemo(e.target.value)} placeholder="アクスタ購入、ライブ当選…" className={field} />
         </label>
 
-        <button disabled={!Number(amount)} className="press flex w-full items-center justify-center gap-2 rounded-full bg-primary py-4 font-bold text-primary-foreground shadow-soft disabled:opacity-50">
+        <Button variant="unstyled" size="auto" disabled={!Number(amount)} className="satin-dark flex w-full items-center justify-center gap-2 rounded-2xl py-4 font-medium text-primary-foreground">
           <Check className="h-5 w-5" /> 記録する
-        </button>
+        </Button>
       </form>
     </AppShell>
   );

@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Shared visual finishes are defined as semantic tokens and utilities in src/styles.css, so all wallet screens stay consistent while custom backgrounds continue to work.
+- Use the shared Button component for button controls, keeping native form behavior and accessibility consistent.

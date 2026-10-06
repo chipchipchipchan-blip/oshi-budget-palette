@@ -14,23 +14,23 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
   const { bgColor } = useStore();
   useEffect(() => { applyBackground(bgColor); }, [bgColor]);
   return (
-    <div className="mx-auto min-h-screen max-w-md px-5 pb-32 pt-8">
-      <header className="mb-6 flex items-center justify-between">
+    <div className="mx-auto min-h-screen max-w-md px-6 pb-36 pt-10">
+      <header className="mb-8 flex items-center justify-between gap-3">
         <div>
-          <p className="font-display text-xs font-bold tracking-[0.25em] text-primary">OSHI WALLET</p>
-          <h1 className="text-2xl font-bold">{title}</h1>
+          <p className="mb-1 font-display text-[11px] font-light text-muted-foreground">OSHI WALLET</p>
+          <h1 className="text-2xl font-light">{title}</h1>
         </div>
-        <div className="grid h-11 w-11 place-items-center rounded-full bg-hero text-hero-foreground shadow-soft"><Wallet className="h-5 w-5" /></div>
+        <div className="silver-surface grid h-12 w-12 shrink-0 place-items-center rounded-2xl text-muted-foreground"><Wallet className="h-5 w-5" /></div>
       </header>
       {children}
-      <nav className="fixed inset-x-0 bottom-4 z-20 mx-auto flex max-w-sm justify-around rounded-full border bg-card/90 p-2 shadow-soft backdrop-blur">
+      <nav aria-label="メインメニュー" className="glass-nav fixed inset-x-6 bottom-6 z-20 mx-auto flex max-w-sm justify-around rounded-3xl p-2">
         {tabs.map(({ to, label, icon: Icon }) => (
           <Link
             key={to}
             to={to}
             activeOptions={{ exact: true }}
-            className="press flex flex-1 flex-col items-center gap-0.5 rounded-full py-2 text-[11px] text-muted-foreground"
-            activeProps={{ className: "bg-secondary !text-secondary-foreground font-bold" }}
+            className="press flex flex-1 flex-col items-center gap-1 rounded-2xl py-2.5 text-[10px] text-muted-foreground"
+            activeProps={{ className: "silver-surface !text-secondary-foreground font-medium" }}
           >
             <Icon className="h-5 w-5" />
             {label}
