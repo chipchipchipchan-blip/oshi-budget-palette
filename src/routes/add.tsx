@@ -76,6 +76,20 @@ function AddPage() {
           </div>
         </div>
 
+        <div>
+          <span className="mb-2 flex items-center gap-1.5 text-sm font-bold"><Wallet className="h-4 w-4 text-primary" /> 支払い方法</span>
+          <div className="grid grid-cols-3 gap-2">
+            {PAYMENTS.map((p) => (
+              <Button variant="unstyled" size="auto"
+                type="button" key={p.id} onClick={() => setPayment(p.id)}
+                className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-bold ${payment === p.id ? "blue-glass blue-ring text-white" : "border-border bg-card"}`}
+              >
+                <p.icon className="h-6 w-6" />{p.label}
+              </Button>
+            ))}
+          </div>
+        </div>
+
         <label className="block">
           <span className="mb-1 flex items-center gap-1.5 text-sm font-bold"><CalendarDays className="h-4 w-4 text-primary" /> 日付</span>
           <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className={field} />
