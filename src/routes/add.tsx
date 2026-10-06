@@ -60,7 +60,7 @@ function AddPage() {
             <span className="silver-ink font-display text-6xl font-extralight">¥</span>
             <input
               aria-label="金額" inputMode="numeric" value={amount} placeholder="0"
-              onChange={(e) => setAmount(e.target.value.replace(/\D/g, ""))}
+              onChange={(e) => setAmount(e.target.value.normalize("NFKC").replace(/\D/g, ""))}
               className="silver-ink w-48 bg-transparent text-center font-display text-6xl font-extralight tracking-tight outline-none placeholder:text-hero-foreground/40"
             />
           </div>
