@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Check, Heart, LayoutGrid, CalendarDays, PenLine, Wallet } from "lucide-react";
+import { Check, LayoutGrid, CalendarDays, PenLine, Wallet } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
 import { useStore, actions, CATEGORIES, PAYMENTS, type Category, type PaymentMethod } from "@/lib/store";
