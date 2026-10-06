@@ -52,7 +52,7 @@ function OshiPage() {
         className="card-soft mt-5 flex gap-2 p-3"
       >
         <input value={name} onChange={(e) => setName(e.target.value)} placeholder="新しい推しの名前" className="min-w-0 flex-1 rounded-lg bg-muted/50 px-3 outline-none" />
-        <Button variant="unstyled" size="auto" aria-label="推しを追加" title="推しを追加" className="satin-dark grid h-11 w-11 shrink-0 place-items-center rounded-xl text-primary-foreground"><Plus /></Button>
+        <Button variant="blueGlass" size="auto" aria-label="推しを追加" title="推しを追加" className="grid h-11 w-11 shrink-0 place-items-center rounded-xl"><Plus /></Button>
       </form>
       <BackgroundPicker />
     </AppShell>
@@ -100,8 +100,8 @@ function OshiCard({ o }: { o: Oshi }) {
     <div className="card-soft overflow-hidden" style={light ? { background: "var(--secondary)" } : undefined}>
       <div className="h-14 border-b border-border/40" style={{ background: o.color }} />
       <div className="-mt-9 flex items-end gap-3 px-5">
-        <label className="press relative cursor-pointer">
-          <OshiAvatar {...o} size={72} />
+        <label className="press blue-ring relative grid cursor-pointer place-items-center rounded-full bg-card p-[3px]">
+          <OshiAvatar {...o} size={68} />
           <span className="absolute bottom-0 right-0 grid h-6 w-6 place-items-center rounded-full bg-card shadow-soft"><Camera className="h-3.5 w-3.5" /></span>
           <input type="file" accept="image/*" hidden onChange={(e) => {
             const f = e.target.files?.[0];
