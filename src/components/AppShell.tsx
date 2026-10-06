@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Home, PlusCircle, Clock, Heart, Settings, PiggyBank } from "lucide-react";
+import { Home, PlusCircle, Clock, Heart, Wallet, PiggyBank } from "lucide-react";
 import { useEffect, type ReactNode } from "react";
 import { useAccount } from "@/hooks/use-account";
 import { applyBackground, isWhitish, useStore } from "@/lib/store";
