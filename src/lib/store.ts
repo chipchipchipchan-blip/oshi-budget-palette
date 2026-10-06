@@ -206,6 +206,12 @@ export function importData(json: string): string | null {
   return null;
 }
 
+/** スマホの現地時刻（日本ならJST）で「今日」を YYYY-MM-DD で返す。UTCのズレで前日にならない */
+export const todayLocal = () => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+};
+
 export const yen = (n: number) => "¥" + n.toLocaleString("ja-JP");
 export const catOf = (id: Category) => CATEGORIES.find((c) => c.id === id) ?? CATEGORIES[4]!;
 export const payOf = (id?: PaymentMethod) => PAYMENTS.find((p) => p.id === id);
