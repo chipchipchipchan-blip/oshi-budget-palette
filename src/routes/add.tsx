@@ -57,7 +57,7 @@ function AddPage() {
         <label className="block">
           <span className="mb-1 flex items-center gap-1.5 text-sm font-bold"><Heart className="h-4 w-4 text-primary" /> 誰のための支出？</span>
           <select value={selected} onChange={(e) => setOshiId(e.target.value)} className={field}>
-            {oshis.map((o) => <option key={o.id} value={o.id}>{o.name} ♡</option>)}
+            {oshis.map((o) => <option key={o.id} value={o.id}>{o.name}</option>)}
           </select>
         </label>
 

@@ -65,7 +65,7 @@ function Dashboard() {
                 <li key={o.id} className="flex items-center gap-2 text-sm">
                   <span className="h-3 w-3 shrink-0 rounded-full" style={{ background: PIE_COLORS[byOshi.indexOf(o) % PIE_COLORS.length] ?? "var(--primary)" }} />
                   <OshiAvatar {...o} size={26} />
-                  <span className="flex flex-1 items-center gap-1 truncate font-bold">{o.name}<Heart className="h-3.5 w-3.5 fill-card text-foreground" /></span>
+                  <span className="flex flex-1 items-center truncate font-bold">{o.name}</span>
                   <span className="text-muted-foreground">{Math.round((o.value / total) * 100)}%</span>
                 </li>
               ))}
