@@ -9,7 +9,7 @@ export function SavingsSummary({ goals }: { goals: SavingsGoal[] }) {
   const pct = target > 0 ? saved / target * 100 : 0;
 
   return (
-    <Button asChild variant="unstyled" className="card-soft mt-4 block w-full p-5 text-left transition-shadow focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring">
+    <Button asChild variant="unstyled" size="auto" className="card-soft mt-4 block w-full whitespace-normal p-5 text-left transition-shadow focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring">
       <Link to="/savings" aria-label="目標貯金の詳細を開く">
         <div className="flex items-center justify-between gap-3">
           <h2 className="inline-flex items-center gap-1.5 text-xs font-light text-muted-foreground"><Target className="h-3.5 w-3.5" />目標貯金<span className="ml-1 text-[11px]">合計</span></h2>
