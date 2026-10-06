@@ -1,13 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Pencil, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { ChevronLeft, ChevronRight, Pencil, Trash2 } from "lucide-react";
+import { useMemo, useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useStore, actions, catOf, payOf, yen } from "@/lib/store";
+import { useStore, actions, catOf, payOf, yen, todayLocal } from "@/lib/store";
 
 export const Route = createFileRoute("/history")({
   head: () => ({
@@ -26,11 +26,26 @@ export const Route = createFileRoute("/history")({
 function HistoryPage() {
   const { expenses, oshis } = useStore();
   const [pendingDelete, setPendingDelete] = useState<{ id: string; label: string } | null>(null);
-  const sorted = [...expenses].sort((a, b) => b.date.localeCompare(a.date));
+  const [month, setMonth] = useState(() => todayLocal().slice(0, 7)); // "YYYY-MM"
+
+  const shiftMonth = (delta: number) => {
+    const [y, m] = month.split("-").map(Number);
+    const d = new Date(y, m - 1 + delta, 1);
+    setMonth(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`);
+  };
+  const monthLabel = useMemo(() => {
+    const [y, m] = month.split("-").map(Number);
+    return `${y}年${m}月`;
+  }, [month]);
+
+  const sorted = [...expenses]
+    .filter((e) => e.date.startsWith(month))
+    .sort((a, b) => b.date.localeCompare(a.date));
   const groups = sorted.reduce<Record<string, typeof sorted>>((acc, e) => {
     (acc[e.date] ??= []).push(e);
     return acc;
   }, {});
+  const monthTotal = sorted.reduce((sum, e) => sum + e.amount, 0);
 
   return (
     <AppShell title="履歴">
