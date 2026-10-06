@@ -31,6 +31,12 @@ function Dashboard() {
   const byOshi = oshis
     .map((o) => ({ ...o, value: month.filter((e) => e.oshiId === o.id).reduce((s, e) => s + e.amount, 0) }))
     .filter((o) => o.value > 0);
+  const orphanValue = month
+    .filter((e) => !oshis.some((o) => o.id === e.oshiId))
+    .reduce((s, e) => s + e.amount, 0);
+  if (orphanValue > 0) {
+    byOshi.push({ id: "__deleted__", name: "削除された推し", color: "#d9d7d4", value: orphanValue });
+  }
   const byCat = CATEGORIES.map((c) => ({
     ...c,
     value: month.filter((e) => e.category === c.id).reduce((s, e) => s + e.amount, 0),
