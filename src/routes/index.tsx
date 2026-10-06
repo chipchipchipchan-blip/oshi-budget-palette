@@ -35,7 +35,7 @@ function Dashboard() {
     .filter((e) => !oshis.some((o) => o.id === e.oshiId))
     .reduce((s, e) => s + e.amount, 0);
   if (orphanValue > 0) {
-    byOshi.push({ id: "__deleted__", name: "削除された推し", color: "", photo: undefined, value: orphanValue });
+    byOshi.push({ id: "__deleted__", name: "削除された推し", color: "#d9d7d4", photo: undefined, value: orphanValue });
   }
   const byCat = CATEGORIES.map((c) => ({
     ...c,
