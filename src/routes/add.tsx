@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Check, LayoutGrid, CalendarDays, PenLine, Wallet } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
-import { useStore, actions, CATEGORIES, PAYMENTS, type Category, type PaymentMethod } from "@/lib/store";
+import { useStore, actions, CATEGORIES, PAYMENTS, todayLocal, type Category, type PaymentMethod } from "@/lib/store";
 
 export const Route = createFileRoute("/add")({
   head: () => ({
@@ -26,7 +26,7 @@ function AddPage() {
   const { edit } = Route.useSearch();
   const editing = edit ? expenses.find((x) => x.id === edit) : undefined;
   const [amount, setAmount] = useState("");
-  const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10));
+  const [date, setDate] = useState(() => todayLocal());
   const [memo, setMemo] = useState("");
   const [oshiId, setOshiId] = useState("");
   const [category, setCategory] = useState<Category>("goods");
