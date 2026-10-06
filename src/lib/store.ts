@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from "react";
+import { toast } from "sonner";
 import { Gift, Ticket, TrainFront, Mail, Sparkles, Banknote, CreditCard, Smartphone, type LucideIcon } from "lucide-react";
 
 export type Category = "goods" | "ticket" | "travel" | "fc" | "other";
@@ -85,9 +86,23 @@ function load() {
     }
   } catch {}
 }
+function notifySaveFailure() {
+  if (typeof window === "undefined") return;
+  toast.error("保存に失敗しました", {
+    description: "写真の容量がいっぱいの可能性があります。写真を減らすか、小さくしてからもう一度お試しください。",
+    duration: 6000,
+  });
+}
+
 function set(next: State) {
   state = next;
-  try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {}
+  try {
+    localStorage.setItem(KEY, JSON.stringify(state));
+  } catch {
+    // 保存に失敗してもメモリ上の state は更新済みなので、入力内容は画面から消えない。
+    // ただし再読み込みで失われるため、ユーザーに通知する。
+    notifySaveFailure();
+  }
   listeners.forEach((l) => l());
 }
 
