@@ -80,7 +80,7 @@
   --glass-border: oklch(1 0 0 / 0.9);
   --gradient-hero: linear-gradient(135deg, oklch(0.27 0.006 30), oklch(0.15 0 0) 52%, oklch(0.045 0 0));
   --gradient-satin: linear-gradient(145deg, oklch(1 0 0 / 0.95), oklch(0.98 0.002 247 / 0.7));
-  --gradient-silver: linear-gradient(135deg, oklch(1 0 0), oklch(0.94 0.004 247) 50%, oklch(0.98 0.002 247));
+  --gradient-blush: linear-gradient(150deg, #fdf7f5 0%, #f8f3f1 45%, #f3f0ef 100%);
   --gradient-sheen: linear-gradient(120deg, transparent 20%, oklch(1 0 0 / 0.07) 50%, transparent 80%);
   --shadow-soft: 0 10px 35px -12px oklch(0.3 0.005 247 / 0.1), 0 2px 8px oklch(0.3 0.005 247 / 0.025);
   --shadow-glass: inset 0 1px 0 oklch(1 0 0 / 0.95), 0 14px 40px -14px oklch(0.25 0.005 247 / 0.16);
@@ -120,6 +120,12 @@
   box-shadow: var(--shadow-soft);
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(16px);
+}
+@utility blush-card {
+  background: var(--gradient-blush);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid color-mix(in oklab, #d4b2ab 26%, oklch(1 0 0));
 }
 @utility glass-nav {
   background: var(--glass);
