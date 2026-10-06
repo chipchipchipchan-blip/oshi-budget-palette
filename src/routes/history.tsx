@@ -1,5 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Trash2 } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Pencil, Trash2 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
 import { useStore, actions, catOf, payOf, yen } from "@/lib/store";
@@ -67,9 +67,14 @@ function HistoryPage() {
                         </span>
                       )}
                     </div>
-                    <Button variant="unstyled" size="auto" onClick={() => actions.deleteExpense(e.id)} aria-label="削除" title="削除" className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-muted-foreground">
-                      <Trash2 className="h-4 w-4" />
+                    <div className="flex shrink-0 flex-col">
+                    <Button asChild variant="unstyled" size="auto" className="grid h-8 w-8 place-items-center rounded-full text-muted-foreground/70 transition-colors hover:text-clear-blue">
+                      <Link to="/add" search={{ edit: e.id }} aria-label="編集" title="編集"><Pencil className="h-3.5 w-3.5" strokeWidth={1.5} /></Link>
                     </Button>
+                    <Button variant="unstyled" size="auto" onClick={() => actions.deleteExpense(e.id)} aria-label="削除" title="削除" className="grid h-8 w-8 place-items-center rounded-full text-muted-foreground/70 transition-colors hover:text-clear-blue">
+                      <Trash2 className="h-3.5 w-3.5" strokeWidth={1.5} />
+                    </Button>
+                    </div>
                   </li>
                 );
               })}

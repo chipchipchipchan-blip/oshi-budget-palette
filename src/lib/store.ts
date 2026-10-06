@@ -104,6 +104,8 @@ const uid = () => Math.random().toString(36).slice(2, 10);
 export const actions = {
   addExpense: (e: Omit<Expense, "id">) => set({ ...state, expenses: [{ ...e, id: uid() }, ...state.expenses] }),
   deleteExpense: (id: string) => set({ ...state, expenses: state.expenses.filter((e) => e.id !== id) }),
+  updateExpense: (id: string, e: Omit<Expense, "id">) =>
+    set({ ...state, expenses: state.expenses.map((x) => (x.id === id ? { ...e, id } : x)) }),
   addOshi: (o: Omit<Oshi, "id">) => set({ ...state, oshis: [...state.oshis, { ...o, id: uid() }] }),
   updateOshi: (id: string, o: Partial<Oshi>) =>
     set({ ...state, oshis: state.oshis.map((x) => (x.id === id ? { ...x, ...o } : x)) }),
