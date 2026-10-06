@@ -16,6 +16,7 @@ export const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         satin: "satin-dark text-primary-foreground",
         silver: "silver-surface text-foreground",
+        blueGlass: "blue-glass text-clear-blue-foreground",
         unstyled: "",
       },
       size: {
