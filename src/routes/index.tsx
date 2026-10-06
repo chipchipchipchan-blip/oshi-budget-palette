@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
-import { Sparkles, Plus } from "lucide-react";
+import { Sparkles, Plus, PencilLine, Check, X } from "lucide-react";
+import { useState } from "react";
 import { AppShell, OshiAvatar } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
-import { useStore, CATEGORIES, PIE_COLORS, yen } from "@/lib/store";
+import { useStore, CATEGORIES, PIE_COLORS, yen, actions } from "@/lib/store";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -20,7 +21,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Dashboard() {
-  const { oshis, expenses } = useStore();
+  const { oshis, expenses, budget } = useStore();
   const now = new Date();
   const ym = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
   const month = expenses.filter((e) => e.date.startsWith(ym));
@@ -44,6 +45,8 @@ function Dashboard() {
           {month.length}件の愛を記録中
         </p>
       </section>
+
+      <BudgetCard total={total} budget={budget} />
 
       <section className="mt-8">
         <h2 className="mb-4 px-1 text-xs font-normal text-muted-foreground">推し別の割合</h2>
@@ -106,4 +109,55 @@ function Dashboard() {
 
 function Empty() {
   return <p className="card-soft py-10 text-center text-[13px] leading-7 text-muted-foreground">まだ今月の記録がありません<br />右下の＋から登録してね</p>;
+}
+
+function BudgetCard({ total, budget }: { total: number; budget?: number | undefined }) {
+  const [editing, setEditing] = useState(false);
+  const [val, setVal] = useState("");
+  const pct = budget ? (total / budget) * 100 : 0;
+  const over = !!budget && total > budget;
+  const warn = pct >= 80;
+  const barColor = over ? "var(--budget-over)" : warn ? "var(--budget-warn)" : undefined;
+  const start = () => { setVal(budget ? String(budget) : ""); setEditing(true); };
+  const save = () => { actions.setBudget(Number(val.replace(/[^0-9]/g, "")) || null); setEditing(false); };
+
+  return (
+    <section className="card-soft mt-4 p-5">
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-xs font-light text-muted-foreground">今月の予算</p>
+        {!editing && (
+          <Button variant="unstyled" onClick={start} className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-[11px] font-light text-foreground/80 hover:text-[var(--clear-blue)]">
+            <PencilLine className="h-3.5 w-3.5" strokeWidth={1.5} />
+            {budget ? "編集" : "予算を設定"}
+          </Button>
+        )}
+      </div>
+
+      {editing ? (
+        <form onSubmit={(e) => { e.preventDefault(); save(); }} className="mt-3 flex items-center gap-2">
+          <div className="satin-field flex flex-1 items-center gap-1 rounded-xl px-3 py-2">
+            <span className="font-display font-light text-muted-foreground">¥</span>
+            <input autoFocus inputMode="numeric" value={val} onChange={(e) => setVal(e.target.value)} placeholder="30000" aria-label="今月の予算" className="w-full bg-transparent font-display text-lg font-light outline-none" />
+          </div>
+          <Button type="submit" variant="unstyled" aria-label="保存" className="blue-glass grid h-10 w-10 place-items-center rounded-full text-white"><Check className="h-4 w-4" /></Button>
+          <Button type="button" variant="unstyled" aria-label="キャンセル" onClick={() => setEditing(false)} className="grid h-10 w-10 place-items-center rounded-full border border-border text-muted-foreground"><X className="h-4 w-4" strokeWidth={1.5} /></Button>
+        </form>
+      ) : budget ? (
+        <>
+          <div className="mt-3 flex items-end justify-between gap-2">
+            <p className="font-display text-2xl font-extralight">{yen(budget)}</p>
+            <p className="font-display text-sm font-light" style={{ color: barColor ?? "var(--muted-foreground)" }}>{Math.round(pct)}%</p>
+          </div>
+          <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-border/60">
+            <div className={"h-full rounded-full transition-all duration-700 " + (barColor ? "" : "blue-glass")} style={{ width: `${Math.min(pct, 100)}%`, background: barColor }} />
+          </div>
+          <p className="mt-2.5 text-[11px] font-light" style={{ color: over ? "var(--budget-over)" : "var(--muted-foreground)" }}>
+            {over ? `予算をオーバーしています（+${yen(total - budget)}）` : `残り ${yen(budget - total)}`}
+          </p>
+        </>
+      ) : (
+        <p className="mt-2 text-[11px] font-light text-muted-foreground">予算を決めると、使った割合がゲージで表示されます</p>
+      )}
+    </section>
+  );
 }

@@ -37,7 +37,7 @@ export type Oshi = { id: string; name: string; color: string; photo?: string };
 export type Expense = {
   id: string; amount: number; date: string; memo: string; oshiId: string; category: Category;
 };
-type State = { oshis: Oshi[]; expenses: Expense[]; bgColor?: string; mono?: boolean };
+type State = { oshis: Oshi[]; expenses: Expense[]; bgColor?: string; mono?: boolean; budget?: number };
 
 const KEY = "oshikatsu-wallet-v1";
 const initial: State = {
@@ -94,6 +94,10 @@ export const actions = {
   updateOshi: (id: string, o: Partial<Oshi>) =>
     set({ ...state, oshis: state.oshis.map((x) => (x.id === id ? { ...x, ...o } : x)) }),
   deleteOshi: (id: string) => set({ ...state, oshis: state.oshis.filter((x) => x.id !== id) }),
+  setBudget: (n: number | null) => {
+    const { budget: _b, ...rest } = state;
+    set(n && n > 0 ? { ...rest, budget: Math.round(n) } : rest);
+  },
   setBgColor: (c: string | null) => {
     const { bgColor: _drop, ...rest } = state;
     set(c ? { ...rest, bgColor: c } : rest);
