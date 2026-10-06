@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
-import { Sparkles, Plus, PencilLine, Check, X, Target, Trash2 } from "lucide-react";
+import { Sparkles, Plus, PencilLine, Check, X } from "lucide-react";
 import { useState } from "react";
 import { AppShell, OshiAvatar } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
-import { useStore, CATEGORIES, PIE_COLORS, yen, actions, type SavingsGoal } from "@/lib/store";
+import { GoalCard } from "@/components/GoalCard";
+import { useStore, CATEGORIES, PIE_COLORS, yen, actions } from "@/lib/store";
 
 export const Route = createFileRoute("/")({
   head: () => ({
