@@ -38,7 +38,7 @@ function OshiPage() {
   const [name, setName] = useState("");
 
   return (
-    <AppShell title="推し設定">
+    <AppShell title="推し一覧">
       <div className="space-y-4">
         {oshis.map((o) => <OshiCard key={o.id} o={o} />)}
       </div>
