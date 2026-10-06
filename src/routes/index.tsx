@@ -111,7 +111,7 @@ function Empty() {
   return <p className="card-soft py-10 text-center text-[13px] leading-7 text-muted-foreground">まだ今月の記録がありません<br />右下の＋から登録してね</p>;
 }
 
-function BudgetCard({ total, budget }: { total: number; budget?: number }) {
+function BudgetCard({ total, budget }: { total: number; budget?: number | undefined }) {
   const [editing, setEditing] = useState(false);
   const [val, setVal] = useState("");
   const pct = budget ? (total / budget) * 100 : 0;
