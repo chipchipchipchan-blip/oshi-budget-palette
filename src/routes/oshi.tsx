@@ -1,14 +1,9 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { Camera, Check, Download, Palette, Plus, Trash2, Upload } from "lucide-react";
-import { toast } from "sonner";
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { Camera, Plus, Trash2 } from "lucide-react";
 import { AppShell, OshiAvatar } from "@/components/AppShell";
-import { useAccount, saveNickname } from "@/hooks/use-account";
 import { Button } from "@/components/ui/button";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { resetAllData } from "@/lib/cloud-sync";
-import { useStore, actions, exportData, importData, OSHI_COLORS, BG_PRESETS, isWhitish, type Oshi } from "@/lib/store";
+import { useStore, actions, OSHI_COLORS, isWhitish, type Oshi } from "@/lib/store";
 
 export const Route = createFileRoute("/oshi")({
   head: () => ({
