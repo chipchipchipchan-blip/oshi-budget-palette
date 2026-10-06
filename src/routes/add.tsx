@@ -64,10 +64,10 @@ function AddPage() {
             {CATEGORIES.map((c) => (
               <button
                 type="button" key={c.id} onClick={() => setCategory(c.id)}
-                className={`press flex flex-col items-center gap-1 rounded-lg border-2 py-3 text-xs font-bold ${category === c.id ? "border-primary" : "border-transparent"}`}
-                style={{ background: c.color }}
+                className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-bold ${category === c.id ? "border-primary" : "border-border bg-card"}`}
+                style={category === c.id ? { background: c.color, color: c.fg } : undefined}
               >
-                <c.icon className="h-6 w-6 text-ink" />{c.label}
+                <c.icon className="h-6 w-6" />{c.label}
               </button>
             ))}
           </div>
