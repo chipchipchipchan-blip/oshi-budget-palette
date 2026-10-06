@@ -170,6 +170,42 @@ export const actions = {
   },
 };
 
+/** 現在の全データ（支出・推し・予算・貯金・背景設定）をJSON文字列として返す */
+export function exportData(): string {
+  load();
+  return JSON.stringify({ app: KEY, version: 1, exportedAt: new Date().toISOString(), data: state }, null, 2);
+}
+
+/** バックアップJSONを検証して復元。不正ならエラーメッセージを返す（成功時は null） */
+export function importData(json: string): string | null {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(json);
+  } catch {
+    return "ファイルが壊れているか、JSON形式ではありません";
+  }
+  const data = (parsed as { data?: unknown })?.data ?? parsed;
+  const d = data as Partial<State>;
+  if (!d || typeof d !== "object" || !Array.isArray(d.oshis) || !Array.isArray(d.expenses)) {
+    return "このアプリのバックアップファイルではないようです";
+  }
+  const next: State = {
+    oshis: d.oshis,
+    expenses: d.expenses,
+    ...(typeof d.bgColor === "string" ? { bgColor: d.bgColor } : {}),
+    mono: true,
+    ...(typeof d.budget === "number" ? { budget: d.budget } : {}),
+    ...(Array.isArray(d.goals) ? { goals: d.goals } : {}),
+  };
+  // 復元前の現データをバックアップキーに退避してから上書き（復元のやり直しができるように）
+  try {
+    const current = localStorage.getItem(KEY);
+    if (current) localStorage.setItem(BACKUP_KEY, current);
+  } catch {}
+  set(next);
+  return null;
+}
+
 export const yen = (n: number) => "¥" + n.toLocaleString("ja-JP");
 export const catOf = (id: Category) => CATEGORIES.find((c) => c.id === id) ?? CATEGORIES[4]!;
 export const payOf = (id?: PaymentMethod) => PAYMENTS.find((p) => p.id === id);
