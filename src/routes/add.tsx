@@ -67,8 +67,7 @@ function AddPage() {
             {CATEGORIES.map((c) => (
               <Button variant="unstyled" size="auto"
                 type="button" key={c.id} onClick={() => setCategory(c.id)}
-                className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-bold ${category === c.id ? "border-primary" : "border-border bg-card"}`}
-                style={category === c.id ? { background: c.color, color: c.fg } : undefined}
+                className={`press flex flex-col items-center gap-1 rounded-lg border py-3 text-xs font-bold ${category === c.id ? "blue-glass blue-ring text-white" : "border-border bg-card"}`}
               >
                 <c.icon className="h-6 w-6" />{c.label}
               </Button>
