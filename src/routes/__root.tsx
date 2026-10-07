@@ -80,7 +80,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { name: "color-scheme", content: "light" },
+      { name: "color-scheme", content: "light only" },
+      { name: "supported-color-schemes", content: "light" },
+      { name: "theme-color", content: "#FFFFFF" },
       { title: "推し活ウォレット" },
       { name: "description", content: "推し活に特化した可愛い家計簿アプリ" },
       { property: "og:title", content: "推し活ウォレット" },
@@ -104,7 +106,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="ja" style={{ colorScheme: "only light" }}>
       <head>
         <HeadContent />
       </head>
