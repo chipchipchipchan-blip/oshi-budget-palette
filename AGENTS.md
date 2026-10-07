@@ -14,3 +14,4 @@
 - Savings goals use stable IDs in a bounded collection, migrating the legacy single goal on load; this preserves existing savings and keeps edits and deposits isolated to the selected goal.
 - Keep savings management on the /savings leaf route and home limited to a linked aggregate summary; both read the same goal collection so navigation never duplicates or resets balances.
 - Cloud sync: wallet_data table (one JSON row per user), local-first store pushes debounced; remote wins on login, local uploaded if none. Why: keeps offline/local behavior intact.
+- Declare light-only color scheme in the root head and global CSS, keep Tailwind v4 dark variants class-based, and paint html/body with the shared background token; this prevents OS-driven recoloring while preserving background customization.
