@@ -1,6 +1,6 @@
 # Satin visual refinement
 <!-- Light-only appearance -->
-- [ ] Fix the app palette independently of the OS theme and verify all screens and customized backgrounds.
+- [x] Fix the app palette independently of the OS theme and verify all screens and customized backgrounds.
 - [x] Apply shared satin surfaces, light sans-serif typography, silver details, and frosted navigation to all four screens.
 - [x] Preserve expense recording, charts, history, and oshi/background settings.
 - [x] Verify the screens and expense flow in the browser.
