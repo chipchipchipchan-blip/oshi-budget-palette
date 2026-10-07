@@ -47,6 +47,7 @@
 }
 
 :root {
+  color-scheme: only light;
   --radius: 0.5rem;
   --background: oklch(0.982 0.002 247);
   --foreground: oklch(0.16 0 0);
@@ -101,7 +102,13 @@
 
 @layer base {
   * { border-color: var(--color-border); }
+  html {
+    min-height: 100%;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
   body {
+    min-height: 100vh;
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);

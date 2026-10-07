@@ -80,6 +80,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "color-scheme", content: "light" },
       { title: "推し活ウォレット" },
       { name: "description", content: "推し活に特化した可愛い家計簿アプリ" },
       { property: "og:title", content: "推し活ウォレット" },
