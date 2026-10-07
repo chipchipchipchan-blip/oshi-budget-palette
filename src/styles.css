@@ -102,15 +102,19 @@
 
 @layer base {
   * { border-color: var(--color-border); }
+  /* OSのダークモード・強制反転の影響を受けないよう、ライト表示に固定 */
   html {
     min-height: 100%;
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    color-scheme: only light !important;
+    background-color: var(--color-background, #fafafa) !important;
+    color: var(--color-foreground, #29292b) !important;
+    forced-color-adjust: none;
   }
   body {
     min-height: 100vh;
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    color-scheme: only light !important;
+    background-color: var(--color-background, #fafafa) !important;
+    color: var(--color-foreground, #29292b) !important;
     font-family: var(--font-sans);
     font-weight: 300;
     letter-spacing: 0;
