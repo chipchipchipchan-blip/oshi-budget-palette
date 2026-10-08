@@ -4,6 +4,7 @@ import { Sparkles, Plus, PencilLine, Check, X } from "lucide-react";
 import { useState } from "react";
 import { AppShell, OshiAvatar } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
+import { FullText } from "@/components/FullText";
 import { SavingsSummary } from "@/components/SavingsSummary";
 import { useStore, CATEGORIES, PIE_COLORS, yen, actions } from "@/lib/store";
 
@@ -76,7 +77,12 @@ function Dashboard() {
                 <li key={o.id} className="flex items-center gap-2 text-[13px] font-light tracking-wide text-foreground/80">
                   <span className="h-3 w-3 shrink-0 rounded-full" style={{ background: PIE_COLORS[byOshi.indexOf(o) % PIE_COLORS.length] ?? "var(--primary)" }} />
                   <OshiAvatar {...o} size={26} />
-                  <span className="flex flex-1 items-center truncate">{o.name}</span>
+                  <FullText
+                    text={o.name}
+                    label="推し"
+                    wrapperClassName="min-w-0 flex-1"
+                    className="block truncate"
+                  />
                   <span className="font-light text-muted-foreground">{Math.round((o.value / total) * 100)}%</span>
                 </li>
               ))}
