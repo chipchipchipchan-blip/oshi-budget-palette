@@ -101,20 +101,22 @@ function HistoryPage() {
                       {e.memo && (
                         <p className="mt-0.5 truncate text-[11px] font-light tracking-wide text-muted-foreground/80">{e.memo}</p>
                       )}
-                      <span className="mt-1.5 inline-flex items-center">
-                        <span className="inline-flex max-w-full items-center rounded-full bg-foreground px-2.5 py-0.5 text-[10px] font-light tracking-wide text-background">
+                      {/* 推しバッジと支払い方法は同じ行にまとめて、狭い画面では折り返す */}
+                      <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+                        <span className="inline-flex min-w-0 max-w-full items-center rounded-full bg-foreground px-2.5 py-0.5 text-[10px] font-light tracking-wide text-background">
                           <span className="truncate">{o?.name ?? "削除された推し"}</span>
                         </span>
-                      </span>
+                        {p && (
+                          <span className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap text-[10px] font-light tracking-wide text-muted-foreground/80">
+                            <p.icon className="h-3 w-3" />{p.label}
+                          </span>
+                        )}
+                      </div>
                     </div>
-                    <div className="flex shrink-0 flex-col items-end gap-1.5">
-                      <p className="break-all text-right font-display text-xl font-extralight leading-none tracking-tight">{yen(e.amount)}</p>
-                      {p && (
-                        <span className="inline-flex items-center gap-1 whitespace-nowrap text-[10px] font-light tracking-wide text-muted-foreground/80">
-                          <p.icon className="h-3 w-3" />{p.label}
-                        </span>
-                      )}
+                    <div className="flex shrink-0 flex-col items-end">
+                      <p className="whitespace-nowrap text-right font-display text-xl font-extralight leading-none tracking-tight">{yen(e.amount)}</p>
                     </div>
+
                     <div className="flex shrink-0 flex-col">
                     <Button asChild variant="unstyled" size="auto" className="grid h-8 w-8 place-items-center rounded-full text-muted-foreground/70 transition-colors hover:text-clear-blue">
                       <Link to="/add" search={{ edit: e.id }} aria-label="編集" title="編集"><Pencil className="h-3.5 w-3.5" strokeWidth={1.5} /></Link>
