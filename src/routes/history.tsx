@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, Pencil, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
+import { FullText } from "@/components/FullText";
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
@@ -97,15 +98,28 @@ function HistoryPage() {
                       <c.icon className="h-4 w-4 text-hero-foreground" style={{ filter: "drop-shadow(0 1px 2px oklch(0.45 0.06 20 / 0.4))" }} />
                     </span>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-light text-foreground/90">{c.label}</p>
+                      <FullText
+                        text={c.label}
+                        label="カテゴリ"
+                        wrapperClassName="block w-full"
+                        className="block truncate text-sm font-light text-foreground/90"
+                      />
                       {e.memo && (
-                        <p className="mt-0.5 truncate text-[11px] font-light tracking-wide text-muted-foreground/80">{e.memo}</p>
+                        <FullText
+                          text={e.memo}
+                          label="メモ"
+                          wrapperClassName="mt-0.5 block w-full"
+                          className="block truncate text-[11px] font-light tracking-wide text-muted-foreground/80"
+                        />
                       )}
                       {/* 推しバッジと支払い方法は同じ行にまとめて、狭い画面では折り返す */}
                       <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
-                        <span className="inline-flex min-w-0 max-w-full items-center rounded-full bg-foreground px-2.5 py-0.5 text-[10px] font-light tracking-wide text-background">
-                          <span className="truncate">{o?.name ?? "削除された推し"}</span>
-                        </span>
+                        <FullText
+                          text={o?.name ?? "削除された推し"}
+                          label="推し"
+                          wrapperClassName="inline-flex min-w-0 max-w-full items-center rounded-full bg-foreground px-2.5 py-0.5 text-[10px] font-light tracking-wide text-background"
+                          className="block truncate"
+                        />
                         {p && (
                           <span className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap text-[10px] font-light tracking-wide text-muted-foreground/80">
                             <p.icon className="h-3 w-3" />{p.label}
