@@ -117,7 +117,7 @@ function HistoryPage() {
                         <FullText
                           text={o?.name ?? "削除された推し"}
                           label="推し"
-                          wrapperClassName="inline-flex min-w-0 max-w-full items-center rounded-full bg-foreground px-2.5 py-0.5 text-[10px] font-light tracking-wide text-background"
+                          wrapperClassName="inline-flex min-w-0 max-w-full items-center rounded-full bg-foreground! px-2.5 py-0.5 text-[10px] font-light tracking-wide text-background!"
                           className="block truncate"
                         />
                         {p && (
